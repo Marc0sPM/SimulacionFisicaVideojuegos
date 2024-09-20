@@ -7,6 +7,7 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
+#include "Vector3D.h"
 
 #include <iostream>
 
@@ -30,6 +31,9 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 RenderItem* sphere;
+RenderItem* eje_x;
+RenderItem* eje_y;
+RenderItem* eje_z;
 
 
 // Initialize physics engine
@@ -55,9 +59,30 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-
-	PxShape* sShape = CreateShape(PxSphereGeometry(4));
+	//Origen
+	PxShape* sShape = CreateShape(PxSphereGeometry(1));
 	sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0, 0)), Vector4(1,1,1,1));
+
+	// ========================================
+	//Eje x
+	Vector3D<float> ejeX = Vector3D<float>(10, 0 ,0);
+	PxTransform* xTr = new PxTransform(ejeX.x, ejeX.y, ejeX.z);
+	eje_x = new RenderItem(sShape, xTr, Vector4(1, 0, 0, 1));
+	// ========================================
+	
+	// ========================================
+	// Eje y
+	Vector3D<float> ejeY = Vector3D<float>(0, 10, 0);
+	PxTransform* yTr = new PxTransform(ejeY.x, ejeY.y, ejeY.z);
+	eje_y = new RenderItem(sShape, yTr, Vector4(0, 1, 0, 1));
+	// ========================================
+
+	// ========================================
+	// Eje z
+	Vector3D<float> ejeZ = Vector3D<float>(0, 0, 10);
+	PxTransform* zTr = new PxTransform(ejeZ.x, ejeZ.y, ejeZ.z);
+	eje_z = new RenderItem(sShape, zTr, Vector4(0, 0, 1, 1));
+	// ========================================
 
 	}
 
