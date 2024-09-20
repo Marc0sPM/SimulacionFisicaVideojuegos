@@ -29,6 +29,7 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+RenderItem* sphere;
 
 
 // Initialize physics engine
@@ -56,7 +57,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	PxShape* sShape = CreateShape(PxSphereGeometry(4));
-	RenderItem* sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0, 0)), Vector4(1,1,1,1));
+	sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0, 0)), Vector4(1,1,1,1));
 
 	}
 
@@ -77,6 +78,8 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
+
+	DeregisterRenderItem(sphere);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
