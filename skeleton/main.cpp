@@ -30,6 +30,8 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+
+//Lista de items
 RenderItem* sphere;
 RenderItem* eje_x;
 RenderItem* eje_y;
@@ -105,6 +107,11 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 	DeregisterRenderItem(sphere);
+	DeregisterRenderItem(eje_x);
+	DeregisterRenderItem(eje_y);
+	DeregisterRenderItem(eje_z);
+
+	_Deref_inout_z_
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
