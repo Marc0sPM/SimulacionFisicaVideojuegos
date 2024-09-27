@@ -6,12 +6,13 @@ class Particle
 public:
 	Particle(Vector3 Pos, Vector3 Vel);
 	~Particle() {
-		delete renderItem;
+		DeregisterRenderItem(renderItem);
 		renderItem = nullptr;
 	}
 
 	void integrate(double t);
 private:
+	const double dampingFact = 0.998;
 	Vector3 vel;
 	physx::PxTransform pose;
 	RenderItem* renderItem;

@@ -1,5 +1,5 @@
 #include "Particle.h"
-
+#include <math.h>
 
 
 
@@ -12,6 +12,10 @@ Particle::Particle(Vector3 Pos, Vector3 Vel)
 }
 
 void Particle::integrate(double t) {
+	// Velocidad constante
 	pose.p += vel * t;
+	//Velocidad con aceleracion
 	vel += acceleration * t;
+	//Damping para correcion de velocidad
+	vel = vel * pow(dampingFact, t);
 }
