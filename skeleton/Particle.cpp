@@ -13,4 +13,5 @@ Particle::Particle(Vector3 Pos, Vector3 Vel)
 
 void Particle::integrate(double t) {
 	pose.p += vel * t;
+	vel += acceleration * t;
 }
