@@ -1,6 +1,6 @@
 #include "Particle.h"
 #include <math.h>
-
+#include <iostream>
 
 
 Particle::Particle(Vector3 Pos, Vector3 Vel)
@@ -9,13 +9,96 @@ Particle::Particle(Vector3 Pos, Vector3 Vel)
 	pose = physx::PxTransform(Pos);
 	PxShape* shape = CreateShape(PxSphereGeometry(1));
 	renderItem = new RenderItem(shape, &pose, def_color);
+	prevPos = Pos;
 }
 
-void Particle::integrate(double t) {
-	// Velocidad constante
-	pose.p += vel * t;
-	//Velocidad con aceleracion
+void Particle::integrate(integrateType i, double t) {
+	switch (i)
+	{
+	case _EULER:
+		integrateEuler(t);
+		break;
+	case _EULER_SEMI:
+		integrateEulerSemi(t);
+		break;
+	case _RK:
+		integrateRK(t);
+		break;
+	case _VERLET:
+		integrateVerlet(t);
+	default:
+		break;
+	}
+}
+
+void Particle::integrateEuler(double t) {
+	// Actualizamos velocidad
 	vel += acceleration * t;
-	//Damping para correcion de velocidad
+
+	// Actualizamos posicion
+	pose.p += vel * t;
+
+	// Damping 
 	vel = vel * pow(dampingFact, t);
+
+	/* 
+	*	No valdria tambien con hacer vel *= dampingFact ? ? ?
+	*/
+}
+
+void Particle::integrateEulerSemi(double t) {
+	// Primero se actualiza la posicion
+	pose.p += vel * t;
+	// Luego la velocidad
+	vel += acceleration * t;
+	// Damping
+	vel = vel * pow(dampingFact, t);
+}
+
+void Particle::integrateRK(double t)
+{
+	// Vel y pos inicial
+	const Vector3 initialPos = pose.p;
+	const Vector3 initialVel = vel;
+
+	// k1
+	const Vector3 k1Vel = acceleration * t;
+	const Vector3 k1Pos = vel * t;
+
+	// k2
+	const Vector3 k2Vel = acceleration * t;
+	const Vector3 k2Pos = (initialVel + k1Vel * 0.5) * t;
+
+	// k3
+	const Vector3 k3Vel = acceleration * t;
+	const Vector3 k3Pos = (initialVel + k2Vel * 0.5) * t;
+
+	// k4
+	const Vector3 k4Vel = acceleration * t;
+	const Vector3 k4Pos = (initialVel + k3Vel) * t;
+
+	// Combinacion de cada fase 
+	pose.p = initialPos + (k1Pos + 2.0 * k2Pos + 2.0 * k3Pos + k4Pos) / 6.0;
+	vel = initialVel + (k1Vel + 2.0 * k2Vel + 2.0 * k3Vel + k4Vel) / 6.0;
+
+	// Damping
+	vel *= pow(dampingFact, t);
+}
+
+void Particle::integrateVerlet(double t)
+{
+	const Vector3 currPos = pose.p;
+
+	pose.p = 2 * currPos - prevPos + acceleration * (t * t);
+
+	std::cout << vel.x << " " << vel.y << " " << vel.z << "\n";
+
+	// Calculo de velocidad - no es necesario 
+	
+	/*vel = (pose.p - currPos) / t;
+	
+	vel *=  dampingFact;*/
+	
+	prevPos = currPos;
+	 
 }

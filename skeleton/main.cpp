@@ -108,7 +108,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	mParticle->integrate(t);
+	mParticle->integrate(Particle::integrateType::_VERLET,  t);
 }
 
 // Function to clean data
