@@ -61,6 +61,9 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+
+	#pragma region EJES DE COORDENADAS
+
 	//Origen
 	PxShape* sShape = CreateShape(PxSphereGeometry(1));
 	sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0, 0)), Vector4(1,1,1,1));
@@ -85,6 +88,9 @@ void initPhysics(bool interactive)
 	PxTransform* zTr = new PxTransform(ejeZ.x, ejeZ.y, ejeZ.z);
 	eje_z = new RenderItem(sShape, zTr, Vector4(0, 0, 1, 1));
 	// ========================================
+
+	#pragma endregion
+
 
 	}
 
