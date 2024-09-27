@@ -8,6 +8,7 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Vector3D.h"
+#include "Particle.h"
 
 #include <iostream>
 
@@ -36,6 +37,7 @@ RenderItem* sphere;
 RenderItem* eje_x;
 RenderItem* eje_y;
 RenderItem* eje_z;
+Particle* mParticle;
 
 
 // Initialize physics engine
@@ -90,7 +92,8 @@ void initPhysics(bool interactive)
 	// ========================================
 
 	#pragma endregion
-
+	Vector3D<float> pPos = Vector3D<float>(20, 20, 0);
+	mParticle = new Particle(Vector3(pPos.x, pPos.y, pPos.z), Vector3(0,1,0 ));
 
 	}
 
@@ -104,6 +107,8 @@ void stepPhysics(bool interactive, double t)
 	
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	mParticle->integrate(t);
 }
 
 // Function to clean data

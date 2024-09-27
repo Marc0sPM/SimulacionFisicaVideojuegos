@@ -1,6 +1,6 @@
 #pragma once
 #include "RenderUtils.hpp"
-
+using namespace physx;
 class Particle
 {
 public:
@@ -16,5 +16,7 @@ private:
 	physx::PxTransform pose;
 	RenderItem* renderItem;
 
+	//Default color
+	Vector4 def_color = { 0,0,0,1 };
 };
 
