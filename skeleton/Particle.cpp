@@ -3,9 +3,10 @@
 #include <iostream>
 
 
-Particle::Particle(Vector3 Pos, Vector3 Vel)
+Particle::Particle(const Vector3& Pos, const Vector3& Vel, const Vector3& acc)
 {
 	vel = Vel;
+	acceleration = acc;
 	pose = physx::PxTransform(Pos);
 	PxShape* shape = CreateShape(PxSphereGeometry(1));
 	renderItem = new RenderItem(shape, &pose, def_color);
@@ -35,11 +36,11 @@ void Particle::integrateEuler(double t) {
 	// Actualizamos velocidad
 	vel += acceleration * t;
 
-	// Actualizamos posicion
-	pose.p += vel * t;
 
 	// Damping 
 	vel = vel * pow(dampingFact, t);
+	// Actualizamos posicion
+	pose.p += vel * t;
 
 	/* 
 	*	No valdria tambien con hacer vel *= dampingFact ? ? ?
@@ -90,8 +91,6 @@ void Particle::integrateVerlet(double t)
 	const Vector3 currPos = pose.p;
 
 	pose.p = 2 * currPos - prevPos + acceleration * (t * t);
-
-	std::cout << vel.x << " " << vel.y << " " << vel.z << "\n";
 
 	// Calculo de velocidad - no es necesario 
 	

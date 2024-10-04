@@ -10,7 +10,7 @@ public:
 		_RK,
 		_VERLET
 	};
-	Particle(Vector3 Pos, Vector3 Vel);
+	Particle(const Vector3& Pos,const Vector3& Vel, const Vector3& acc);
 	~Particle() {
 		DeregisterRenderItem(renderItem);
 		renderItem = nullptr;
@@ -18,7 +18,7 @@ public:
 	//Elige que metodo de integracion usar
 	//@param i --> 0:Euler Method 1:
 	void integrate(integrateType i, double t);
-private:
+protected:
 
 	void integrateEuler(double t);
 	void integrateEulerSemi(double t);

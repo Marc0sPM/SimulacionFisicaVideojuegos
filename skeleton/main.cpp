@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 #include "Vector3D.h"
 #include "Particle.h"
+#include "Proyectil.h"
 
 #include <iostream>
 
@@ -38,6 +39,7 @@ RenderItem* eje_x;
 RenderItem* eje_y;
 RenderItem* eje_z;
 Particle* mParticle;
+Proyectil* mProyectil;
 
 
 // Initialize physics engine
@@ -92,8 +94,14 @@ void initPhysics(bool interactive)
 	// ========================================
 
 	#pragma endregion
+
+	//// Particula sola
 	Vector3D<float> pPos = Vector3D<float>(20, 20, 0);
-	mParticle = new Particle(Vector3(pPos.x, pPos.y, pPos.z), Vector3(0,1,0 ));
+	Vector3D<float> pVel = Vector3D<float>(10, 0, 0);
+	//mParticle = new Particle(Vector3(pPos.x, pPos.y, pPos.z), Vector3(0,1,0 ));
+	
+	mProyectil = new Proyectil(pPos.toPhysix(), pVel.toPhysix(), 0.2, 0.5);
+	std::cout << *mProyectil << std::endl;
 
 	}
 
@@ -108,7 +116,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	mParticle->integrate(Particle::integrateType::_VERLET,  t);
+	// mParticle->integrate(Particle::integrateType::_EULER,  t);
 }
 
 // Function to clean data

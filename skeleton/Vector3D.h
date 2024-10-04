@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <PxPhysics.h>
 
 template <typename T>
 
@@ -49,5 +50,9 @@ public:
 	Vector3D operator *(const Vector3D& v) {
 		return Vector3D(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
 	}
+	Vector3 toPhysix() {
+		return Vector3(x,y,z); 
+	}
+
 };
 
