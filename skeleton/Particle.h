@@ -10,7 +10,14 @@ public:
 		_RK,
 		_VERLET
 	};
-	Particle(const Vector3& Pos,const Vector3& Vel, const Vector3& acc);
+	Particle() : 
+		vel(Vector3(0,0,0)),
+		pose(physx::PxTransform(0,0,0)),
+		renderItem(nullptr),
+		acceleration(Vector3(0,0,0)) {}
+
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 acc);
+
 	~Particle() {
 		DeregisterRenderItem(renderItem);
 		renderItem = nullptr;
@@ -18,6 +25,15 @@ public:
 	//Elige que metodo de integracion usar
 	//@param i --> 0:Euler Method 1:
 	void integrate(integrateType i, double t);
+
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
+		vel = Vel;
+		acceleration = acc;
+		pose = physx::PxTransform(Pos);
+		PxShape* shape = CreateShape(PxSphereGeometry(1));
+		renderItem = new RenderItem(shape, &pose, def_color);
+		prevPos = Pos;
+	}
 protected:
 
 	void integrateEuler(double t);
@@ -31,7 +47,7 @@ protected:
 	Vector3 vel;
 	physx::PxTransform pose;
 	RenderItem* renderItem;
-	Vector3 acceleration = { 0,3,0 };
+	Vector3 acceleration;
 
 	// Posicion previa necesaria para integracion Verlet
 	Vector3 prevPos;

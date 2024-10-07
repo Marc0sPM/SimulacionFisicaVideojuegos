@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-Particle::Particle(const Vector3& Pos, const Vector3& Vel, const Vector3& acc)
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 {
 	vel = Vel;
 	acceleration = acc;

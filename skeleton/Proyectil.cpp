@@ -1,13 +1,12 @@
 #include "Proyectil.h"
 
-Proyectil::Proyectil(const Vector3& pos, const Vector3& vel, float mass, float scaleFactor) : Particle(){
+Proyectil::Proyectil(const Vector3& pos, const Vector3& vel, float mass, float scaleFactor): Particle(){
 	mass_r = mass;
 	vel_r = vel;
 	scale_fact = scaleFactor;
 
 	adjustParameters();
-
-	Particle(pos, vel_s, Vector3(0, -grav_s, 0));
+	init(pos, vel_s, Vector3(0, -grav_s, 0));
 }
 
 void Proyectil::adjustParameters()

@@ -38,9 +38,79 @@ RenderItem* sphere;
 RenderItem* eje_x;
 RenderItem* eje_y;
 RenderItem* eje_z;
-Particle* mParticle;
-Proyectil* mProyectil;
 
+std::vector<Proyectil*> proyectiles;
+
+enum proy_type {
+	_BULLET, 
+	_CANNON
+};
+
+struct defs {
+	struct Bullet {
+		float vel;
+		float mass;
+		float fact;
+
+		Bullet() : vel(100), mass(0.2), fact(0.5) {}
+	} bullet;
+
+	struct Cannon {
+		float vel;
+		float mass;
+		float fact;
+
+		Cannon() : vel(15), mass(10), fact(0.5) {}
+	} cannon;
+};
+
+defs definitions;
+
+void printVec(const Vector3& v) {
+	std::cout << v.x << ", " << v.y << ", " << v.z << "\n";
+ }
+void createAxis() {
+	//Origen
+	PxShape* sShape = CreateShape(PxSphereGeometry(1));
+	sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0, 0)), Vector4(1, 1, 1, 1));
+
+	// ========================================
+	//Eje x
+	Vector3D<float> ejeX = Vector3D<float>(10, 0, 0);
+	PxTransform* xTr = new PxTransform(ejeX.x, ejeX.y, ejeX.z);
+	eje_x = new RenderItem(sShape, xTr, Vector4(1, 0, 0, 1));
+	// ========================================
+
+	// ========================================
+	// Eje y
+	Vector3D<float> ejeY = Vector3D<float>(0, 10, 0);
+	PxTransform* yTr = new PxTransform(ejeY.x, ejeY.y, ejeY.z);
+	eje_y = new RenderItem(sShape, yTr, Vector4(0, 1, 0, 1));
+	// ========================================
+
+	// ========================================
+	// Eje z
+	Vector3D<float> ejeZ = Vector3D<float>(0, 0, 10);
+	PxTransform* zTr = new PxTransform(ejeZ.x, ejeZ.y, ejeZ.z);
+	eje_z = new RenderItem(sShape, zTr, Vector4(0, 0, 1, 1));
+	// ========================================
+}
+void crearProyectil(proy_type type) {
+	auto cam = GetCamera();
+	Vector3 camPos = cam->getTransform().p;
+	auto dir = cam->getDir();
+	
+	switch (type)
+	{
+	case _BULLET:
+		proyectiles.push_back(new Proyectil(camPos, dir * definitions.bullet.vel, definitions.bullet.mass, definitions.bullet.fact));
+		break;
+	case _CANNON:
+		proyectiles.push_back(new Proyectil(camPos, dir * definitions.cannon.vel, definitions.cannon.mass, definitions.cannon.fact));
+	default:
+		break;
+	}
+}
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -66,46 +136,9 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	#pragma region EJES DE COORDENADAS
-
-	//Origen
-	PxShape* sShape = CreateShape(PxSphereGeometry(1));
-	sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0, 0)), Vector4(1,1,1,1));
-
-	// ========================================
-	//Eje x
-	Vector3D<float> ejeX = Vector3D<float>(10, 0 ,0);
-	PxTransform* xTr = new PxTransform(ejeX.x, ejeX.y, ejeX.z);
-	eje_x = new RenderItem(sShape, xTr, Vector4(1, 0, 0, 1));
-	// ========================================
-	
-	// ========================================
-	// Eje y
-	Vector3D<float> ejeY = Vector3D<float>(0, 10, 0);
-	PxTransform* yTr = new PxTransform(ejeY.x, ejeY.y, ejeY.z);
-	eje_y = new RenderItem(sShape, yTr, Vector4(0, 1, 0, 1));
-	// ========================================
-
-	// ========================================
-	// Eje z
-	Vector3D<float> ejeZ = Vector3D<float>(0, 0, 10);
-	PxTransform* zTr = new PxTransform(ejeZ.x, ejeZ.y, ejeZ.z);
-	eje_z = new RenderItem(sShape, zTr, Vector4(0, 0, 1, 1));
-	// ========================================
-
-	#pragma endregion
-
-	//// Particula sola
-	Vector3D<float> pPos = Vector3D<float>(20, 20, 0);
-	Vector3D<float> pVel = Vector3D<float>(10, 0, 0);
-	//mParticle = new Particle(Vector3(pPos.x, pPos.y, pPos.z), Vector3(0,1,0 ));
-	
-	mProyectil = new Proyectil(pPos.toPhysix(), pVel.toPhysix(), 0.2, 0.5);
-	std::cout << *mProyectil << std::endl;
+	createAxis();
 
 	}
-
-
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
@@ -116,6 +149,9 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
+	for (auto p : proyectiles) {
+		p->integrate(Particle::integrateType::_EULER_SEMI, t);
+	}
 	// mParticle->integrate(Particle::integrateType::_EULER,  t);
 }
 
@@ -130,6 +166,10 @@ void cleanupPhysics(bool interactive)
 	DeregisterRenderItem(eje_y);
 	DeregisterRenderItem(eje_z);
 
+	for (auto p : proyectiles) {
+		delete p;
+	}
+
 	_Deref_inout_z_
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
@@ -142,6 +182,8 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
+
+	
 	}
 
 // Function called when a key is pressed
@@ -157,6 +199,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		break;
 	}
+	case 'Q':
+		crearProyectil(_BULLET);
+		break;
+	case 'C': 
+		crearProyectil(_CANNON);
+		break;
 	default:
 		break;
 	}
