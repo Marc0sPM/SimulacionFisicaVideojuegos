@@ -10,22 +10,36 @@ public:
 		_RK,
 		_VERLET
 	};
+	/**
+	*	Constructora por defecto
+	*/
 	Particle() : 
 		vel(Vector3(0,0,0)),
 		pose(physx::PxTransform(0,0,0)),
 		renderItem(nullptr),
-		acceleration(Vector3(0,0,0)) {}
+		acceleration(Vector3(0,0,0)),
+		age(0.0)	{
+	}
+	/**
+	*	Constructora de particula simple pensada para proyectil
+	*/
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 acc = {0,0,0});
 
-	Particle(Vector3 Pos, Vector3 Vel, Vector3 acc);
+	/**
+	*	Constructora de particula pensada para un sistema de particulas
+	*/
+	Particle(Vector3 Pos, Vector3 Vel, float lifetime, Vector3 acc = {0,0,0});
 
 	~Particle() {
 		DeregisterRenderItem(renderItem);
 		renderItem = nullptr;
 	}
 	//Elige que metodo de integracion usar
-	//@param i --> 0:Euler Method 1:
 	void integrate(integrateType i, double t);
 
+	/**
+	*	Inicializa valores de la particula tal como lo hace la constructora
+	*/
 	void init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
 		vel = Vel;
 		acceleration = acc;
@@ -34,6 +48,12 @@ public:
 		renderItem = new RenderItem(shape, &pose, def_color);
 		prevPos = Pos;
 	}
+
+	/**
+	*	Cambia el valor de la aceleracion por el deseado
+	*/
+	void setAcceleration(const Vector3& a) { acceleration = a; }
+
 protected:
 
 	void integrateEuler(double t);
@@ -54,5 +74,8 @@ protected:
 
 	// Color por defecto
 	Vector4 def_color = { 0,0,0,1 };
+
+	float age;
+	float lifeTime;
 };
 

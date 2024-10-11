@@ -41,28 +41,7 @@ RenderItem* eje_z;
 
 std::vector<Proyectil*> proyectiles;
 
-enum proy_type {
-	_BULLET, 
-	_CANNON
-};
 
-struct defs {
-	struct Bullet {
-		float vel;
-		float mass;
-		float fact;
-
-		Bullet() : vel(100), mass(0.2), fact(0.5) {}
-	} bullet;
-
-	struct Cannon {
-		float vel;
-		float mass;
-		float fact;
-
-		Cannon() : vel(15), mass(10), fact(0.5) {}
-	} cannon;
-};
 
 defs definitions;
 
@@ -77,7 +56,7 @@ void createAxis() {
 	// ========================================
 	//Eje x
 	Vector3D<float> ejeX = Vector3D<float>(10, 0, 0);
-	PxTransform* xTr = new PxTransform(ejeX.x, ejeX.y, ejeX.z);
+	PxTransform* xTr = new PxTransform(ejeX.toPhysix());
 	eje_x = new RenderItem(sShape, xTr, Vector4(1, 0, 0, 1));
 	// ========================================
 

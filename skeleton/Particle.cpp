@@ -11,6 +11,19 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 	PxShape* shape = CreateShape(PxSphereGeometry(1));
 	renderItem = new RenderItem(shape, &pose, def_color);
 	prevPos = Pos;
+	age = 0;
+}
+
+Particle::Particle(Vector3 Pos, Vector3 Vel, float lifetime, Vector3 acc)
+{
+	vel = Vel;
+	acceleration = acc;
+	lifeTime = lifetime;
+	pose = physx::PxTransform(Pos);
+	PxShape* shape = CreateShape(PxSphereGeometry(1));
+	renderItem = new RenderItem(shape, &pose, def_color);
+	prevPos = Pos;
+	age = 0;
 }
 
 void Particle::integrate(integrateType i, double t) {

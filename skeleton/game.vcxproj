@@ -260,6 +260,8 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleGenerator.cpp" />
+    <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
@@ -269,6 +271,8 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleGenerator.h" />
+    <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
