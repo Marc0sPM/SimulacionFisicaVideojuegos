@@ -18,10 +18,21 @@ class ParticleSystem
 {
 private:
 	std::list<Particle* > pList;
-	std::vector<PG* > gList;
+	std::vector<PG* > gList; // cambiar a list si se quiere borrar generadores de forma dinamica
 	std::vector<Particle*> toErase;
 
-	double particle_lifeTime = 5.0;
+	/**
+	*	Posicion central de la cual se calcula el rango de existencia
+	*	de las particulas del sistema
+	*/
+	Vector3 center = Vector3(0, 0, 0);
+	/**
+	*	Radio en el que las particulas existen
+	*/
+	float ratius;
+
+	// Por defecto, 5 secs
+	double particle_lifeTime = 100.0;
 
 public:
 	ParticleSystem() {}
@@ -51,25 +62,40 @@ public:
 	*	Elimina una particula de la lista de particulas
 	*	@param p Particula que se quiere eliminar
 	*/
-	void killParticle(Particle* p) {
-		if(p != nullptr && p->getIterator() != pList.end())
-			toErase.push_back(p);
-	}
+	void killParticle(Particle* p);
 
 	/**
-	*	Añade una particula a la lista de particulas a partir de su posicion, velocidad y aceleracion 
-	*	? -> mirar si hacer esto o pasar solo la particula y crearla en el generador
+	*	Añade una particula a la lista de particulas  
+	*	Y establece el iterador correspondiente a esa particula
 	*/
-	void addParticle(Particle* p) {
-		pList.push_back(p);
-		p->setIterator(--pList.end());
-		
-	}
+	void addParticle(Particle* p);
 
+	/*
+	*	Añade un generador a la lista de generadores
+	*	@param pos Posicion de la cual se generan las particulas
+	*	@param type Tipo de generacion que se desea
+	*/
 	void addGenerator(Vector3 pos, float rate, generators_type type);
 
+	/**
+	*	Cambia el tiempo de vida de las particulas que se desea en el sistema
+	* 
+	*	¿¿¿ *** Tal vez cambiar posteriormente al generador en especifico o que se genere aleatoriamente
+	*			entre un rango especifico *** ???
+	*/
 	void changeParticleLifeTime(float t) { particle_lifeTime = t; }
 
+	/*
+	*	Retorna la el tiempo de vida de las particulas del sistema
+	*/
 	float getParticleLifeTime() const { return particle_lifeTime; }
+
+	void setCenter(Vector3 c) { center = c; }
+
+	void setRatius(float r) { ratius = r; }
+	 
+	float getRatius() const { return ratius; } 
+
+	Vector3 getCenter() const { return center; } 
 };
 

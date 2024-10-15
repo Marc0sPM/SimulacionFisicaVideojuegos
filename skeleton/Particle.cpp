@@ -3,16 +3,27 @@
 #include <iostream>
 #include "ParticleSystem.h"
 
+Particle::Particle() {
+	vel = Vector3(0, 0, 0);
+	pose = physx::PxTransform(0, 0, 0);
+	renderItem = nullptr; 
+	acceleration = Vector3(0, 0, 0);
+	age = 0.0; 
+}
 
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 {
+	init(Pos, Vel, acc);
+	age = 0;
+}
+
+void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
 	vel = Vel;
 	acceleration = acc;
 	pose = physx::PxTransform(Pos);
 	PxShape* shape = CreateShape(PxSphereGeometry(1));
 	renderItem = new RenderItem(shape, &pose, def_color);
 	prevPos = Pos;
-	age = 0;
 }
 
 void Particle::integrate(integrateType i, double t) {
@@ -38,7 +49,12 @@ void Particle::update(double t, integrateType type, ParticleSystem& sys)
 {
 	age += t;
 	integrate(type, t);
-	if (age > lifeTime) sys.killParticle(this);
+	if (age > lifeTime || !isOnRatio(sys.getCenter(), sys.getRatius())) sys.killParticle(this);
+}
+
+bool Particle::isOnRatio(Vector3 const& v, float r)
+{
+	return (pose.p - v).magnitude() < r;
 }
 
 void Particle::integrateEuler(double t) {
@@ -51,8 +67,8 @@ void Particle::integrateEuler(double t) {
 	// Actualizamos posicion
 	pose.p += vel * t;
 
-	/* 
-	*	No valdria tambien con hacer vel *= dampingFact ? ? ?
+	/*  
+	*	No valdria tambien con hacer vel *= dampingFact ? ? ? 
 	*/
 }
 

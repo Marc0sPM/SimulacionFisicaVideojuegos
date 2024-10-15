@@ -119,7 +119,9 @@ void initPhysics(bool interactive)
 
 	createAxis();
 	ps = new ParticleSystem();
+	ps->setRatius(20.0f);
 	ps->addGenerator(Vector3(0, 0, 0), 5, generators_type::UNIFORM);
+
 
 	}
 // Function to configure what happens in each step of physics

@@ -19,6 +19,9 @@ public:
 		random_engine.seed(rd());
 	}
 
+	/**
+	*	Metodo virtual para generacion de particulas
+	*/
 	virtual Particle* emit() = 0;
 
 	void update(double t, ParticleSystem& pS);

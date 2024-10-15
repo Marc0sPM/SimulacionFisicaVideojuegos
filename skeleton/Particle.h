@@ -16,13 +16,7 @@ public:
 	/**
 	*	Constructora por defecto
 	*/
-	Particle() : 
-		vel(Vector3(0,0,0)),
-		pose(physx::PxTransform(0,0,0)),
-		renderItem(nullptr),
-		acceleration(Vector3(0,0,0)),
-		age(0.0)	{
-	}
+	Particle();
 	/**
 	*	Constructora de particula simple pensada para proyectil
 	*/
@@ -33,41 +27,55 @@ public:
 	*/
 	Particle(Vector3 Pos, Vector3 Vel, float lifetime, Vector3 acc = {0,0,0});
 
+	/**
+	*	Destructora, desregistra el renderItem que representa la particula
+	*/
 	~Particle() {
 		DeregisterRenderItem(renderItem);
 		renderItem = nullptr;
 	}
-	//Elige que metodo de integracion usar
+
+	/**
+	*	Ejecuta el metodo de integracion que se pasa
+	*/
 	void integrate(integrateType i, double t);
 
 	/**
 	*	Inicializa valores de la particula tal como lo hace la constructora
 	*/
-	void init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
-		vel = Vel;
-		acceleration = acc;
-		pose = physx::PxTransform(Pos);
-		PxShape* shape = CreateShape(PxSphereGeometry(1));
-		renderItem = new RenderItem(shape, &pose, def_color);
-		prevPos = Pos;
-	}
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc);
 
+	/**
+	*	Llama al metodo de integracion, compruba el tiempo de vida
+	*/
 	void update(double t, integrateType type, ParticleSystem& sys);
 
 	/**
 	*	Cambia el valor de la aceleracion por el deseado
 	*/
 	void setAcceleration(const Vector3& a) { acceleration = a; }
+	/**
+	*	Establece el iterador de la lista de particulas correspondiente
+	*/
 	void setIterator(std::list<Particle*>::iterator it) {
 		p_it = it;
 	}
-
+	/**
+	*	Devuelve el iterador de la particula
+	*/
 	std::list<Particle*>::iterator getIterator() const {
 		return p_it;
 	}
+	/**
+	*	Establece el limite de tiempo que vive la particula
+	*/
 	void setLifeTime(float t) { lifeTime = t; }
 
-
+	/**
+	*	Compruba si la particula esta dentro del radio deseado
+	*	tomando v como el centro
+	*/
+	bool isOnRatio(Vector3 const& v, float r);
 protected:
 
 	std::list<Particle*>::iterator p_it;

@@ -12,18 +12,27 @@ void ParticleSystem::update(double t) {
 	for (auto it = pList.begin(); it != pList.end(); ) {
 		if (*it != nullptr) {
 			(*it)->update(t, Particle::_EULER_SEMI, *this);
-			++it;  // Mueve al siguiente elemento
+			++it; 
 		}
 	}
 
-	// Eliminar partículas en `toErase`
 	for (auto p : toErase) {
-		auto it = std::find(pList.begin(), pList.end(), p); // Busca la partícula
+		auto it = std::find(pList.begin(), pList.end(), p);
 		if (it != pList.end()) {
-			pList.erase(it); // Elimina la partícula
+			pList.erase(it); 
 			delete p;
 		}
 	}
+}
+
+void ParticleSystem::killParticle(Particle* p) {
+	if (p != nullptr && p->getIterator() != pList.end())
+		toErase.push_back(p);
+}
+
+void ParticleSystem::addParticle(Particle* p) {
+	pList.push_back(p);
+	p->setIterator(--pList.end());
 }
 
 void ParticleSystem::addGenerator(Vector3 pos, float rate, generators_type type)

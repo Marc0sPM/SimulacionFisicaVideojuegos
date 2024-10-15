@@ -1,5 +1,6 @@
 #include "ParticleGenerator.h"
 #include "ParticleSystem.h"
+
 void ParticleGenerator::update(double t, ParticleSystem& pS ) {
     // Acumula el tiempo
     accumulatedTime += t;
