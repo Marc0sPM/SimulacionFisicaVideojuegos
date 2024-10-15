@@ -1,6 +1,9 @@
 #pragma once
 #include "RenderUtils.hpp"
+#include <list>
 using namespace physx;
+const float GRAVITY = -10.0f;
+class ParticleSystem;
 class Particle
 {
 public:
@@ -49,12 +52,25 @@ public:
 		prevPos = Pos;
 	}
 
+	void update(double t, integrateType type, ParticleSystem& sys);
+
 	/**
 	*	Cambia el valor de la aceleracion por el deseado
 	*/
 	void setAcceleration(const Vector3& a) { acceleration = a; }
+	void setIterator(std::list<Particle*>::iterator it) {
+		p_it = it;
+	}
+
+	std::list<Particle*>::iterator getIterator() const {
+		return p_it;
+	}
+	void setLifeTime(float t) { lifeTime = t; }
+
 
 protected:
+
+	std::list<Particle*>::iterator p_it;
 
 	void integrateEuler(double t);
 	void integrateEulerSemi(double t);

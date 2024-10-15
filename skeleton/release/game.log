@@ -1,0 +1,13 @@
+﻿  main.cpp
+U:\hlocal\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: "physx::PxLightCpuTask::mRefCount": un miembro de datos no estático con un tipo calificado volátil ya no implica
+           que los constructores de copia/movimiento generados por el compilador y los operadores de asignación de copia o movimiento no sean triviales
+U:\hlocal\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : vea la declaración de 'physx::PxLightCpuTask::mRefCount'
+U:\hlocal\SimulacionFisicaVideojuegos\skeleton\Particle.h(92,1): warning C4626: 'Particle': el operador de asignaciones se definió implícitamente como eliminado
+U:\hlocal\SimulacionFisicaVideojuegos\skeleton\Proyectil.h(74,1): warning C4626: 'Proyectil': el operador de asignaciones se definió implícitamente como eliminado
+U:\hlocal\SimulacionFisicaVideojuegos\skeleton\Proyectil.h(74,1): warning C5027: 'Proyectil': el operador de asignaciones de movimiento se definió implícitamente como eliminado
+U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleGenerator.h(28,1): warning C5204: "ParticleGenerator": la clase tiene funciones virtuales, pero su destructor trivial no es virtual; puede que las instancias de objetos derivados de esta clase no se destruyan correctamente
+U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleGenerator.h(17,5): warning C5038: miembro de datos "ParticleGenerator::pos" se inicializará después de miembro de datos "ParticleGenerator::emissionRate"
+U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.h(33,4): warning C5205: la eliminación de una clase abstracta "ParticleGenerator" que tiene un destructor no virtual produce un comportamiento no definido
+U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleGenerator.h(6): message : vea la declaración de 'ParticleGenerator'
+main.obj : error LNK2019: símbolo externo "public: void __cdecl ParticleSystem::addGenerator(class physx::PxVec3 const &,int)" (?addGenerator@ParticleSystem@@QEAAXAEBVPxVec3@physx@@H@Z) sin resolver al que se hace referencia en la función "void __cdecl initPhysics(bool)" (?initPhysics@@YAX_N@Z)
+..\bin\game.exe : fatal error LNK1120: 1 externos sin resolver

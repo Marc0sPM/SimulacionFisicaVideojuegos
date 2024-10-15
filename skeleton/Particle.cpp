@@ -1,24 +1,13 @@
 #include "Particle.h"
 #include <math.h>
 #include <iostream>
+#include "ParticleSystem.h"
 
 
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 {
 	vel = Vel;
 	acceleration = acc;
-	pose = physx::PxTransform(Pos);
-	PxShape* shape = CreateShape(PxSphereGeometry(1));
-	renderItem = new RenderItem(shape, &pose, def_color);
-	prevPos = Pos;
-	age = 0;
-}
-
-Particle::Particle(Vector3 Pos, Vector3 Vel, float lifetime, Vector3 acc)
-{
-	vel = Vel;
-	acceleration = acc;
-	lifeTime = lifetime;
 	pose = physx::PxTransform(Pos);
 	PxShape* shape = CreateShape(PxSphereGeometry(1));
 	renderItem = new RenderItem(shape, &pose, def_color);
@@ -43,6 +32,13 @@ void Particle::integrate(integrateType i, double t) {
 	default:
 		break;
 	}
+}
+
+void Particle::update(double t, integrateType type, ParticleSystem& sys)
+{
+	age += t;
+	integrate(type, t);
+	if (age > lifeTime) sys.killParticle(this);
 }
 
 void Particle::integrateEuler(double t) {

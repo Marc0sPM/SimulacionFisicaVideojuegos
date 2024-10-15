@@ -10,6 +10,7 @@
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Proyectil.h"
+#include "ParticleSystem.h"
 
 #include <iostream>
 
@@ -41,6 +42,7 @@ RenderItem* eje_z;
 
 std::vector<Proyectil*> proyectiles;
 
+ParticleSystem* ps;
 
 
 defs definitions;
@@ -116,6 +118,8 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	createAxis();
+	ps = new ParticleSystem();
+	ps->addGenerator(Vector3(0, 0, 0), 5, generators_type::UNIFORM);
 
 	}
 // Function to configure what happens in each step of physics
@@ -132,6 +136,7 @@ void stepPhysics(bool interactive, double t)
 		p->integrate(Particle::integrateType::_EULER_SEMI, t);
 	}
 	// mParticle->integrate(Particle::integrateType::_EULER,  t);
+	ps->update(t);
 }
 
 // Function to clean data

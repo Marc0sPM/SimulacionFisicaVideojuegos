@@ -14,6 +14,7 @@
     <ClCompile Include="Proyectil.cpp" />
     <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.cpp" />
     <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleGenerator.cpp" />
+    <ClCompile Include="UniformGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -30,6 +31,7 @@
     <ClInclude Include="Proyectil.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\ParticleGenerator.h" />
+    <ClInclude Include="UniformGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
