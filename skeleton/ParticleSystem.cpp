@@ -43,6 +43,7 @@ void ParticleSystem::addGenerator(Vector3 pos, float rate, generators_type type)
 		gList.push_back(new UniformGenerator(pos, rate, Vector3(-20, 20, 0), Vector3(20, 30, 0)));
 		break;
 	case NORMAL:
+		gList.push_back(new NormalGenerator(pos, rate, Vector3(0, 60, 0), Vector3(8, 0.5, 8)));
 		break;
 	default:
 		break;

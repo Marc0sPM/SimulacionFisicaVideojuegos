@@ -119,8 +119,8 @@ void initPhysics(bool interactive)
 
 	createAxis();
 	ps = new ParticleSystem();
-	ps->setRatius(20.0f);
-	ps->addGenerator(Vector3(0, 0, 0), 5, generators_type::UNIFORM);
+	ps->setRatius(100.0f);
+	ps->addGenerator(Vector3(0, 0, 0), 10, generators_type::NORMAL);
 
 
 	}
