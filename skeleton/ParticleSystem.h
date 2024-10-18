@@ -31,6 +31,7 @@ private:
 	// Por defecto, 10 secs
 	double particle_lifeTime = 10.0;
 
+
 public:
 	ParticleSystem() {}
 
@@ -68,13 +69,26 @@ public:
 	void addParticle(Particle* p);
 
 	/*
-	*	Añade un generador a la lista de generadores
+	*	Añade un generador uniforme a la lista de generadores
 	*	@param pos Posicion de la cual se generan las particulas
+	*	@param direction velocidad media en la cual se emiten las particulas
 	*	@param rate Ratio de emision de las particulas
-	*	@param type Tipo de generacion que se desea
-	*	
+	*	@param range rango de desviacion para calculo de velocidades
+	*	@param spawnR rango de generacion de particulas
+	*	@param tipo de distribucion para calculo de poscicion
 	*/
-	void addGenerator(Vector3 pos, Vector3 direction, float rate, generators_type type, float range, float spawnR, spawn_position_distribution sp);
+	void addUniformGenerator(Vector3 pos, Vector3 direction, float rate, float range, float spawnR, spawn_position_distribution sp);
+
+	/**
+	*	Añade un generador de distribucion normal a la lista de generadores
+	*	@param pos Posicion de la cual se generan las particulas
+	*	@param direction velocidad media en la cual se emiten las particulas
+	*	@param rate Ratio de emision de las particulas
+	*	@param dev desviacion tipica para calculo de velocidades
+	*	@param spawnR rango de generacion de particulas
+	*	@param tipo de distribucion para calculo de poscicion
+	*/
+	void addNormalGenerator(Vector3 pos, Vector3 direction, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp);
 
 	/**
 	*	Cambia el tiempo de vida de las particulas que se desea en el sistema

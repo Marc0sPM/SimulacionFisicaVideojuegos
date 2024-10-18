@@ -120,8 +120,8 @@ void initPhysics(bool interactive)
 	createAxis();
 	ps = new ParticleSystem();
 	ps->setRatius(100.0f);
-	ps->addGenerator(Vector3(0, 0, 0), Vector3(0, 30, 0), 10, generators_type::UNIFORM, 20.0f, 20.0f, UNIFORM_SP);
-
+	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 30, 0), 30 , 20.0f, 10.0f, spawn_position_distribution::UNIFORM_SP);
+	ps->addNormalGenerator(Vector3(0, 0, 0), Vector3(0, 40, 0), 40, Vector3(10, 0.0001, 10), 5.0f, spawn_position_distribution::UNIFORM_SP);
 
 	}
 // Function to configure what happens in each step of physics
