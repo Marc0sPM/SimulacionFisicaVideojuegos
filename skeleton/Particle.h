@@ -30,7 +30,7 @@ public:
 	/**
 	*	Destructora, desregistra el renderItem que representa la particula
 	*/
-	~Particle() {
+	virtual ~Particle() {
 		DeregisterRenderItem(renderItem);
 		renderItem = nullptr;
 	}
@@ -43,7 +43,7 @@ public:
 	/**
 	*	Inicializa valores de la particula tal como lo hace la constructora
 	*/
-	void init(Vector3 Pos, Vector3 Vel, Vector3 acc);
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, GRAVITY,0 ));
 
 	/**
 	*	Llama al metodo de integracion, compruba el tiempo de vida
@@ -76,6 +76,30 @@ public:
 	*	tomando v como el centro
 	*/
 	bool isOnRatio(Vector3 const& v, float r);
+
+	/**
+	*	Cambia la posicion de la particula
+	*/
+	void setPosition(Vector3 p) {
+		pose.p = p;
+	}
+	
+	/**
+	*	Cambia la velocidad de
+	*/
+	void setVelocity(Vector3 v) {
+		vel = v;
+	}
+
+	Particle& operator=(const Particle& p) {
+		init(p.pose.p, p.vel, p.acceleration);
+		age = p.age;
+		return *this;
+	}
+
+	Vector3 getVelocity() const {
+		return vel;
+	}
 protected:
 
 	std::list<Particle*>::iterator p_it;
@@ -97,7 +121,7 @@ protected:
 	Vector3 prevPos;
 
 	// Color por defecto
-	Vector4 def_color = { 0,0,0,1 };
+	const Vector4 def_color = { 0,0,0,1 };
 
 	float age;
 	float lifeTime;

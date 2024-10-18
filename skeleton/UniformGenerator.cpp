@@ -8,7 +8,9 @@ Particle* UniformGenerator::emit()
 
     Vector3 randomVelocity(distX(random_engine), distY(random_engine), distZ(random_engine));
 
-    Particle* newParticle = new Particle(pos, randomVelocity, Vector3(0, GRAVITY, 0));
+    Particle newParticle = model_particle;
 
-    return newParticle;
+    newParticle.setVelocity(randomVelocity);
+
+    return &newParticle;
 }

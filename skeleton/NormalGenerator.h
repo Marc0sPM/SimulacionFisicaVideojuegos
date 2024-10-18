@@ -10,8 +10,8 @@ private:
 	Vector3 devVelocity;
 
 public:
-	NormalGenerator(Vector3 pos, float rate, Vector3 meanV, Vector3 devV)
-		: ParticleGenerator(pos, rate), meanVelocity(meanV), devVelocity(devV) {}
+	NormalGenerator(Particle p, float rate, Vector3 meanV, Vector3 devV)
+		: ParticleGenerator(p, rate), meanVelocity(meanV), devVelocity(devV) {}
 
 	/**
 	*	Genera particulas a partir de una distribucion normal

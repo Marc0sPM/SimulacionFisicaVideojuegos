@@ -17,7 +17,7 @@ private:
 	std::list<Particle* > pList;
 	std::vector<ParticleGenerator* > gList; // cambiar a list si se quiere borrar generadores de forma dinamica
 	std::vector<Particle*> toErase;
-
+	
 	/**
 	*	Posicion central de la cual se calcula el rango de existencia
 	*	de las particulas del sistema
@@ -74,7 +74,7 @@ public:
 	*	@param type Tipo de generacion que se desea
 	*	
 	*/
-	void addGenerator(Vector3 pos, float rate, generators_type type);
+	void addGenerator(Vector3 pos, Vector3 direction, float rate, generators_type type, float range = 0);
 
 	/**
 	*	Cambia el tiempo de vida de las particulas que se desea en el sistema

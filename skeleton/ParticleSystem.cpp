@@ -35,15 +35,16 @@ void ParticleSystem::addParticle(Particle* p) {
 	p->setIterator(--pList.end());
 }
 
-void ParticleSystem::addGenerator(Vector3 pos, float rate, generators_type type)
+void ParticleSystem::addGenerator(Vector3 pos, Vector3 direction, float rate, generators_type type, float range)
 {
+	Particle p = Particle(pos, direction);
 	switch (type)
 	{
 	case UNIFORM:
-		gList.push_back(new UniformGenerator(pos, rate, Vector3(-20, 20, 0), Vector3(20, 30, 0)));
+		gList.push_back(new UniformGenerator(p, rate, range));
 		break;
 	case NORMAL:
-		gList.push_back(new NormalGenerator(pos, rate, Vector3(0, 60, 0), Vector3(8, 0.5, 8)));
+		gList.push_back(new NormalGenerator(p, rate, Vector3(0, 60, 0), Vector3(8, 0.5, 8)));
 		break;
 	default:
 		break;
