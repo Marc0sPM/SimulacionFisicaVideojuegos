@@ -9,8 +9,14 @@ private:
     Vector3 maxVelocity;
 
 public:
-    UniformGenerator(Particle p, float rate, float range)
-        : ParticleGenerator(p, rate), minVelocity(p.getVelocity() - Vector3(range, range, range)), maxVelocity(p.getVelocity() + Vector3(range, range, range)) {}
+    UniformGenerator(Particle* p, float rate, float range, float spawnRange, spawn_position_distribution sp)
+        : ParticleGenerator(p, rate, spawnRange, sp) 
+    {
+        Vector3 vel = p->getVelocity();
+        Vector3 dev = Vector3(range, range, range);
+        minVelocity = vel - dev;
+        maxVelocity = vel + dev;
+    }
 
     /**
     *   Genera particulas a partir de una distribucion uniforme

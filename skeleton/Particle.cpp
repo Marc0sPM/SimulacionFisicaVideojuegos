@@ -17,6 +17,10 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 	age = 0;
 }
 
+Particle::Particle(Particle const& p) {
+	*this = p;
+}
+
 void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
 	vel = Vel;
 	acceleration = acc;

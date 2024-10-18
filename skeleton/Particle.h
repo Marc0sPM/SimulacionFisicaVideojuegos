@@ -28,6 +28,10 @@ public:
 	Particle(Vector3 Pos, Vector3 Vel, float lifetime, Vector3 acc = {0,0,0});
 
 	/**
+	*	Constructora a partir de otra particula para evitar la copia
+	*/
+	Particle(Particle const& p);
+	/**
 	*	Destructora, desregistra el renderItem que representa la particula
 	*/
 	virtual ~Particle() {
@@ -99,6 +103,10 @@ public:
 
 	Vector3 getVelocity() const {
 		return vel;
+	}
+
+	Vector3 getPosition() const {
+		return pose.p;
 	}
 protected:
 

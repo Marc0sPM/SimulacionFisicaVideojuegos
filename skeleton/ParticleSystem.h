@@ -74,7 +74,7 @@ public:
 	*	@param type Tipo de generacion que se desea
 	*	
 	*/
-	void addGenerator(Vector3 pos, Vector3 direction, float rate, generators_type type, float range = 0);
+	void addGenerator(Vector3 pos, Vector3 direction, float rate, generators_type type, float range, float spawnR, spawn_position_distribution sp);
 
 	/**
 	*	Cambia el tiempo de vida de las particulas que se desea en el sistema
