@@ -119,9 +119,8 @@ void initPhysics(bool interactive)
 
 	createAxis();
 	ps = new ParticleSystem();
-	ps->setRatius(100.0f);
-	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 30, 0), 30 , 20.0f, 10.0f, spawn_position_distribution::UNIFORM_SP);
-	ps->addNormalGenerator(Vector3(0, 0, 0), Vector3(0, 40, 0), 40, Vector3(10, 0.0001, 10), 5.0f, spawn_position_distribution::UNIFORM_SP);
+	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 20, 0), 40 , 20.0f, 1.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 2);
+	ps->addNormalGenerator(Vector3(100, 0, -100), Vector3(0, 20, 0), 1000, Vector3(10, 0.0001, 10), 1.0f, spawn_position_distribution::UNIFORM_SP, 50);
 
 	}
 // Function to configure what happens in each step of physics
@@ -152,6 +151,7 @@ void cleanupPhysics(bool interactive)
 	DeregisterRenderItem(eje_y);
 	DeregisterRenderItem(eje_z);
 
+	delete ps;
 	for (auto p : proyectiles) {
 		delete p;
 	}

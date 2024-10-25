@@ -34,8 +34,7 @@ void ParticleGenerator::update(double t, ParticleSystem& pS ) {
     for (int i = 0; i < particlesToEmit; ++i) {
         Particle* newParticle = emit();
         if (newParticle) {
-            pS.addParticle(newParticle);
-            newParticle->setLifeTime(pS.getParticleLifeTime());
+            pS.addParticle(newParticle); 
         }
     }
 

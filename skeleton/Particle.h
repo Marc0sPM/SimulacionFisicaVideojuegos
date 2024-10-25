@@ -36,6 +36,7 @@ public:
 	*/
 	virtual ~Particle() {
 		DeregisterRenderItem(renderItem);
+		delete renderItem;
 		renderItem = nullptr;
 	}
 
@@ -47,7 +48,7 @@ public:
 	/**
 	*	Inicializa valores de la particula tal como lo hace la constructora
 	*/
-	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, GRAVITY,0 ));
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, GRAVITY,0));
 
 	/**
 	*	Llama al metodo de integracion, compruba el tiempo de vida
@@ -79,7 +80,7 @@ public:
 	*	Compruba si la particula esta dentro del radio deseado
 	*	tomando v como el centro
 	*/
-	bool isOnRatio(Vector3 const& v, float r);
+	bool isOnRatio();
 
 	/**
 	*	Cambia la posicion de la particula
@@ -108,6 +109,22 @@ public:
 	Vector3 getPosition() const {
 		return pose.p;
 	}
+
+	void setRatius(float r) {
+		rat = r;
+	}
+
+	float getRatius() const {
+		return rat;
+	}
+
+	void setColor(Vector4 c) {
+		color = c;
+	}
+
+	float getLifeTime() const {
+		return lifeTime;
+	}
 protected:
 
 	std::list<Particle*>::iterator p_it;
@@ -128,8 +145,15 @@ protected:
 	// Posicion previa necesaria para integracion Verlet
 	Vector3 prevPos;
 
+	// Posicion central del generador
+	Vector3 center;
+
+	//Radio de "vida" del generador
+	float rat;
+
 	// Color por defecto
-	const Vector4 def_color = { 0,0,0,1 };
+	Vector4 color = { 0,0,0,1 };
+	
 
 	float age;
 	float lifeTime;

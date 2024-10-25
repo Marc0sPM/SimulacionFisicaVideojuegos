@@ -31,6 +31,8 @@ public:
 		: model_particle(*p), emissionRate(rate), spawn_range(spawnR), spawn_distribution(sp) {
 		std::random_device rd;
 		random_engine.seed(rd());
+		
+
 	}
 
 	/**

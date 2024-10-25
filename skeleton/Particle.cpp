@@ -9,6 +9,7 @@ Particle::Particle() {
 	renderItem = nullptr; 
 	acceleration = Vector3(0, 0, 0);
 	age = 0.0; 
+	
 }
 
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
@@ -19,6 +20,9 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 
 Particle::Particle(Particle const& p) {
 	*this = p;
+	center = p.getPosition();
+	rat = p.getRatius();
+	lifeTime = p.getLifeTime();
 }
 
 void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
@@ -26,7 +30,7 @@ void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
 	acceleration = acc;
 	pose = physx::PxTransform(Pos);
 	PxShape* shape = CreateShape(PxSphereGeometry(1));
-	renderItem = new RenderItem(shape, &pose, def_color);
+	renderItem = new RenderItem(shape, &pose, color);
 	prevPos = Pos;
 }
 
@@ -53,12 +57,12 @@ void Particle::update(double t, integrateType type, ParticleSystem& sys)
 {
 	age += t;
 	integrate(type, t);
-	if (age > lifeTime || !isOnRatio(sys.getCenter(), sys.getRatius())) sys.killParticle(this);
+	if (age > lifeTime || !isOnRatio()) sys.killParticle(this);
 }
 
-bool Particle::isOnRatio(Vector3 const& v, float r)
+bool Particle::isOnRatio()
 {
-	return (pose.p - v).magnitude() < r;
+	return (pose.p - center).magnitude() < rat;
 }
 
 void Particle::integrateEuler(double t) {
