@@ -10,7 +10,7 @@ private:
 
 public:
     UniformGenerator(Particle* p, float rate, float range, float spawnRange, spawn_position_distribution sp)
-        : ParticleGenerator(p, rate, spawnRange, sp) 
+        : ParticleGenerator(p, rate, spawnRange, sp, UNIFORM) 
     {
         Vector3 vel = p->getVelocity();
         Vector3 dev = Vector3(range, range, range);
@@ -21,5 +21,5 @@ public:
     /**
     *   Genera particulas a partir de una distribucion uniforme
     */
-    Particle* emit() override;
+    void  emit() override;
 };

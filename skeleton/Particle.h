@@ -152,7 +152,7 @@ protected:
 	float rat;
 
 	// Color por defecto
-	Vector4 color = { 0,0,0,1 };
+	Vector4 color;
 	
 
 	float age;

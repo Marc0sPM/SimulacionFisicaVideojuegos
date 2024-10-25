@@ -25,19 +25,18 @@ Vector3 ParticleGenerator::calculatePosition()
 }
 
 void ParticleGenerator::update(double t, ParticleSystem& pS ) {
-    // Acumula el tiempo
     accumulatedTime += t;
-
-    // Particulas a emitir
     int particlesToEmit = static_cast<int>(accumulatedTime * emissionRate);
 
-    for (int i = 0; i < particlesToEmit; ++i) {
-        Particle* newParticle = emit();
-        if (newParticle) {
-            pS.addParticle(newParticle); 
+    for (auto it = emittedParticles.begin(); it != emittedParticles.end();) {
+        if (*it) {
+            pS.addParticle(*it);
+            it = emittedParticles.erase(it); // Elimina referencia sin borrar la partícula
+        }
+        else {
+            ++it;
         }
     }
-
-    // Restar el tiempo emitido
+    emittedParticles.clear();
     accumulatedTime -= particlesToEmit / emissionRate;
 }

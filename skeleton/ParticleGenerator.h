@@ -1,12 +1,18 @@
 #pragma once
 #include "Particle.h"
-
+#include <vector>
+#include <list>
 #include <random>
 class ParticleSystem;
 
 enum spawn_position_distribution {
 	UNIFORM_SP,
 	NORMAL_SP
+};
+enum generator_type {
+	UNIFORM, 
+	NORMAL,
+	FIREWORK
 };
 
 class ParticleGenerator
@@ -24,11 +30,14 @@ protected:
 	*/
 	Particle model_particle;
 
+	std::list<Particle* > emittedParticles;
+
+	generator_type type;
 public:
 	
 
-	ParticleGenerator(Particle* p, float rate, float spawnR, spawn_position_distribution sp)
-		: model_particle(*p), emissionRate(rate), spawn_range(spawnR), spawn_distribution(sp) {
+	ParticleGenerator(Particle* p, float rate, float spawnR, spawn_position_distribution sp, generator_type tp)
+		: model_particle(*p), emissionRate(rate), spawn_range(spawnR), spawn_distribution(sp), type(tp){
 		std::random_device rd;
 		random_engine.seed(rd());
 		
@@ -38,7 +47,8 @@ public:
 	/**
 	*	Metodo virtual para generacion de particulas
 	*/
-	virtual Particle* emit() = 0;
+	virtual void emit() = 0;
+	
 	/**
 	*	Calcula la`posicion de la particula a emitir dependiendo de la distribucion
 	*/
@@ -47,6 +57,10 @@ public:
 	void update(double t, ParticleSystem& pS);
 
 	float getEmissionRate() const { return emissionRate; }
+
+	void addParticle(Particle* p) {
+		emittedParticles.push_back(p);
+	}
 
 };
 

@@ -19,10 +19,11 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 }
 
 Particle::Particle(Particle const& p) {
+	color = p.color;
 	*this = p;
 	center = p.getPosition();
-	rat = p.getRatius();
-	lifeTime = p.getLifeTime();
+	rat = p.rat;
+	lifeTime = p.lifeTime;
 }
 
 void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc) {
@@ -62,6 +63,7 @@ void Particle::update(double t, integrateType type, ParticleSystem& sys)
 
 bool Particle::isOnRatio()
 {
+	if (rat < 0) return true; // -1 en caso de que no se quiera evaluar con el radio
 	return (pose.p - center).magnitude() < rat;
 }
 

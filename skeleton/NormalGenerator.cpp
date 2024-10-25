@@ -1,6 +1,6 @@
 #include "NormalGenerator.h"
 
-Particle* NormalGenerator::emit()
+void NormalGenerator::emit()
 {
     std::normal_distribution<float> distX(meanVelocity.x, devVelocity.x);
     std::normal_distribution<float> distY(meanVelocity.y, devVelocity.y);
@@ -12,5 +12,5 @@ Particle* NormalGenerator::emit()
     p->setVelocity(randomVelocity);
     p->setPosition(calculatePosition());
 
-    return p;
+    addParticle(p);
 }

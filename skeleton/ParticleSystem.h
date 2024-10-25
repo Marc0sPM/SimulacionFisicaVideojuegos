@@ -5,12 +5,7 @@
 #include "ParticleGenerator.h"
 #include "UniformGenerator.h"
 #include "NormalGenerator.h"
-
-enum generators_type {
-	UNIFORM,
-	NORMAL
-};
-
+#include "ExplosionGenerator.h"
 
 
 class ParticleSystem
@@ -57,6 +52,8 @@ public:
 	*/
 	void addParticle(Particle* p);
 
+	void addParticles(const std::vector<Particle*>& particles);
+
 	/*
 	*	Añade un generador uniforme a la lista de generadores
 	*	@param pos Posicion de la cual se generan las particulas
@@ -67,7 +64,7 @@ public:
 	*	@param sp tipo de distribucion para calculo de poscicion
 	*	@param rat radio de existencia de la particula
 	*/
-	void addUniformGenerator(Vector3 pos, Vector3 direction, float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f);
+	void addUniformGenerator(Vector3 pos, Vector3 direction, float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f, Vector4 color = {0,0,0,1});
 
 	/**
 	*	Añade un generador de distribucion normal a la lista de generadores
@@ -79,6 +76,8 @@ public:
 	*	@param sp tipo de distribucion para calculo de poscicion
 	*	@param rat radio de existencia de la particula
 	*/
-	void addNormalGenerator(Vector3 pos, Vector3 direction, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f );
+	void addNormalGenerator(Vector3 pos, Vector3 direction, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f , Vector4 color = {0,0,0,1});
+
+	void addExplosionGenerator(Vector3 pos, Vector3 direction, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color);
 };
 

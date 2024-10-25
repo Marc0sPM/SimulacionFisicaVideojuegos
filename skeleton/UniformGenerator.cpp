@@ -1,6 +1,6 @@
 #include "UniformGenerator.h"
 
-Particle* UniformGenerator::emit()
+void UniformGenerator::emit()
 {
     std::uniform_real_distribution<float> distX(minVelocity.x, maxVelocity.x);
     std::uniform_real_distribution<float> distY(minVelocity.y, maxVelocity.y);
@@ -13,5 +13,5 @@ Particle* UniformGenerator::emit()
     newParticle->setVelocity(randomVelocity);
     newParticle->setPosition(calculatePosition());
 
-    return newParticle;
+    addParticle(newParticle);
 }
