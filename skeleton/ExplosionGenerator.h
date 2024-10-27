@@ -8,19 +8,15 @@ private:
 
 public:
     
-    ExplosionGenerator(Particle* p, int count, float spawnR, spawn_position_distribution sp)
-        : ParticleGenerator(p, 0, spawnR, sp, FIREWORK), particle_count(count) {}
+    ExplosionGenerator(Particle* p, float rate, int count, float spawnR, spawn_position_distribution sp)
+        : ParticleGenerator(p, rate, spawnR, sp, FIREWORK), particle_count(count) {}
 
     
     void emit() override {
-        
+        Vector3 new_pos = calculatePosition();
         for (int i = 0; i < particle_count; ++i) {
-
             Particle* new_particle = new Particle(model_particle);
-
-
-            new_particle->setPosition(calculatePosition());
-
+            new_particle->setPosition(new_pos);
 
             std::uniform_real_distribution<float> speed_distribution(-1.0f, 1.0f);
             Vector3 random_velocity(

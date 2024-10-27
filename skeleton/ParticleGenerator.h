@@ -37,10 +37,9 @@ public:
 	
 
 	ParticleGenerator(Particle* p, float rate, float spawnR, spawn_position_distribution sp, generator_type tp)
-		: model_particle(*p), emissionRate(rate), spawn_range(spawnR), spawn_distribution(sp), type(tp){
+		: model_particle(*p, true), emissionRate(rate), spawn_range(spawnR), spawn_distribution(sp), type(tp){
 		std::random_device rd;
 		random_engine.seed(rd());
-		
 
 	}
 

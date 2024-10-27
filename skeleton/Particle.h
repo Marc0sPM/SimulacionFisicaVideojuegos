@@ -30,14 +30,16 @@ public:
 	/**
 	*	Constructora a partir de otra particula para evitar la copia
 	*/
-	Particle(Particle const& p);
+	Particle(Particle const& p, bool isModel = false);
 	/**
 	*	Destructora, desregistra el renderItem que representa la particula
 	*/
 	virtual ~Particle() {
-		DeregisterRenderItem(renderItem);
-		delete renderItem;
-		renderItem = nullptr;
+		if (renderItem != nullptr) {
+			DeregisterRenderItem(renderItem);
+			//delete renderItem;
+			renderItem = nullptr;
+		}
 	}
 
 	/**
@@ -48,7 +50,7 @@ public:
 	/**
 	*	Inicializa valores de la particula tal como lo hace la constructora
 	*/
-	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, GRAVITY,0));
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, GRAVITY,0), bool isModel = false);
 
 	/**
 	*	Llama al metodo de integracion, compruba el tiempo de vida
@@ -125,6 +127,9 @@ public:
 	float getLifeTime() const {
 		return lifeTime;
 	}
+	void setModelP() {
+		DeregisterRenderItem(renderItem);
+	}
 protected:
 
 	std::list<Particle*>::iterator p_it;
@@ -139,7 +144,7 @@ protected:
 	const double dampingFact = 0.998;
 	Vector3 vel;
 	physx::PxTransform pose;
-	RenderItem* renderItem;
+	RenderItem* renderItem = nullptr;
 	Vector3 acceleration;
 
 	// Posicion previa necesaria para integracion Verlet

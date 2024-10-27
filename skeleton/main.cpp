@@ -121,8 +121,12 @@ void initPhysics(bool interactive)
 	ps = new ParticleSystem();
 	// Efecto cascada
 	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 100 , 0.01f, 3.0f, spawn_position_distribution::UNIFORM_SP, 100.0f, 5, Vector4(0.6, 0.6, 1.0, 1));
-	//ps->addNormalGenerator(Vector3(100, 0, -100), Vector3(0, 20, 0), 1000, Vector3(10, 0.0001, 10), 1.0f, spawn_position_distribution::UNIFORM_SP, 50);
-	}
+	// Efecto manguera
+	ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(50, 20, -50), 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000, 2, Vector4(1, 0, 0, 1));
+	// Efecto explosion
+	ps->addExplosionGenerator(Vector3(0, 60, 0), Vector3(0, 10, 0), 1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
+
+}
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
@@ -191,9 +195,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'C': 
 		crearProyectil(_CANNON);
 		break;
-	case 'H':
-		ps->addExplosionGenerator(Vector3(0, 0, 0), Vector3(20, 20, 20), 20, 2, spawn_position_distribution::UNIFORM_SP, 100, 2, Vector4(0, 0, 0, 1));
-
 	default:
 		break;
 	}

@@ -58,7 +58,7 @@ void ParticleSystem::addNormalGenerator(Vector3 pos, Vector3 direction, float ra
 	gList.push_back(new NormalGenerator(&p, rate, dev, spawnR, sp));
 }
 
-void ParticleSystem::addExplosionGenerator(Vector3 pos, Vector3 direction, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
+void ParticleSystem::addExplosionGenerator(Vector3 pos, Vector3 direction, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
 	// Crear una partícula base con las propiedades de la explosión
 	Particle p = Particle(pos, direction, Vector3(0, GRAVITY, 0));
@@ -67,5 +67,5 @@ void ParticleSystem::addExplosionGenerator(Vector3 pos, Vector3 direction, int p
 	p.setColor(color);
 
 	// Crear el generador de explosiones y añadirlo a la lista de generadores
-	gList.push_back(new ExplosionGenerator(&p, particle_count, spawnR, sp));
+	gList.push_back(new ExplosionGenerator(&p,rate, particle_count, spawnR, sp));
 }

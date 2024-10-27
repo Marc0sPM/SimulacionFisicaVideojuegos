@@ -78,6 +78,6 @@ public:
 	*/
 	void addNormalGenerator(Vector3 pos, Vector3 direction, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f , Vector4 color = {0,0,0,1});
 
-	void addExplosionGenerator(Vector3 pos, Vector3 direction, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color);
+	void addExplosionGenerator(Vector3 pos, Vector3 direction, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color);
 };
 
