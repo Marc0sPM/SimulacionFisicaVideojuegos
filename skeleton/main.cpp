@@ -122,7 +122,7 @@ void initPhysics(bool interactive)
 	// Efecto cascada
 	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 100 , 0.01f, 3.0f, spawn_position_distribution::UNIFORM_SP, 100.0f, 5, Vector4(0.6, 0.6, 1.0, 1));
 	// Efecto manguera
-	ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(50, 20, -50), 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000, 2, Vector4(1, 0, 0, 1));
+	ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(30, 20, -50), 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000, 2, Vector4(1, 0, 0, 1));
 	// Efecto explosion
 	ps->addExplosionGenerator(Vector3(0, 60, 0), Vector3(0, 10, 0), 1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
 
