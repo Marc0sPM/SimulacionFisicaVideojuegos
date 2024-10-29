@@ -1,6 +1,7 @@
 #pragma once
 #include "RenderUtils.hpp"
 #include <list>
+#include <iostream>
 using namespace physx;
 const float GRAVITY = -10.0f;
 class ParticleSystem;
@@ -36,7 +37,8 @@ public:
 	*/
 	virtual ~Particle() {
 		if (renderItem != nullptr) {
-			DeregisterRenderItem(renderItem);
+			//std::cout << "BORRA PARTICULA\n";
+ 			DeregisterRenderItem(renderItem);
 			//delete renderItem;
 			renderItem = nullptr;
 		}
@@ -50,12 +52,17 @@ public:
 	/**
 	*	Inicializa valores de la particula tal como lo hace la constructora
 	*/
-	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, GRAVITY,0), bool isModel = false);
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, 0,0), bool isModel = false);
 
 	/**
 	*	Llama al metodo de integracion, compruba el tiempo de vida
 	*/
 	void update(double t, integrateType type, ParticleSystem& sys);
+
+	/**
+	*	@return true si la particula se le a acabado su tiempo de vida o si esta fuera del radio del generador, false en caso contrario
+	*/
+	bool canDie();
 
 	/**
 	*	Cambia el valor de la aceleracion por el deseado
@@ -100,7 +107,6 @@ public:
 
 	Particle& operator=(const Particle& p) {
 		init(p.pose.p, p.vel, p.acceleration);
-		age = p.age;
 		return *this;
 	}
 
@@ -129,6 +135,12 @@ public:
 	}
 	void setModelP() {
 		DeregisterRenderItem(renderItem);
+	}
+	void setMass(float m) {
+		mass = m;
+	}
+	float getMass() const {
+		return mass; 
 	}
 protected:
 
@@ -159,8 +171,7 @@ protected:
 	// Color por defecto
 	Vector4 color;
 	
-
-	float age;
+	float mass;
 	float lifeTime;
 };
 

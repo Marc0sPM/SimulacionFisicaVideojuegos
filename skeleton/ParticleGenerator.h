@@ -60,6 +60,11 @@ public:
 	void addParticle(Particle* p) {
 		emittedParticles.push_back(p);
 	}
-
+	void changeModAcc(Vector3 newAcc) {
+		model_particle.setAcceleration(newAcc);
+	}
+	Particle* getModParticle() {
+		return &model_particle;
+	}
 };
 

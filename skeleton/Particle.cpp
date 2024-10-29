@@ -8,14 +8,13 @@ Particle::Particle() {
 	pose = physx::PxTransform(0, 0, 0);
 	renderItem = nullptr; 
 	acceleration = Vector3(0, 0, 0);
-	age = 0.0; 
 	
 }
 
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
 {
 	init(Pos, Vel, acc);
-	age = 0;
+	
 }
 
 Particle::Particle(Particle const& p, bool isModel) {
@@ -24,6 +23,7 @@ Particle::Particle(Particle const& p, bool isModel) {
 	center = p.getPosition();
 	rat = p.rat;
 	lifeTime = p.lifeTime;
+	mass = p.mass;
 }
 
 void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc, bool isModel) {
@@ -58,9 +58,11 @@ void Particle::integrate(integrateType i, double t) {
 
 void Particle::update(double t, integrateType type, ParticleSystem& sys)
 {
-	age += t;
+	lifeTime -= t;
 	integrate(type, t);
-	if (age > lifeTime || !isOnRatio()) sys.killParticle(this);
+}
+bool Particle::canDie() {
+	return lifeTime < 0 || !isOnRatio();
 }
 
 bool Particle::isOnRatio()
@@ -88,7 +90,7 @@ void Particle::integrateEulerSemi(double t) {
 	// Primero se actualiza la posicion
 	pose.p += vel * t;
 	// Luego la velocidad
-	vel += acceleration * t;
+ 	vel += acceleration * t;
 	// Damping
 	vel = vel * pow(dampingFact, t);
 }

@@ -14,11 +14,12 @@ public:
     
     void emit() override {
         Vector3 new_pos = calculatePosition();
+        float vel_mod = model_particle.getVelocity().magnitude();
         for (int i = 0; i < particle_count; ++i) {
             Particle* new_particle = new Particle(model_particle);
             new_particle->setPosition(new_pos);
 
-            std::uniform_real_distribution<float> speed_distribution(-1.0f, 1.0f);
+            std::uniform_real_distribution<float> speed_distribution(-vel_mod, vel_mod);
             Vector3 random_velocity(
                 speed_distribution(random_engine),
                 speed_distribution(random_engine),
