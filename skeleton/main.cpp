@@ -125,7 +125,7 @@ void initPhysics(bool interactive)
 	//ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(30, 20, -50), 0.1f, 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 2, Vector4(1, 0, 0, 1));
 	//// Efecto explosion
 	//ps->addExplosionGenerator(Vector3(0, 60, 0), Vector3(0, 50, 0),0.1f ,1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
-	ps->addGravity(Vector3(0, 5, 0));
+	ps->addGravity(Vector3(0, 5.8, 0));
 	ps->addGravity(Vector3(0, -5, 0));
 }
 // Function to configure what happens in each step of physics

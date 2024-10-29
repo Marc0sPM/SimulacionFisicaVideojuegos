@@ -57,6 +57,9 @@ public:
 	/**
 	*	Llama al metodo de integracion, compruba el tiempo de vida
 	*/
+
+	//Cambiar posteriormente para que se le pase una fuerza y que 
+
 	void update(double t, integrateType type, ParticleSystem& sys);
 
 	/**
@@ -155,9 +158,11 @@ protected:
 
 	const double dampingFact = 0.998;
 	Vector3 vel;
+	
 	physx::PxTransform pose;
 	RenderItem* renderItem = nullptr;
 	Vector3 acceleration;
+	Vector3 totalForce = { 0,0,0 };
 
 	// Posicion previa necesaria para integracion Verlet
 	Vector3 prevPos;
