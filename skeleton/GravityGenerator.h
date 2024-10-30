@@ -8,7 +8,7 @@ public:
 	GravityGenerator(Vector3 g = {0, -9.8, 0}) : gravAcc(g),
 		ForceGenerator() {
 	}
-	Vector3 calculateForce(float mass) override {
+	Vector3 calculateForce(float mass) {
 		return mass * gravAcc;
 	}
 	

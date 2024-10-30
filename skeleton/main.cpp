@@ -121,6 +121,7 @@ void initPhysics(bool interactive)
 	ps = new ParticleSystem();
 	// Efecto cascada
 	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.1f ,100 , 0.01f, 3.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 5, Vector4(0.6, 0.6, 1.0, 1));
+	ps->addUniformGenerator(Vector3(30, 0, -30), Vector3(0, 0, 0), 1.4f ,100 , 0.01f, 3.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 5, Vector4(0.6, 0.6, 1.0, 1));
 	// Efecto manguera
 	//ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(30, 20, -50), 0.1f, 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 2, Vector4(1, 0, 0, 1));
 	//// Efecto explosion
