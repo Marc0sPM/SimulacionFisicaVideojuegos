@@ -145,6 +145,13 @@ public:
 	float getMass() const {
 		return mass; 
 	}
+	void setForce(Vector3 f) {
+		force = f;
+	}
+	Vector3 getForce() const {
+		return force;
+	}
+
 protected:
 
 	std::list<Particle*>::iterator p_it;
@@ -162,7 +169,7 @@ protected:
 	physx::PxTransform pose;
 	RenderItem* renderItem = nullptr;
 	Vector3 acceleration;
-	Vector3 totalForce = { 0,0,0 };
+	Vector3 force = { 0,0,0 };
 
 	// Posicion previa necesaria para integracion Verlet
 	Vector3 prevPos;

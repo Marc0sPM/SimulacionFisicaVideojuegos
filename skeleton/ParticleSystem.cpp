@@ -15,8 +15,8 @@ void ParticleSystem::update(double t) {
 				killParticle(*it);
 			}
 			else {
-				(*it)->update(t, Particle::_EULER_SEMI, *this);
 				applyForces(*it);
+				(*it)->update(t, Particle::_EULER_SEMI, *this);
 			}
 			++it; 
 		}
@@ -86,9 +86,9 @@ void ParticleSystem::addGravity(Vector3 grav) {
 
 void ParticleSystem::applyForces(Particle* p)
 {
-	Vector3 accTotal = Vector3(0, 0, 0);
+	Vector3 totalForce = Vector3(0, 0, 0);
 	for (auto f : fList) {
-		accTotal += f->calculateAcc(p);
+		totalForce += f->calculateForce(p->getMass());
 	}
-	p->setAcceleration(accTotal);
+	p->setForce(totalForce);
 }

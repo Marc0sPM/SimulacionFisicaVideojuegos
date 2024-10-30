@@ -3,14 +3,14 @@
 class GravityGenerator : public ForceGenerator
 {
 private:
-	Vector3 gravForce;
+	Vector3 gravAcc;
 public:
-	GravityGenerator(Vector3 grav) : gravForce(grav),
+	GravityGenerator(Vector3 g = {0, -9.8, 0}) : gravAcc(g),
 		ForceGenerator() {
 	}
-
-	Vector3 calculateAcc(Particle* p) override {
-		return gravForce / p->getMass();
+	Vector3 calculateForce(float mass) override {
+		return mass * gravAcc;
 	}
+	
 };
 

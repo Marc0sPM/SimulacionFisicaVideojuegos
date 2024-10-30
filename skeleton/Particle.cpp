@@ -39,7 +39,7 @@ void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc, bool isModel) {
 
 void Particle::integrate(integrateType i, double t) {
 
-	acceleration = totalForce / mass;
+	acceleration = force / mass;
 
 	switch (i)
 	{
