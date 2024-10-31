@@ -7,6 +7,7 @@
 #include "NormalGenerator.h"
 #include "ExplosionGenerator.h"
 #include "GravityGenerator.h"
+#include "WindGenerator.h"
 
 class ParticleSystem
 {
@@ -97,6 +98,14 @@ public:
 	*	@param grav vector de gravedad
 	*/
 	void addGravity(Vector3 grav = {0, -9.8, 0});
+	/**
+	*	Añade un generador de viento al sistema
+	*	@param center Posicion central del perimetro donde hay viento
+	*	@param size Dimensiones del perimetro
+	*	@param windVel velocidad del viento
+	*	@param rCoef coeficiente de rozamiento del aire
+	*/
+	void addWind(Vector3 center, Vector3 size, Vector3 windVel, float rCoef);
 	/**
 	*	Aplica las fuerzas que generan los generadores a la particula
 	*	@param p Particula a la que se aplica la fuerza

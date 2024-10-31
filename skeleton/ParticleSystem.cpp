@@ -84,11 +84,17 @@ void ParticleSystem::addGravity(Vector3 grav) {
 	fList.push_back(new GravityGenerator(grav));
 }
 
+void ParticleSystem::addWind(Vector3 center, Vector3 size, Vector3 windVel, float rCoef)	{
+	fList.push_back(new WindGenerator(center, size, windVel, rCoef));
+}
+
 void ParticleSystem::applyForces(Particle* p)
 {
 	Vector3 totalForce = Vector3(0, 0, 0);
 	for (auto f : fList) {
-		totalForce += f->calculateForce(p->getMass());
+		totalForce += f->calculateForce(p);
 	}
+	std::cout<< "Vector3(" << totalForce.x << ", " << totalForce.y << ", " << totalForce.z << ")\n";
 	p->setForce(totalForce);
+
 }

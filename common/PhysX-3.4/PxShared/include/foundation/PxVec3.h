@@ -56,6 +56,8 @@ class PxVec3
 	{
 	}
 
+	
+
 	/**
 	\brief zero constructor.
 	*/

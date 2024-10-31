@@ -7,11 +7,13 @@ private:
 	Vector3 center;
 	//tamaño del perimetro
 	Vector3 size;
+	//velocidad del viento
 	Vector3 windVelocity;
+	//coeficiente de rozamiento del aire
+	float rozCoef;
 public:
-	WindGenerator(Vector3 center, Vector3 size, Vector3 wVel)
-		: center(center), size(size), windVelocity(wVel) {
-
+	WindGenerator(Vector3 center, Vector3 size, Vector3 wVel, float rozCoef)
+		: center(center), size(size), windVelocity(wVel), rozCoef(rozCoef) {
 	}
 
 	/**
@@ -24,6 +26,12 @@ public:
 			pPos.z < center.z - size.z || pPos.z > center.z + size.z) return false;
 		return true;
 
+	}
+	Vector3 calculateForce(Particle* p) {
+		if (isInside(p->getPosition())) {
+			return rozCoef * (windVelocity - p->getVelocity());
+		}
+		else return Vector3(0, 0, 0);
 	}
 };
 

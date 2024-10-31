@@ -7,6 +7,6 @@ public:
 	ForceGenerator() {}
 	~ForceGenerator() {}
 
-	virtual Vector3 calculateForce(float mass) = 0;
+	virtual Vector3 calculateForce(Particle* p) = 0;
 };
 
