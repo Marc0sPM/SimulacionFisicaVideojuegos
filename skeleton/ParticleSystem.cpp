@@ -4,11 +4,12 @@ void ParticleSystem::update(double t) {
 
 	toErase.clear();
 
+	//Generadores
 	for (auto g : gList) {
 		if(g != nullptr)
 			g->update(t, *this);
 	}
-
+	//Particulas
 	for (auto it = pList.begin(); it != pList.end(); ) {
 		if (*it != nullptr) {
 			if ((*it)->canDie()) {
@@ -21,7 +22,7 @@ void ParticleSystem::update(double t) {
 			++it; 
 		}
 	}
-
+	//Eliminacion particulas
 	for (auto p : toErase) {
 		auto it = std::find(pList.begin(), pList.end(), p);
 		if (it != pList.end()) {
@@ -39,10 +40,6 @@ void ParticleSystem::killParticle(Particle* p) {
 void ParticleSystem::addParticle(Particle* p) {
 	pList.push_back(p);
 	p->setIterator(--pList.end());
-}
-
-void ParticleSystem::addParticles(const std::vector<Particle*>& particles) {
-	pList.insert(pList.end(), particles.begin(), particles.end());
 }
 
 void ParticleSystem::addUniformGenerator(Vector3 pos, Vector3 direction,float mass ,float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
@@ -88,13 +85,18 @@ void ParticleSystem::addWind(Vector3 center, Vector3 size, Vector3 windVel, floa
 	fList.push_back(new WindGenerator(center, size, windVel, rCoef));
 }
 
+void ParticleSystem::addTorbellino(Vector3 center, Vector3 size, float rozCoef, float intensity)
+{
+	fList.push_back(new TorbellinoGenerator(center, size, rozCoef, intensity));
+}
+
 void ParticleSystem::applyForces(Particle* p)
 {
 	Vector3 totalForce = Vector3(0, 0, 0);
 	for (auto f : fList) {
 		totalForce += f->calculateForce(p);
 	}
-	std::cout<< "Vector3(" << totalForce.x << ", " << totalForce.y << ", " << totalForce.z << ")\n";
+	//std::cout<< "Vector3(" << totalForce.x << ", " << totalForce.y << ", " << totalForce.z << ")\n";
 	p->setForce(totalForce);
 
 }

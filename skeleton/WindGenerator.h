@@ -2,7 +2,7 @@
 #include "ForceGenerator.h"
 class WindGenerator : public ForceGenerator
 {
-private:
+protected:
 	//centro de perimetro de viento
 	Vector3 center;
 	//tamaño del perimetro
@@ -11,6 +11,9 @@ private:
 	Vector3 windVelocity;
 	//coeficiente de rozamiento del aire
 	float rozCoef;
+
+	virtual void calculateVelocity(Vector3 pPos) {}
+
 public:
 	WindGenerator(Vector3 center, Vector3 size, Vector3 wVel, float rozCoef)
 		: center(center), size(size), windVelocity(wVel), rozCoef(rozCoef) {
@@ -27,8 +30,9 @@ public:
 		return true;
 
 	}
-	Vector3 calculateForce(Particle* p) {
+	virtual Vector3 calculateForce(Particle* p) {
 		if (isInside(p->getPosition())) {
+			calculateVelocity(p->getPosition());
 			return rozCoef * (windVelocity - p->getVelocity());
 		}
 		else return Vector3(0, 0, 0);

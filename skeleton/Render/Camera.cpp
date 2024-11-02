@@ -117,6 +117,13 @@ PxVec3 Camera::getDir() const
 	return mDir; 
 }
 
+void Camera::setDir(physx::PxVec3 dir) {
+	mDir = dir;
+}
+
+void Camera::setEye(physx::PxVec3 eye) {
+	mEye = eye;
+}
 
 }
 

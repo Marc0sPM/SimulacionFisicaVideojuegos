@@ -266,6 +266,7 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="TorbellinoGenerator.cpp" />
     <ClCompile Include="UniformGenerator.cpp" />
     <ClCompile Include="WindGenerator.cpp" />
   </ItemGroup>
@@ -283,6 +284,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="TorbellinoGenerator.h" />
     <ClInclude Include="UniformGenerator.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WindGenerator.h" />

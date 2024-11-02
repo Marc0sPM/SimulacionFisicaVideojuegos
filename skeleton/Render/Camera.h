@@ -48,6 +48,8 @@ public:
 	physx::PxVec3		getEye()	const;
 	physx::PxVec3		getDir()	const;
 	physx::PxTransform	getTransform() const;
+	void				setDir(physx::PxVec3 dir);
+	void				setEye(physx::PxVec3 eye);
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;

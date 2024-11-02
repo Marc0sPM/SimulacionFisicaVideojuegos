@@ -8,6 +8,7 @@
 #include "ExplosionGenerator.h"
 #include "GravityGenerator.h"
 #include "WindGenerator.h"
+#include "TorbellinoGenerator.h"
 
 class ParticleSystem
 {
@@ -57,8 +58,6 @@ public:
 	*/
 	void addParticle(Particle* p);
 
-	void addParticles(const std::vector<Particle*>& particles);
-
 	/*
 	*	Añade un generador uniforme a la lista de generadores
 	*	@param pos Posicion de la cual se generan las particulas
@@ -82,6 +81,7 @@ public:
 	*	@param rat radio de existencia de la particula
 	*/
 	void addNormalGenerator(Vector3 pos, Vector3 direction, float mass, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f , Vector4 color = {0,0,0,1});
+	
 	/**
 	*	Añade un generador con efecto de explosiones
 	*	@param pos Posicion de la cual se generan las particulas
@@ -93,11 +93,13 @@ public:
 	*	@param rat radio de existencia de la particula
 	*/
 	void addExplosionGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f, Vector4 color = {1,1,1,1}); // poner color aleatoria proximamente
+	
 	/**
 	*	Añade un generador de gravedad al sistema
 	*	@param grav vector de gravedad
 	*/
 	void addGravity(Vector3 grav = {0, -9.8, 0});
+	
 	/**
 	*	Añade un generador de viento al sistema
 	*	@param center Posicion central del perimetro donde hay viento
@@ -106,6 +108,16 @@ public:
 	*	@param rCoef coeficiente de rozamiento del aire
 	*/
 	void addWind(Vector3 center, Vector3 size, Vector3 windVel, float rCoef);
+
+	/**
+	*	Añade un generador de torbellino al sistema
+	*	@param center Posicion central del torbellino
+	*	@param size Dimensiones del torbelino
+	*	@param rCoef coeficiente de rozamiento del aire
+	*	@param intensity intensidad de la fuerza del torbellino
+	*/
+	void addTorbellino(Vector3 center, Vector3 size, float rozCoef, float intensity);
+
 	/**
 	*	Aplica las fuerzas que generan los generadores a la particula
 	*	@param p Particula a la que se aplica la fuerza
