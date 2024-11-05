@@ -15,8 +15,8 @@ protected:
 	virtual void calculateVelocity(Vector3 pPos) {}
 
 public:
-	WindGenerator(Vector3 center, Vector3 size, Vector3 wVel, float rozCoef)
-		: center(center), size(size), windVelocity(wVel), rozCoef(rozCoef) {
+	WindGenerator(Vector3 center, Vector3 size, Vector3 wVel, float rozCoef, float dur = -1)
+		: center(center), size(size), windVelocity(wVel), rozCoef(rozCoef), ForceGenerator(dur) {
 	}
 
 	/**
@@ -37,5 +37,6 @@ public:
 		}
 		else return Vector3(0, 0, 0);
 	}
+	void update(double t) {}
 };
 

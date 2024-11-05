@@ -1,35 +1,38 @@
 #pragma once
-#include "ParticleGenerator.h"
-#include <vector>
-
-class ExplosionGenerator : public ParticleGenerator {
-private:
-    int particle_count; 
-
+#include "ForceGenerator.h"
+class ExplosionGenerator : public ForceGenerator
+{
 public:
-    
-    ExplosionGenerator(Particle* p, float rate, int count, float spawnR, spawn_position_distribution sp)
-        : ParticleGenerator(p, rate, spawnR, sp, FIREWORK), particle_count(count) {}
+	ExplosionGenerator(Vector3 center, float k, float r, float tau)
+		: center(center), K(k), R(r), tau(tau), ForceGenerator(tau * 4.0f) {}
 
-    
-    void emit() override {
-        Vector3 new_pos = calculatePosition();
-        float vel_mod = model_particle.getVelocity().magnitude();
-        for (int i = 0; i < particle_count; ++i) {
-            Particle* new_particle = new Particle(model_particle);
-            new_particle->setPosition(new_pos);
+	~ExplosionGenerator() {}
 
-            std::uniform_real_distribution<float> speed_distribution(-vel_mod, vel_mod);
-            Vector3 random_velocity(
-                speed_distribution(random_engine),
-                speed_distribution(random_engine),
-                speed_distribution(random_engine)
-            );
-            new_particle->setVelocity(random_velocity.getNormalized() * model_particle.getVelocity().magnitude());
+	Vector3 calculateForce(Particle* p) {
+ 		Vector3 distance = p->getPosition() - center;
+		float r = distance.magnitude();
 
-            addParticle(new_particle);
-        }
+		if (r < R) {
+			float factor = (K / (r * r)) * physx::PxExp(-duration / tau);
+			return distance * factor;
+		}
+		else {
+			return Vector3(0, 0, 0);
+		}
+	}
+	void update(double t) {
+		duration -= t;
+		if (duration < 0) alive = false;
+	}
+private:
+	//Intensidad de la explosion
+	float K;
+	//Radio de la explosion
+	float R;
+	//Constante de tiempo de la explosion
+	float tau;
+	//Centro de la explosion
+	Vector3 center;
 
-        
-    }
 };
+

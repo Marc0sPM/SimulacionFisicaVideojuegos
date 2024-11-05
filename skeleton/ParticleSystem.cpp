@@ -3,7 +3,7 @@
 void ParticleSystem::update(double t) {
 
 	toErase.clear();
-
+	fToErase.clear();
 	//Generadores
 	for (auto g : gList) {
 		if(g != nullptr)
@@ -16,7 +16,7 @@ void ParticleSystem::update(double t) {
 				killParticle(*it);
 			}
 			else {
-				applyForces(*it);
+				applyForces(*it, t);
 				(*it)->update(t, Particle::_EULER_SEMI, *this);
 			}
 			++it; 
@@ -28,6 +28,14 @@ void ParticleSystem::update(double t) {
 		if (it != pList.end()) {
 			pList.erase(it); 
 			delete p;
+		}
+	}
+	//Eliminacion fuerzas
+	for (auto f : fToErase) {
+		auto it = std::find(fList.begin(), fList.end(), f);
+		if (it != fList.end()) {
+			fList.erase(it);
+			delete f;
 		}
 	}
 }
@@ -64,7 +72,7 @@ void ParticleSystem::addNormalGenerator(Vector3 pos, Vector3 direction,float mas
 	gList.push_back(new NormalGenerator(&p, rate, dev, spawnR, sp));
 }
 
-void ParticleSystem::addExplosionGenerator(Vector3 pos, Vector3 direction, float mass,float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
+void ParticleSystem::addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass,float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
 	// Crear una partícula base con las propiedades de la explosión
 	Particle p = Particle(pos, direction);
@@ -74,7 +82,7 @@ void ParticleSystem::addExplosionGenerator(Vector3 pos, Vector3 direction, float
 	p.setMass(mass);
 
 	// Crear el generador de explosiones y añadirlo a la lista de generadores
-	gList.push_back(new ExplosionGenerator(&p,rate, particle_count, spawnR, sp));
+	gList.push_back(new FireWorkGenerator(&p,rate, particle_count, spawnR, sp));
 }
 
 void ParticleSystem::addGravity(Vector3 grav) {
@@ -90,11 +98,22 @@ void ParticleSystem::addTorbellino(Vector3 center, Vector3 size, float rozCoef, 
 	fList.push_back(new TorbellinoGenerator(center, size, rozCoef, intensity));
 }
 
-void ParticleSystem::applyForces(Particle* p)
+void ParticleSystem::addExplosion(Vector3 center, float k, float r, float tau)
+{
+	fList.push_back(new ExplosionGenerator(center, k, r, tau));
+}
+
+void ParticleSystem::applyForces(Particle* p, double t)
 {
 	Vector3 totalForce = Vector3(0, 0, 0);
 	for (auto f : fList) {
-		totalForce += f->calculateForce(p);
+		if (f) {
+			if (f->isAlive()) {
+				totalForce += f->calculateForce(p);
+				f->update(t);
+			}
+			else	fToErase.push_back(f);
+		}
 	}
 	//std::cout<< "Vector3(" << totalForce.x << ", " << totalForce.y << ", " << totalForce.z << ")\n";
 	p->setForce(totalForce);

@@ -5,10 +5,11 @@
 #include "ParticleGenerator.h"
 #include "UniformGenerator.h"
 #include "NormalGenerator.h"
-#include "ExplosionGenerator.h"
+#include "FireWorkGenerator.h"
 #include "GravityGenerator.h"
 #include "WindGenerator.h"
 #include "TorbellinoGenerator.h"
+#include "ExplosionGenerator.h"
 
 class ParticleSystem
 {
@@ -17,6 +18,7 @@ private:
 	std::vector<ParticleGenerator* > gList; // cambiar a list si se quiere borrar generadores de forma dinamica
 	std::vector<Particle*> toErase;			// vector de particulas a eliminar
 	std::list<ForceGenerator* > fList;
+	std::vector<ForceGenerator* > fToErase;	// vector de generadores de fuerzas a eliminar
 
 public:
 	ParticleSystem() {}
@@ -83,7 +85,7 @@ public:
 	void addNormalGenerator(Vector3 pos, Vector3 direction, float mass, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f , Vector4 color = {0,0,0,1});
 	
 	/**
-	*	Añade un generador con efecto de explosiones
+	*	Añade un generador con efecto de fuegos artificiales
 	*	@param pos Posicion de la cual se generan las particulas
 	*	@param direction velocidad media en la cual se emiten las particulas
 	*	@param rate Ratio de emision de las particulas
@@ -92,7 +94,7 @@ public:
 	*	@param sp tipo de distribucion para calculo de poscicion
 	*	@param rat radio de existencia de la particula
 	*/
-	void addExplosionGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f, Vector4 color = {1,1,1,1}); // poner color aleatoria proximamente
+	void addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f, Vector4 color = {1,1,1,1}); // poner color aleatoria proximamente
 	
 	/**
 	*	Añade un generador de gravedad al sistema
@@ -119,9 +121,21 @@ public:
 	void addTorbellino(Vector3 center, Vector3 size, float rozCoef, float intensity);
 
 	/**
+	*	Añade una explosion al sistema
+	*	@param center centro de la explosion
+	*	@param k intensidad de la explosion
+	*	@param r radio de la explosion
+	*	@param tau contante de tiempo de la explosion
+	*	@param dur duracion de la explosion
+	*/
+	void addExplosion(Vector3 center, float k, float r, float tau);
+
+	/**
 	*	Aplica las fuerzas que generan los generadores a la particula
 	*	@param p Particula a la que se aplica la fuerza
+	*	@param t deltaTime
 	*/
-	void applyForces(Particle* p);
+	void applyForces(Particle* p, double t);
+
 };
 
