@@ -132,9 +132,9 @@ void initPhysics(bool interactive)
 	createAxis();
 	ps = new ParticleSystem();
 	// Efecto cascada
-	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.1f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0.3, 0.3, 1.0, 1));
-	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 0, 0, 1));
-	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
+	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.1f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0.3, 0.3, 1.0, 1));
+	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 0, 0, 1));
+	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
 	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
 	//ps->addUniformGenerator(Vector3(30, 0, -30), Vector3(0, 0, 0), 1.4f ,100 , 0.01f, 3.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 5, Vector4(0.6, 0.6, 1.0, 1));
 	// Efecto manguera
@@ -142,8 +142,8 @@ void initPhysics(bool interactive)
 	//// Efecto explosion
 	//ps->addExplosionGenerator(Vector3(0, 60, 0), Vector3(0, 50, 0),0.1f ,1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
 	ps->addGravity(Vector3(0, 20, 0));
-	// ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
-	ps->addTorbellino(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 0.8f);
+	//ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
+	ps->addTorbellino(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 1.0f);
 }
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
