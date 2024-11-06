@@ -9,6 +9,7 @@ void ParticleSystem::update(double t) {
 		if(g != nullptr)
 			g->update(t, *this);
 	}
+	
 	//Particulas
 	for (auto it = pList.begin(); it != pList.end(); ) {
 		if (*it != nullptr) {
@@ -16,10 +17,16 @@ void ParticleSystem::update(double t) {
 				killParticle(*it);
 			}
 			else {
-				applyForces(*it, t);
+				applyForces(*it);
 				(*it)->update(t, Particle::_EULER_SEMI, *this);
 			}
 			++it; 
+		}
+	}
+	//Fuerzas
+	for (auto f : fList) {
+		if (f) {
+			f->update(t);
 		}
 	}
 	//Eliminacion particulas
@@ -103,14 +110,13 @@ void ParticleSystem::addExplosion(Vector3 center, float k, float r, float tau)
 	fList.push_back(new ExplosionGenerator(center, k, r, tau));
 }
 
-void ParticleSystem::applyForces(Particle* p, double t)
+void ParticleSystem::applyForces(Particle* p)
 {
 	Vector3 totalForce = Vector3(0, 0, 0);
 	for (auto f : fList) {
 		if (f) {
 			if (f->isAlive()) {
 				totalForce += f->calculateForce(p);
-				f->update(t);
 			}
 			else	fToErase.push_back(f);
 		}

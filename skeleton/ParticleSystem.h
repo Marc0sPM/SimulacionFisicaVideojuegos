@@ -133,9 +133,7 @@ public:
 	/**
 	*	Aplica las fuerzas que generan los generadores a la particula
 	*	@param p Particula a la que se aplica la fuerza
-	*	@param t deltaTime
 	*/
-	void applyForces(Particle* p, double t);
-
+	void applyForces(Particle* p);
 };
 
