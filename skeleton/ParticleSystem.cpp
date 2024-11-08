@@ -23,10 +23,11 @@ void ParticleSystem::update(double t) {
 			++it; 
 		}
 	}
-	//Fuerzas
-	for (auto f : fList) {
-		if (f) {
-			f->update(t);
+	//Actualizacion de generadores de fuerzas
+	for (auto& pair : forceRegister) {
+		auto fG = pair.first;
+		if (fG != nullptr) {
+			fG->update(t);
 		}
 	}
 	//Eliminacion particulas
@@ -34,14 +35,20 @@ void ParticleSystem::update(double t) {
 		auto it = std::find(pList.begin(), pList.end(), p);
 		if (it != pList.end()) {
 			pList.erase(it); 
-			delete p;
 		}
+		for (auto& entry : forceRegister) {
+			entry.second.remove(p);
+		}
+		delete p;  
 	}
+
 	//Eliminacion fuerzas
 	for (auto f : fToErase) {
-		auto it = std::find(fList.begin(), fList.end(), f);
-		if (it != fList.end()) {
-			fList.erase(it);
+		auto it = forceRegister.find(f); 
+
+		if (it != forceRegister.end()) {
+			it->second.clear();
+			forceRegister.erase(it);
 			delete f;
 		}
 	}
@@ -57,7 +64,7 @@ void ParticleSystem::addParticle(Particle* p) {
 	p->setIterator(--pList.end());
 }
 
-void ParticleSystem::addUniformGenerator(Vector3 pos, Vector3 direction,float mass ,float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
+ParticleGenerator* ParticleSystem::addUniformGenerator(Vector3 pos, Vector3 direction,float mass ,float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
 	Particle p = Particle(pos, direction);
 	p.setRatius(rat);
@@ -66,9 +73,10 @@ void ParticleSystem::addUniformGenerator(Vector3 pos, Vector3 direction,float ma
 	p.setMass(mass);
 
 	gList.push_back(new UniformGenerator(&p, rate, range, spawnR, sp));
+	return gList.back();
 }
 
-void ParticleSystem::addNormalGenerator(Vector3 pos, Vector3 direction,float mass ,float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
+ParticleGenerator* ParticleSystem::addNormalGenerator(Vector3 pos, Vector3 direction,float mass ,float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
 	Particle p = Particle(pos, direction);
 	p.setRatius(rat);
@@ -77,9 +85,10 @@ void ParticleSystem::addNormalGenerator(Vector3 pos, Vector3 direction,float mas
 	p.setMass(mass);
 
 	gList.push_back(new NormalGenerator(&p, rate, dev, spawnR, sp));
+	return gList.back();
 }
 
-void ParticleSystem::addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass,float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
+ParticleGenerator* ParticleSystem::addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass,float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
 	// Crear una partícula base con las propiedades de la explosión
 	Particle p = Particle(pos, direction);
@@ -90,38 +99,49 @@ void ParticleSystem::addFireWorkGenerator(Vector3 pos, Vector3 direction, float 
 
 	// Crear el generador de explosiones y añadirlo a la lista de generadores
 	gList.push_back(new FireWorkGenerator(&p,rate, particle_count, spawnR, sp));
+	return gList.back();
 }
 
-void ParticleSystem::addGravity(Vector3 grav) {
-	fList.push_back(new GravityGenerator(grav));
-}
 
-void ParticleSystem::addWind(Vector3 center, Vector3 size, Vector3 windVel, float rCoef)	{
-	fList.push_back(new WindGenerator(center, size, windVel, rCoef));
-}
-
-void ParticleSystem::addTorbellino(Vector3 center, Vector3 size, float rozCoef, float intensity)
+ForceGenerator*  ParticleSystem::addExplosion(Vector3 center, float k, float r, float tau)
 {
-	fList.push_back(new TorbellinoGenerator(center, size, rozCoef, intensity));
-}
+	ExplosionGenerator* eg = new ExplosionGenerator(center, k, r, tau);
+	forceRegister.insert({eg, std::list<Particle* >() });
+	for (auto g : gList) {
 
-void ParticleSystem::addExplosion(Vector3 center, float k, float r, float tau)
-{
-	fList.push_back(new ExplosionGenerator(center, k, r, tau));
+	}
+	return eg;
+
 }
 
 void ParticleSystem::applyForces(Particle* p)
 {
 	Vector3 totalForce = Vector3(0, 0, 0);
-	for (auto f : fList) {
-		if (f) {
-			if (f->isAlive()) {
-				totalForce += f->calculateForce(p);
+
+	for (auto& entry : forceRegister) {
+		ForceGenerator* generator = entry.first;          
+		std::list<Particle*>& particles = entry.second;  
+
+		if (std::find(particles.begin(), particles.end(), p) != particles.end()) {
+			if (generator->isAlive()) {
+				totalForce += generator->calculateForce(p);  
 			}
-			else	fToErase.push_back(f);
 		}
 	}
-	//std::cout<< "Vector3(" << totalForce.x << ", " << totalForce.y << ", " << totalForce.z << ")\n";
 	p->setForce(totalForce);
-
 }
+
+void ParticleSystem::addRegister(ForceGenerator* fg, ParticleGenerator* pg)	{
+	pg->linkForce(fg);
+}
+
+void ParticleSystem::addForceToParticle(ForceGenerator* fg, Particle* p) {
+	auto it = forceRegister.find(fg);
+	it->second.push_back(p);
+}
+
+ForceGenerator* ParticleSystem::addForce(ForceGenerator* fg) {
+	forceRegister.insert({ fg, std::list<Particle* >() });
+	return fg;
+}
+

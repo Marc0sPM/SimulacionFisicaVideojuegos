@@ -138,21 +138,26 @@ void initPhysics(bool interactive)
 
 	#pragma region PRACTICA 2
 	//// Efecto cascada
-	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, -9.8f, 0), 0.1f ,100 , 0.01f, 5.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0.3, 0.3, 1.0, 1));
+	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, -9.8f, 0), 0.1f ,100 , 0.01f, 5.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0.3, 0.3, 1.0, 1));
 	//// Efecto manguera
-	ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(30, 20, -50), 0.1f, 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 2, Vector4(1, 0, 0, 1));
+	//ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(30, 20, -50), 0.1f, 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 2, Vector4(1, 0, 0, 1));
 	//// Efecto explosion
-	ps->addFireWorkGenerator(Vector3(0, 60, 0), Vector3(0, 50, 0),0.1f ,1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
+	//ps->addFireWorkGenerator(Vector3(0, 60, 0), Vector3(0, 50, 0),0.1f ,1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
 
 #pragma endregion
 
 	#pragma region PRACTICA 3
+	//Se crean particulas y fuerzas
 	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f ,10 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 0, 0, 1));
-	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
-	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
-	//ps->addGravity(Vector3(0, 50, 0));
+	auto g2 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
+	auto g1 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
+	auto grav1 = ps->addForce(new GravityGenerator(Vector3(0, 50, 0)));
 	////ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
-	//ps->addTorbellino(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 2.0f);
+	auto t = ps->addForce(new TorbellinoGenerator(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 2.0f));
+	//Se linkean fuerzas y particulas
+	ps->addRegister(grav1, g1);
+	ps->addRegister(t, g2);
+
 	#pragma endregion
 
 	#pragma region PRACTICA 4

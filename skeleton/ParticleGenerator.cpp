@@ -32,6 +32,9 @@ void ParticleGenerator::update(double t, ParticleSystem& pS ) {
 
         for (auto p : emittedParticles) {
             pS.addParticle(p);
+            for (auto fg : linkedForces) {
+                pS.addForceToParticle(fg, p);
+            }
         }
         emittedParticles.clear();
     }

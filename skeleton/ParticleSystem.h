@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <list>
+#include <unordered_map>
 #include "Particle.h"
 #include "ParticleGenerator.h"
 #include "UniformGenerator.h"
@@ -17,7 +18,8 @@ private:
 	std::list<Particle* > pList;
 	std::vector<ParticleGenerator* > gList; // cambiar a list si se quiere borrar generadores de forma dinamica
 	std::vector<Particle*> toErase;			// vector de particulas a eliminar
-	std::pair<ForceGenerator*, std::list<Particle*>> forceRegister;
+	std::unordered_map<ForceGenerator*, std::list<Particle*>> forceRegister; //resgistro de generadores de fuerzas y a que particulas afectan;
+	std::vector<ForceGenerator* > fToErase;	
 
 public:
 	ParticleSystem() {}
@@ -31,14 +33,18 @@ public:
 			delete g;
 			g = nullptr;
 		}
-		for (auto f : fList) {
-			delete f;
-			f = nullptr;
+		for (auto& entry : forceRegister) {
+			ForceGenerator* generator = entry.first;  
+			std::list<Particle*>& particles = entry.second;  
+
+			particles.clear();
+
+			delete generator;  
 		}
 
 		pList.clear();
+		toErase.clear();
 		gList.clear();
-		fList.clear();
 	}
 
 	/**
@@ -69,7 +75,7 @@ public:
 	*	@param sp tipo de distribucion para calculo de poscicion
 	*	@param rat radio de existencia de la particula
 	*/
-	void addUniformGenerator(Vector3 pos, Vector3 direction, float mass,float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f, Vector4 color = {0,0,0,1});
+	ParticleGenerator* addUniformGenerator(Vector3 pos, Vector3 direction, float mass,float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f, Vector4 color = {0,0,0,1});
 
 	/**
 	*	Añade un generador de distribucion normal a la lista de generadores
@@ -81,7 +87,7 @@ public:
 	*	@param sp tipo de distribucion para calculo de poscicion
 	*	@param rat radio de existencia de la particula
 	*/
-	void addNormalGenerator(Vector3 pos, Vector3 direction, float mass, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f , Vector4 color = {0,0,0,1});
+	ParticleGenerator* addNormalGenerator(Vector3 pos, Vector3 direction, float mass, float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 10.0f , Vector4 color = {0,0,0,1});
 	
 	/**
 	*	Añade un generador con efecto de fuegos artificiales
@@ -93,32 +99,8 @@ public:
 	*	@param sp tipo de distribucion para calculo de poscicion
 	*	@param rat radio de existencia de la particula
 	*/
-	void addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f, Vector4 color = {1,1,1,1}); // poner color aleatoria proximamente
+	ParticleGenerator* addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f, Vector4 color = {1,1,1,1}); // poner color aleatoria proximamente
 	
-	/**
-	*	Añade un generador de gravedad al sistema
-	*	@param grav vector de gravedad
-	*/
-	void addGravity(Vector3 grav = {0, -9.8, 0});
-	
-	/**
-	*	Añade un generador de viento al sistema
-	*	@param center Posicion central del perimetro donde hay viento
-	*	@param size Dimensiones del perimetro
-	*	@param windVel velocidad del viento
-	*	@param rCoef coeficiente de rozamiento del aire
-	*/
-	void addWind(Vector3 center, Vector3 size, Vector3 windVel, float rCoef);
-
-	/**
-	*	Añade un generador de torbellino al sistema
-	*	@param center Posicion central del torbellino
-	*	@param size Dimensiones del torbelino
-	*	@param rCoef coeficiente de rozamiento del aire
-	*	@param intensity intensidad de la fuerza del torbellino
-	*/
-	void addTorbellino(Vector3 center, Vector3 size, float rozCoef, float intensity);
-
 	/**
 	*	Añade una explosion al sistema
 	*	@param center centro de la explosion
@@ -127,12 +109,18 @@ public:
 	*	@param tau contante de tiempo de la explosion
 	*	@param dur duracion de la explosion
 	*/
-	void addExplosion(Vector3 center, float k, float r, float tau);
+	ForceGenerator* addExplosion(Vector3 center, float k, float r, float tau);
 
 	/**
 	*	Aplica las fuerzas que generan los generadores a la particula
 	*	@param p Particula a la que se aplica la fuerza
 	*/
 	void applyForces(Particle* p);
+
+	void addRegister(ForceGenerator* fg, ParticleGenerator* pg);
+
+	void addForceToParticle(ForceGenerator* fg, Particle* p);
+
+	ForceGenerator* addForce(ForceGenerator* fg);
 };
 

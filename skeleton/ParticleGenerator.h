@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <random>
+#include "ForceGenerator.h"
 class ParticleSystem;
 
 enum spawn_position_distribution {
@@ -31,6 +32,7 @@ protected:
 	Particle model_particle;
 
 	std::list<Particle* > emittedParticles;
+	std::vector<ForceGenerator*> linkedForces;
 
 	generator_type type;
 public:
@@ -65,6 +67,10 @@ public:
 	}
 	Particle* getModParticle() {
 		return &model_particle;
+	}
+
+	void linkForce(ForceGenerator* fg) {
+		linkedForces.push_back(fg);
 	}
 };
 
