@@ -17,8 +17,7 @@ private:
 	std::list<Particle* > pList;
 	std::vector<ParticleGenerator* > gList; // cambiar a list si se quiere borrar generadores de forma dinamica
 	std::vector<Particle*> toErase;			// vector de particulas a eliminar
-	std::list<ForceGenerator* > fList;
-	std::vector<ForceGenerator* > fToErase;	// vector de generadores de fuerzas a eliminar
+	std::pair<ForceGenerator*, std::list<Particle*>> forceRegister;
 
 public:
 	ParticleSystem() {}

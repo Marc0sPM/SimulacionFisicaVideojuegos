@@ -93,13 +93,17 @@ void crearProyectil(proy_type type) {
 	}
 }
 
-
+/**
+* Function to set the camera to top view
+*/
 void setCamTop() {
 	auto cam = GetCamera();
 	cam->setEye(PxVec3(0.0f, 500.0f, 0.0f));
 	cam->setDir(PxVec3(0.0001f, -1.0f, 0.00001f));
 }
-
+/**
+* Function to set camera to lateral view
+*/
 void setCamLat() {
 	auto cam = GetCamera();
 	cam->setEye(PxVec3(1000.0f, 100.0f, 0.0f));
@@ -131,19 +135,31 @@ void initPhysics(bool interactive)
 
 	createAxis();
 	ps = new ParticleSystem();
-	// Efecto cascada
-	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.1f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0.3, 0.3, 1.0, 1));
+
+	#pragma region PRACTICA 2
+	//// Efecto cascada
+	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, -9.8f, 0), 0.1f ,100 , 0.01f, 5.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0.3, 0.3, 1.0, 1));
+	//// Efecto manguera
+	ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(30, 20, -50), 0.1f, 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 2, Vector4(1, 0, 0, 1));
+	//// Efecto explosion
+	ps->addFireWorkGenerator(Vector3(0, 60, 0), Vector3(0, 50, 0),0.1f ,1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
+
+#pragma endregion
+
+	#pragma region PRACTICA 3
 	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f ,10 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 0, 0, 1));
 	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
-	ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
-	//ps->addUniformGenerator(Vector3(30, 0, -30), Vector3(0, 0, 0), 1.4f ,100 , 0.01f, 3.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 5, Vector4(0.6, 0.6, 1.0, 1));
-	// Efecto manguera
-	//ps->addNormalGenerator(Vector3(30, 0, -30), Vector3(30, 20, -50), 0.1f, 100.0f, Vector3(3, 3, 3), 2.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 2, Vector4(1, 0, 0, 1));
-	//// Efecto explosion
-	//ps->addExplosionGenerator(Vector3(0, 60, 0), Vector3(0, 50, 0),0.1f ,1.0f, 20, 10.0f, spawn_position_distribution::UNIFORM_SP, 50.0f, 2, Vector4(1, 1, 1, 1));
+	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
 	//ps->addGravity(Vector3(0, 50, 0));
-	//ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
+	////ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
 	//ps->addTorbellino(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 2.0f);
+	#pragma endregion
+
+	#pragma region PRACTICA 4
+
+	#pragma endregion
+
+
 }
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
