@@ -10,6 +10,7 @@ private:
 public:
 	TorbellinoGenerator(Vector3 center, Vector3 size, float rozCoef, float intensity)
 		: intensity(intensity), WindGenerator(center, size, Vector3(0,0,0), rozCoef) {
+		type = F_TORBELLINO;
 	}
 };
 

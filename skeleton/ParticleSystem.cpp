@@ -103,15 +103,19 @@ ParticleGenerator* ParticleSystem::addFireWorkGenerator(Vector3 pos, Vector3 dir
 }
 
 
-ForceGenerator*  ParticleSystem::addExplosion(Vector3 center, float k, float r, float tau)
+ForceGenerator*  ParticleSystem::addExplosionGenerator(float k, float r, float tau)
 {
-	ExplosionGenerator* eg = new ExplosionGenerator(center, k, r, tau);
+	ExplosionGenerator* eg = new ExplosionGenerator(k, r, tau);
 	forceRegister.insert({eg, std::list<Particle* >() });
-	for (auto g : gList) {
-
-	}
 	return eg;
 
+}
+
+ForceGenerator* ParticleSystem::findForce(force_type type) {
+	for (auto it : forceRegister) {
+		if (it.first->getType() == type) return it.first;
+	}
+	return nullptr;
 }
 
 void ParticleSystem::applyForces(Particle* p)

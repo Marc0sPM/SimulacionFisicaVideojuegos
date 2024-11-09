@@ -43,7 +43,7 @@ RenderItem* eje_z;
 std::vector<Proyectil*> proyectiles;
 
 ParticleSystem* ps;
-
+ExplosionGenerator* eg = nullptr;
 
 defs definitions;
 
@@ -151,20 +151,22 @@ void initPhysics(bool interactive)
 	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f ,10 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 0, 0, 1));
 	auto g2 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
 	auto g1 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
-	auto grav1 = ps->addForce(new GravityGenerator(Vector3(0, 50, 0)));
+	eg = new ExplosionGenerator(5000.0f, 100.0f, 0.25f);
+	ps->addForce(eg);
+	ps->addRegister(eg, g1);
+	
+	//auto grav1 = ps->addForce(new GravityGenerator(Vector3(0, 50, 0)));
 	////ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
-	auto t = ps->addForce(new TorbellinoGenerator(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 2.0f));
+	//auto t = ps->addForce(new TorbellinoGenerator(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 2.0f));
 	//Se linkean fuerzas y particulas
-	ps->addRegister(grav1, g1);
-	ps->addRegister(t, g2);
+	//ps->addRegister(grav1, g1);
+	//ps->addRegister(t, g2);
 
 	#pragma endregion
 
 	#pragma region PRACTICA 4
 
 	#pragma endregion
-
-
 }
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
@@ -241,7 +243,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		setCamLat();
 		break;
 	case 'E':
-		ps->addExplosion(Vector3(0, 0, 0), 10000.0f, 100.0f, 0.25f);
+		if(eg != nullptr)
+			eg->explode(Vector3(0, 0, 0));
 		break;
 	default:
 		break;

@@ -16,7 +16,7 @@ protected:
 
 public:
 	WindGenerator(Vector3 center, Vector3 size, Vector3 wVel, float rozCoef, float dur = -1)
-		: center(center), size(size), windVelocity(wVel), rozCoef(rozCoef), ForceGenerator(dur) {
+		: center(center), size(size), windVelocity(wVel), rozCoef(rozCoef), ForceGenerator(dur, F_WIND) {
 	}
 
 	/**

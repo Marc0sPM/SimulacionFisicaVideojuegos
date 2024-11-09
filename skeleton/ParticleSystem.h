@@ -109,7 +109,18 @@ public:
 	*	@param tau contante de tiempo de la explosion
 	*	@param dur duracion de la explosion
 	*/
-	ForceGenerator* addExplosion(Vector3 center, float k, float r, float tau);
+	ForceGenerator* addExplosionGenerator(float k, float r, float tau);
+
+	/**
+	*	acitva la explosion del generador de explosiones
+	*	@param center centro de la explosion
+	*/
+	void addExplosion(Vector3 center);
+
+	/**
+	*	Devuelve el primer generador del tipo deseado dentro del registro
+	*/
+	ForceGenerator* findForce(force_type type);
 
 	/**
 	*	Aplica las fuerzas que generan los generadores a la particula
