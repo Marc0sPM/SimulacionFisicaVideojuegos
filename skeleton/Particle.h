@@ -5,6 +5,11 @@
 using namespace physx;
 const float GRAVITY = -10.0f;
 class ParticleSystem;
+
+enum shape {
+	SPHERE, 
+	BOX
+};
 class Particle
 {
 public:
@@ -21,7 +26,7 @@ public:
 	/**
 	*	Constructora de particula simple pensada para proyectil
 	*/
-	Particle(Vector3 Pos, Vector3 Vel, Vector3 acc = {0,0,0});
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 acc = {0,0,0}, Vector4 color = {0.8, 0.8, 0.8, 1.0}, shape sh = SPHERE);
 
 	/**
 	*	Constructora de particula pensada para un sistema de particulas
@@ -52,7 +57,7 @@ public:
 	/**
 	*	Inicializa valores de la particula tal como lo hace la constructora
 	*/
-	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, 0,0), bool isModel = false);
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, 0,0),shape sh = SPHERE ,bool isModel = false);
 
 	/**
 	*	Llama al metodo de integracion, compruba el tiempo de vida
@@ -151,6 +156,7 @@ public:
 	Vector3 getForce() const {
 		return force;
 	}
+	void setCenter(Vector3 c) { center = c; }
 
 protected:
 
@@ -175,7 +181,7 @@ protected:
 	Vector3 prevPos;
 
 	// Posicion central del generador
-	Vector3 center;
+	Vector3 center = Vector3(0, 0, 0);
 
 	//Radio de "vida" del generador
 	float rat;

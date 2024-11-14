@@ -76,6 +76,13 @@ void createAxis() {
 	eje_z = new RenderItem(sShape, zTr, Vector4(0, 0, 1, 1));
 	// ========================================
 }
+
+void deregisterAxis() {
+	DeregisterRenderItem(sphere);
+	DeregisterRenderItem(eje_x);
+	DeregisterRenderItem(eje_y);
+	DeregisterRenderItem(eje_z);
+}
 void crearProyectil(proy_type type) {
 	auto cam = GetCamera();
 	Vector3 camPos = cam->getTransform().p;
@@ -109,6 +116,7 @@ void setCamLat() {
 	cam->setEye(PxVec3(1000.0f, 100.0f, 0.0f));
 	cam->setDir(PxVec3(-1.0001f, 0.00001f, 0.00001f));
 }
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -133,7 +141,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	createAxis();
+	// createAxis();
 	ps = new ParticleSystem();
 
 	#pragma region PRACTICA 2
@@ -149,11 +157,14 @@ void initPhysics(bool interactive)
 	#pragma region PRACTICA 3
 	//Se crean particulas y fuerzas
 	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f ,10 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 0, 0, 1));
-	auto g2 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
+	
+	
+	/*auto g2 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
 	auto g1 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
 	eg = new ExplosionGenerator(5000.0f, 100.0f, 0.25f);
 	ps->addForce(eg);
-	ps->addRegister(eg, g1);
+	ps->addLink(eg, g1);*/
+	
 	
 	//auto grav1 = ps->addForce(new GravityGenerator(Vector3(0, 50, 0)));
 	////ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
@@ -166,6 +177,7 @@ void initPhysics(bool interactive)
 
 	#pragma region PRACTICA 4
 
+	ps->generateSpringDemo();
 	#pragma endregion
 }
 // Function to configure what happens in each step of physics
@@ -191,10 +203,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	DeregisterRenderItem(sphere);
-	DeregisterRenderItem(eje_x);
-	DeregisterRenderItem(eje_y);
-	DeregisterRenderItem(eje_z);
+	//deregisterAxis();
 
 	delete ps;
 	for (auto p : proyectiles) {

@@ -11,6 +11,7 @@
 #include "WindGenerator.h"
 #include "TorbellinoGenerator.h"
 #include "ExplosionGenerator.h"
+#include "AnchoredSpringFG.h"
 
 class ParticleSystem
 {
@@ -128,10 +129,24 @@ public:
 	*/
 	void applyForces(Particle* p);
 
-	void addRegister(ForceGenerator* fg, ParticleGenerator* pg);
+	/**
+	*	Linkea un generador de fuerzas a un generador de particulas de forma que todas las particulas que genere esten resgistradas a ese generador de fuerzas
+	*/
+	void addLink(ForceGenerator* fg, ParticleGenerator* pg);
 
-	void addForceToParticle(ForceGenerator* fg, Particle* p);
+	/**
+	*	Registra un particula a la lista de correspondiente del generador de fuerza
+	*/
+	void registerParticle(ForceGenerator* fg, Particle* p);
 
+	/**
+	*	Añade un generador de fuerzas a la lista fList
+	*/
 	ForceGenerator* addForce(ForceGenerator* fg);
+
+	/**
+	*	Crea una demostracion de con dos particulas para el funcionamiento de un muelle
+	*/
+	void generateSpringDemo();
 };
 

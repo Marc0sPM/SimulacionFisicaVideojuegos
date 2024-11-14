@@ -11,26 +11,37 @@ Particle::Particle() {
 	
 }
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc)
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc, Vector4 col, shape sh)
 {
-	init(Pos, Vel, acc);
+	color = col;
+	init(Pos, Vel, acc, sh);
 	
 }
 
 Particle::Particle(Particle const& p, bool isModel) {
 	color = p.color;
-	init(p.getPosition(), p.vel, p.acceleration, isModel);
+	init(p.getPosition(), p.vel, p.acceleration, SPHERE ,isModel);
 	center = p.getPosition();
 	rat = p.rat;
 	lifeTime = p.lifeTime;
 	mass = p.mass;
 }
 
-void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc, bool isModel) {
+void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc, shape sh, bool isModel) {
 	vel = Vel;
 	acceleration = acc;
 	pose = physx::PxTransform(Pos);
-	PxShape* shape = CreateShape(PxSphereGeometry(1));
+	PxShape* shape;
+	switch (sh)
+	{
+	case SPHERE:
+		shape = CreateShape(PxSphereGeometry(1));
+		break;
+	case BOX:
+		shape = CreateShape(PxBoxGeometry(1, 1, 1));
+		break;
+	}
+	
 	if (!isModel) {
 		renderItem = new RenderItem(shape, &pose, color);
 	}

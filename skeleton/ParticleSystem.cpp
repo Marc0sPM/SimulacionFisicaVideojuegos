@@ -135,11 +135,11 @@ void ParticleSystem::applyForces(Particle* p)
 	p->setForce(totalForce);
 }
 
-void ParticleSystem::addRegister(ForceGenerator* fg, ParticleGenerator* pg)	{
+void ParticleSystem::addLink(ForceGenerator* fg, ParticleGenerator* pg)	{
 	pg->linkForce(fg);
 }
 
-void ParticleSystem::addForceToParticle(ForceGenerator* fg, Particle* p) {
+void ParticleSystem::registerParticle(ForceGenerator* fg, Particle* p) {
 	auto it = forceRegister.find(fg);
 	it->second.push_back(p);
 }
@@ -147,5 +147,48 @@ void ParticleSystem::addForceToParticle(ForceGenerator* fg, Particle* p) {
 ForceGenerator* ParticleSystem::addForce(ForceGenerator* fg) {
 	forceRegister.insert({ fg, std::list<Particle* >() });
 	return fg;
+}
+
+void ParticleSystem::generateSpringDemo()
+{
+	// Ejercicio 2
+	Particle* p1 = new Particle(Vector3( - 10.0, 10.0, 0.0 ), Vector3(0.0, 0.0, 0.0), Vector3(0,0,0), Vector4(0.5, 0.0, 1.0, 1.0));
+	p1->setLifeTime(100);
+	p1->setRatius(1000);
+	p1->setMass(2.0f);
+
+	Particle* p2 = new Particle(Vector3(10.0, 10.0, 0.0 ), Vector3(0.0, 0.0, 0.0), Vector3(0, 0, 0), Vector4(1.0, 0.5, 0.0, 1.0));
+	p2->setRatius(1000);
+	p2->setLifeTime(100);
+	p2->setMass(2.0f);
+
+	addParticle(p1);
+	addParticle(p2);
+
+	SpringForceGenerator *sp1 = new SpringForceGenerator(0.98, 10, p2);
+	SpringForceGenerator* sp2 = new SpringForceGenerator(0.98, 10, p1);
+
+	addForce(sp1);
+	addForce(sp2);
+
+	registerParticle(sp1, p1);
+	registerParticle(sp2, p2);
+
+	//Ejercicio 1
+	Particle* p3 = new Particle(Vector3(0.0, 30.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(0, 0, 0), Vector4(1.0, 0.5, 0.0, 1.0));
+	p3->setLifeTime(1000);
+	p3->setRatius(1000);
+	p3->setMass(2.0);
+
+	addParticle(p3);
+
+	AnchoredSpringFG* ac1 = new AnchoredSpringFG(1, 20, Vector3(0, 30, 0));
+	addForce(ac1);
+
+	registerParticle(ac1, p3);
+
+	GravityGenerator* g1 = new GravityGenerator(Vector3(0, -9.8, 0));
+	addForce(g1);
+	registerParticle(g1, p3);
 }
 

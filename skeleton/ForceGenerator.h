@@ -13,7 +13,7 @@ enum force_type {
 class ForceGenerator
 {
 public:
-	ForceGenerator(float dur, force_type type = F_NONE, bool alive = true) :  duration(dur), type(type), alive(alive) {}
+	ForceGenerator(float dur = -1, force_type type = F_NONE, bool alive = true) :  duration(dur), type(type), alive(alive) {}
 	~ForceGenerator() {}
 
 	virtual Vector3 calculateForce(Particle* p) = 0;

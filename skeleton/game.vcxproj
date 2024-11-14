@@ -267,6 +267,8 @@
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="TorbellinoGenerator.cpp" />
+    <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.cpp" />
+    <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.cpp" />
     <ClCompile Include="UniformGenerator.cpp" />
     <ClCompile Include="WindGenerator.cpp" />
   </ItemGroup>
@@ -286,6 +288,8 @@
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="TorbellinoGenerator.h" />
+    <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.h" />
+    <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.h" />
     <ClInclude Include="UniformGenerator.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WindGenerator.h" />
