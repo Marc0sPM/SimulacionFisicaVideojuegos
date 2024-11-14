@@ -3,7 +3,7 @@
 class SpringForceGenerator : public ForceGenerator
 {
 public :
-	SpringForceGenerator(double k, double resting_length, Particle* other) 
+	SpringForceGenerator(float k, float resting_length, Particle* other) 
 		: _k(k), _resting_length(resting_length), _other(other) {}
 
 	void update(double t) override {}
@@ -21,6 +21,7 @@ public :
 	}
 
 	inline void setK(double k) { _k = k; }  
+	inline float& getK() { return _k; }
 
 	virtual ~SpringForceGenerator() {}
 

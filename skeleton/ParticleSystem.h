@@ -143,10 +143,5 @@ public:
 	*	Añade un generador de fuerzas a la lista fList
 	*/
 	ForceGenerator* addForce(ForceGenerator* fg);
-
-	/**
-	*	Crea una demostracion de con dos particulas para el funcionamiento de un muelle
-	*/
-	void generateSpringDemo();
 };
 
