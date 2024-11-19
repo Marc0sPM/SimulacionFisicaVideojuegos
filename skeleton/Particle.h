@@ -34,6 +34,10 @@ public:
 	Particle(Vector3 Pos, Vector3 Vel, float lifetime, Vector3 acc = {0,0,0});
 
 	/**
+	* Constructora para muelles y eso 
+	*/
+	Particle(Vector3 Pos, Vector3 size, Vector4 color = { 1,1,1,1 }, shape sh = SPHERE);
+	/**
 	*	Constructora a partir de otra particula para evitar la copia
 	*/
 	Particle(Particle const& p, bool isModel = false);
@@ -58,7 +62,7 @@ public:
 	/**
 	*	Inicializa valores de la particula tal como lo hace la constructora
 	*/
-	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, 0,0),shape sh = SPHERE ,bool isModel = false);
+	void init(Vector3 Pos, Vector3 Vel, Vector3 acc = Vector3(0, 0, 0), shape sh = SPHERE, bool isModel = false);
 
 	/**
 	*	Llama al metodo de integracion, compruba el tiempo de vida
@@ -158,6 +162,9 @@ public:
 		return force;
 	}
 	void setCenter(Vector3 c) { center = c; }
+	inline Vector3 getSize() const {
+		return size;
+	}
 
 protected:
 
@@ -183,6 +190,7 @@ protected:
 
 	// Posicion central del generador
 	Vector3 center = Vector3(0, 0, 0);
+	Vector3 size = Vector3(0, 0, 0);
 
 	//Radio de "vida" del generador
 	float rat;

@@ -11,6 +11,7 @@
 #include "Particle.h"
 #include "Proyectil.h"
 #include "ParticleSystem.h"
+#include "GameObject.h"
 
 #include <iostream>
 
@@ -44,6 +45,8 @@ std::vector<Proyectil*> proyectiles;
 
 ParticleSystem* ps = nullptr;
 ExplosionGenerator* eg = nullptr;
+
+GameObject* pruebaObjecto;
 
 defs definitions;
 
@@ -176,7 +179,7 @@ void initPhysics(bool interactive)
 	#pragma endregion
 
 	#pragma region PRACTICA 4
-
+	//pruebaObjecto = new GameObject(Vector3(0, 0, 0), PxBoxGeometry(30.f, 3.f, 30.f), Vector4(0.6f, 0.6f, 1.f, 1.f));
 	ps->generateSpringDemo();
 	#pragma endregion
 }

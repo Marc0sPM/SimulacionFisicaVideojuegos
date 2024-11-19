@@ -66,7 +66,7 @@ void ParticleSystem::addParticle(Particle* p) {
 
 ParticleGenerator* ParticleSystem::addUniformGenerator(Vector3 pos, Vector3 direction,float mass ,float rate, float range, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
-	Particle p = Particle(pos, direction);
+	Particle p = Particle(pos, direction, Vector3(0,0,0));
 	p.setRatius(rat);
 	p.setLifeTime(lifetime);
 	p.setColor(color);
@@ -78,7 +78,7 @@ ParticleGenerator* ParticleSystem::addUniformGenerator(Vector3 pos, Vector3 dire
 
 ParticleGenerator* ParticleSystem::addNormalGenerator(Vector3 pos, Vector3 direction,float mass ,float rate, Vector3 dev, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
-	Particle p = Particle(pos, direction);
+	Particle p = Particle(pos, direction, Vector3(0, 0, 0));
 	p.setRatius(rat);
 	p.setLifeTime(lifetime);
 	p.setColor(color);
@@ -91,7 +91,7 @@ ParticleGenerator* ParticleSystem::addNormalGenerator(Vector3 pos, Vector3 direc
 ParticleGenerator* ParticleSystem::addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass,float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
 {
 	// Crear una partícula base con las propiedades de la explosión
-	Particle p = Particle(pos, direction);
+	Particle p = Particle(pos, direction, Vector3(0, 0, 0));
 	p.setRatius(rat);
 	p.setLifeTime(lifetime);
 	p.setColor(color);

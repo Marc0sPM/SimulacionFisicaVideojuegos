@@ -3,6 +3,7 @@
 #include "Particle.h"
 #include "ArbitraryForce.h"
 #include "AnchoredSpringFG.h"
+#include "FlotationForceGenerator.h"
 class ParticleSystem;
 struct slink {
 	AnchoredSpringFG* s_an = nullptr;
@@ -36,11 +37,15 @@ private:
 	SpringForceGenerator* sp2 = nullptr;
 	// -------------------------------------
 	// 
-	// Ejercicio 2 -------------------------
+	// Ejercicio 1 -------------------------
 	Particle* p3 = nullptr;
 
 	AnchoredSpringFG* an1 = nullptr;
 	// -------------------------------------
+
+	// Ejercicio 3 -------------------------
+	FlotationForceGenerator* ffg;
+	Particle* f_p1;
 public:
 	SpringDemo(ParticleSystem* ps);
 	~SpringDemo() {}
@@ -69,5 +74,6 @@ public:
 	void createSlink();
 	void anchoredSpring();
 	void particleSpring();
+	void flotationSystem();
 };
 

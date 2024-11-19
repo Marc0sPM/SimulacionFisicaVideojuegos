@@ -17,7 +17,10 @@ void SpringDemo::init()
 	// particleSpring();
 
 	//Ejercicio 2 - opcional
-	createSlink();
+	// createSlink();
+
+	// Ejercicio 3
+	flotationSystem();
 }
 
 void SpringDemo::createSlink() {
@@ -152,4 +155,24 @@ void SpringDemo::anchoredSpring()
 	ar1 = new ArbitraryForce(arb_force, 2);
 	_ps->addForce(ar1);
 	_ps->registerParticle(ar1, p3);
+}
+
+void SpringDemo::flotationSystem() {
+	const float water_density = 1000.f;
+	Vector3 obj_size = { 4.f, 4.f, 4.f };
+	f_p1 = new Particle(Vector3(0, 40, 0), obj_size, { 1,0,0,1 }, shape::BOX);
+	float perfect_mass = (obj_size.x * obj_size.y * obj_size.z) * water_density;
+	float mass_offset = 4000;
+	f_p1->setMass(perfect_mass - mass_offset);
+	f_p1->setLifeTime(1000);
+	f_p1->setRatius(10000);
+
+	_ps->addParticle(f_p1);
+
+	float surface_height = 50.f;
+	ffg = new FlotationForceGenerator(surface_height, obj_size, water_density);
+	_ps->addForce(ffg);
+
+	_ps->registerParticle(ffg, f_p1);
+	_ps->registerParticle(g1, f_p1);
 }

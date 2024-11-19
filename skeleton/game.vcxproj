@@ -256,7 +256,9 @@
     <ClCompile Include="ArbitraryForce.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="ExplosionGenerator.cpp" />
+    <ClCompile Include="FlotationForceGenerator.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GravityGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalGenerator.cpp" />
@@ -269,8 +271,8 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="SpringDemo.cpp" />
     <ClCompile Include="TorbellinoGenerator.cpp" />
-    <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.cpp" />
-    <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.cpp" />
+    <ClCompile Include="AnchoredSpringFG.cpp" />
+    <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformGenerator.cpp" />
     <ClCompile Include="WindGenerator.cpp" />
   </ItemGroup>
@@ -280,7 +282,9 @@
     <ClInclude Include="core.hpp" />
     <ClInclude Include="ExplosionGenerator.h" />
     <ClInclude Include="FireWorkGenerator.h" />
+    <ClInclude Include="FlotationForceGenerator.h" />
     <ClInclude Include="ForceGenerator.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GravityGenerator.h" />
     <ClInclude Include="NormalGenerator.h" />
     <ClInclude Include="Particle.h" />
@@ -292,8 +296,8 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="SpringDemo.h" />
     <ClInclude Include="TorbellinoGenerator.h" />
-    <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.h" />
-    <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.h" />
+    <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="UniformGenerator.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WindGenerator.h" />

@@ -18,6 +18,13 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc, Vector4 col, shape sh)
 	
 }
 
+Particle::Particle(Vector3 Pos, Vector3 s, Vector4 col, shape sh)
+{
+	color = col;
+	size = s;
+	init(Pos, Vector3(0, 0, 0), Vector3(0, 0, 0),  sh);
+}
+
 Particle::Particle(Particle const& p, bool isModel) {
 	color = p.color;
 	init(p.getPosition(), p.vel, p.acceleration, SPHERE ,isModel);
@@ -35,10 +42,16 @@ void Particle::init(Vector3 Pos, Vector3 Vel, Vector3 acc, shape sh, bool isMode
 	switch (sh)
 	{
 	case SPHERE:
-		shape = CreateShape(PxSphereGeometry(1));
+		if (size.isZero())
+			shape = CreateShape(PxSphereGeometry(1));
+		else
+			shape = CreateShape(PxSphereGeometry(size.x));
 		break;
 	case BOX:
-		shape = CreateShape(PxBoxGeometry(1, 1, 1));
+		if (size.isZero())
+			shape = CreateShape(PxBoxGeometry(1, 1, 1));
+		else
+			shape = CreateShape(PxBoxGeometry(size));
 		break;
 	}
 	
