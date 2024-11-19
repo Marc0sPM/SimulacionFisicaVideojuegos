@@ -22,8 +22,8 @@ public:
 	}
 	void update(double t) {
 		if (active) {
-			duration -= t;
-			if (duration < 0) active = false;
+			explosion_dur -= t;
+			if (explosion_dur < 0) active = false;
 		}
 	}
 
@@ -34,6 +34,7 @@ public:
 	void explode(Vector3 c) {
 		active = true;
 		center = c;
+		explosion_dur = duration;
 	}
 private:
 	//Intensidad de la explosion
@@ -46,5 +47,7 @@ private:
 	Vector3 center = Vector3(0, 0, 0);
 	//Explosion activa o no
 	bool active = false;
+	//Duracion de la explosion
+	float explosion_dur;
 };
 

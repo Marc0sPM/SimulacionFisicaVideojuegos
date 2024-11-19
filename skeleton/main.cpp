@@ -42,11 +42,8 @@ RenderItem* eje_z;
 
 std::vector<Proyectil*> proyectiles;
 
-ParticleSystem* ps;
+ParticleSystem* ps = nullptr;
 ExplosionGenerator* eg = nullptr;
-SpringForceGenerator* sp1;
-SpringForceGenerator* sp2;
-AnchoredSpringFG* ac1;
 
 defs definitions;
 
@@ -101,50 +98,6 @@ void crearProyectil(proy_type type) {
 	default:
 		break;
 	}
-}
-
-void generateSpringDemo()
-{
-	// Ejercicio 2
-	Particle* p1 = new Particle(Vector3(-10.0, 10.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(0, 0, 0), Vector4(0.5, 0.0, 1.0, 1.0));
-	p1->setLifeTime(100);
-	p1->setRatius(1000);
-	p1->setMass(2.0f);
-
-	Particle* p2 = new Particle(Vector3(10.0, 10.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(0, 0, 0), Vector4(1.0, 0.5, 0.0, 1.0));
-	p2->setRatius(1000);
-	p2->setLifeTime(100);
-	p2->setMass(2.0f);
-
-	ps->addParticle(p1);
-	ps->addParticle(p2);
-
-	sp1 = new SpringForceGenerator(0.98, 10, p2);
-	sp2 = new SpringForceGenerator(0.98, 10, p1);
-
-	ps->addForce(sp1);
-	ps->addForce(sp2);
-
-	ps->registerParticle(sp1, p1);
-	ps->registerParticle(sp2, p2);
-
-	//Ejercicio 1
-	Particle* p3 = new Particle(Vector3(0.0, 30.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(0, 0, 0), Vector4(1.0, 0.5, 0.0, 1.0));
-	p3->setLifeTime(1000);
-	p3->setRatius(10000);
-	p3->setMass(2.0);
-
-	ps->addParticle(p3);
-
-	ac1 = new AnchoredSpringFG(1, 20, Vector3(0, 30, 0));
-	ac1->setAnchorLife(1000);
-	ps->addForce(ac1);
-
-	ps->registerParticle(ac1, p3);
-
-	GravityGenerator* g1 = new GravityGenerator(Vector3(0, -9.8, 0));
-	ps->addForce(g1);
-	ps->registerParticle(g1, p3);
 }
 
 /**
@@ -224,7 +177,7 @@ void initPhysics(bool interactive)
 
 	#pragma region PRACTICA 4
 
-	generateSpringDemo();
+	ps->generateSpringDemo();
 	#pragma endregion
 }
 // Function to configure what happens in each step of physics
@@ -303,10 +256,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			eg->explode(Vector3(0, 0, 0));
 		break;
 	case 'J': 
-		ac1->getK() += 0.1;
+		ps->getSpringDemo()->increaseAnK();
 		break;
 	case 'K':
-		ac1->getK() -= 0.1;
+		ps->getSpringDemo()->decreaseAnK();
+		break;
+	case 'L':
+		ps->getSpringDemo()->applyArbForce();
 		break;
 	default:
 		break;

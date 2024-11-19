@@ -253,6 +253,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArbitraryForce.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="ExplosionGenerator.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
@@ -266,6 +267,7 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="SpringDemo.cpp" />
     <ClCompile Include="TorbellinoGenerator.cpp" />
     <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.cpp" />
     <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.cpp" />
@@ -273,6 +275,7 @@
     <ClCompile Include="WindGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArbitraryForce.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="ExplosionGenerator.h" />
@@ -287,6 +290,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="SpringDemo.h" />
     <ClInclude Include="TorbellinoGenerator.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.h" />

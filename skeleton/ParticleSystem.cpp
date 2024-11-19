@@ -149,3 +149,10 @@ ForceGenerator* ParticleSystem::addForce(ForceGenerator* fg) {
 	return fg;
 }
 
+void ParticleSystem::generateSpringDemo()
+{
+	spd = new SpringDemo(this);
+	spd->init();
+	
+}
+

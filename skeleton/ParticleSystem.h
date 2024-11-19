@@ -7,11 +7,8 @@
 #include "UniformGenerator.h"
 #include "NormalGenerator.h"
 #include "FireWorkGenerator.h"
-#include "GravityGenerator.h"
-#include "WindGenerator.h"
-#include "TorbellinoGenerator.h"
 #include "ExplosionGenerator.h"
-#include "AnchoredSpringFG.h"
+#include "SpringDemo.h"
 
 class ParticleSystem
 {
@@ -20,7 +17,9 @@ private:
 	std::vector<ParticleGenerator* > gList; // cambiar a list si se quiere borrar generadores de forma dinamica
 	std::vector<Particle*> toErase;			// vector de particulas a eliminar
 	std::unordered_map<ForceGenerator*, std::list<Particle*>> forceRegister; //resgistro de generadores de fuerzas y a que particulas afectan;
-	std::vector<ForceGenerator* > fToErase;	
+	std::vector<ForceGenerator* > fToErase;
+
+	SpringDemo* spd = nullptr;
 
 public:
 	ParticleSystem() {}
@@ -42,10 +41,12 @@ public:
 
 			delete generator;  
 		}
-
 		pList.clear();
 		toErase.clear();
 		gList.clear();
+
+		if (spd) delete spd;
+		spd = nullptr;
 	}
 
 	/**
@@ -143,5 +144,12 @@ public:
 	*	Añade un generador de fuerzas a la lista fList
 	*/
 	ForceGenerator* addForce(ForceGenerator* fg);
+
+	/** 
+	*	Genera una demo para los muelles
+	*/
+	void generateSpringDemo();
+
+	SpringDemo* getSpringDemo() { return spd; }
 };
 

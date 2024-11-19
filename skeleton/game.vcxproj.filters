@@ -23,6 +23,8 @@
     <ClCompile Include="ExplosionGenerator.cpp" />
     <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.cpp" />
     <ClCompile Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.cpp" />
+    <ClCompile Include="SpringDemo.cpp" />
+    <ClCompile Include="ArbitraryForce.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -49,6 +51,8 @@
     <ClInclude Include="ExplosionGenerator.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SpringForceGenerator.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\AnchoredSpringFG.h" />
+    <ClInclude Include="SpringDemo.h" />
+    <ClInclude Include="ArbitraryForce.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
