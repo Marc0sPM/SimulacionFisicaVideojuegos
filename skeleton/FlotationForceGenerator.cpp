@@ -11,28 +11,23 @@ FlotationForceGenerator::~FlotationForceGenerator() {}
 Vector3 FlotationForceGenerator::calculateForce(Particle* p) {
     // Obtener la posición vertical del objeto y calcular la inmersión.
     float objectPositionY = p->getPosition().y;
-    float immersedFraction = 0.0f;
+    float immersed_level= 0.0f;
 
     if (objectPositionY - _liquidLevel > _objectHeight * 0.5f) {
-        // Caso 1: El objeto está completamente fuera del líquido.
-        immersedFraction = 0.0f;
+        // Completamente fuera
+        immersed_level = 0.0f;
     }
     else if (_liquidLevel - objectPositionY > _objectHeight * 0.5f) {
-        // Caso 2: El objeto está completamente sumergido.
-        immersedFraction = 1.0f;
+        // Completamente sumergido
+        immersed_level = 1.0f;
     }
     else {
-        // Caso 3: El objeto está parcialmente sumergido.
-        immersedFraction = (_liquidLevel - objectPositionY) / _objectHeight + 0.5f;
+        // Parcialmente sumergido.
+        immersed_level = (_liquidLevel - objectPositionY) / _objectHeight + 0.5f;
     }
 
-    // Calcular la fuerza de flotación.
-    float buoyancyForce = _liquidDensity * _objectVolume * immersedFraction * _gravity;
+    float buoyancy_force = _liquidDensity * _objectVolume * immersed_level * _gravity;
 
-    // Retornar el vector de fuerza (solo actúa en el eje Y).
-    return Vector3(0.0f, buoyancyForce, 0.0f);
-}
-
-void FlotationForceGenerator::updateLiquidLevel(float newLevel) {
-    _liquidLevel = newLevel;
+    
+    return Vector3(0.0f, buoyancy_force, 0.0f);
 }

@@ -11,6 +11,7 @@
 #include "Particle.h"
 #include "Proyectil.h"
 #include "ParticleSystem.h"
+#include "TorbellinoGenerator.h"
 #include "GameObject.h"
 
 #include <iostream>
@@ -162,19 +163,19 @@ void initPhysics(bool interactive)
 	//ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f ,10 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 0, 0, 1));
 	
 	
-	/*auto g2 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f ,100 , 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
-	auto g1 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f ,100 , 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
+	//auto g2 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0f, 100, 0.01f, 25.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(0, 1, 0, 1));
+	/*auto g1 = ps->addUniformGenerator(Vector3(0, 0, 0), Vector3(0, 0, 0), 0.01f, 100, 0.01f, 15.0f, spawn_position_distribution::UNIFORM_SP, 1000.0f, 50, Vector4(1, 1, 0, 1));
 	eg = new ExplosionGenerator(5000.0f, 100.0f, 0.25f);
 	ps->addForce(eg);
 	ps->addLink(eg, g1);*/
 	
 	
-	//auto grav1 = ps->addForce(new GravityGenerator(Vector3(0, 50, 0)));
+	//auto grav1 = ps->addForce(new GravityGenerator(Vector3(0, -15, 0)));
 	////ps->addWind(Vector3(0, 50, 0), Vector3(100, 30, 100), Vector3(5, 1, -5), 0.25f);
-	//auto t = ps->addForce(new TorbellinoGenerator(Vector3(0, 50, 0), Vector3(3000, 5000, 3000), 0.25, 2.0f));
+	//auto t = ps->addForce(new TorbellinoGenerator(Vector3(0, 50, 0), Vector3(300, 5000, 300), 0.25, 2.0f));
 	//Se linkean fuerzas y particulas
-	//ps->addRegister(grav1, g1);
-	//ps->addRegister(t, g2);
+	//ps->addLink(grav1, g2);
+	//ps->addLink(t, g2);
 
 	#pragma endregion
 

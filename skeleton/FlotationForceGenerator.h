@@ -13,12 +13,6 @@ public:
 
     Vector3 calculateForce(Particle* p) override;
 
-    /**
-     * Actualiza la posición del nivel del líquido (opcional para dinámicas).
-     * @param newLevel Nueva altura del nivel del líquido.
-     */
-    void updateLiquidLevel(float newLevel);
-
     void update(double t) override {}
 
 private:

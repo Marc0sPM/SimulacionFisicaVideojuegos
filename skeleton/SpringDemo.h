@@ -71,7 +71,13 @@ public:
 	inline void applyArbForce() {
 		if(ar1) ar1->apply();
 	}
+	/**
+	* Crea un slink
+	*/
 	void createSlink();
+	/**
+	* Crea una particula atada a unn sitio fijo mediante un muelle
+	*/
 	void anchoredSpring();
 	void particleSpring();
 	void flotationSystem();

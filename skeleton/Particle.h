@@ -45,7 +45,7 @@ public:
 	*	Destructora, desregistra el renderItem que representa la particula
 	*/
 	virtual ~Particle() {
-		std::cout << "Destruye particula: " << this << "\n";
+		// std::cout << "Destruye particula: " << this << "\n";
 		if (renderItem != nullptr) {
 			//std::cout << "BORRA PARTICULA\n";
  			DeregisterRenderItem(renderItem);

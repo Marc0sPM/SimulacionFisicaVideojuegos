@@ -14,13 +14,13 @@ void SpringDemo::init()
 	// anchoredSpring();
 
 	//Ejercicio 2
-	// particleSpring();
+	 particleSpring();
 
 	//Ejercicio 2 - opcional
 	// createSlink();
 
 	// Ejercicio 3
-	flotationSystem();
+	//flotationSystem();
 }
 
 void SpringDemo::createSlink() {
@@ -125,8 +125,8 @@ void SpringDemo::particleSpring()
 	_ps->addParticle(p1);
 	_ps->addParticle(p2);
 
-	sp1 = new SpringForceGenerator(0.98, 10, p2);
-	sp2 = new SpringForceGenerator(0.98, 10, p1);
+	sp1 = new SpringForceGenerator(1.5, 10, p2);
+	sp2 = new SpringForceGenerator(1.5, 10, p1);
 
 	_ps->addForce(sp1);
 	_ps->addForce(sp2);
@@ -163,7 +163,7 @@ void SpringDemo::flotationSystem() {
 	f_p1 = new Particle(Vector3(0, 40, 0), obj_size, { 1,0,0,1 }, shape::BOX);
 	float perfect_mass = (obj_size.x * obj_size.y * obj_size.z) * water_density;
 	float mass_offset = 4000;
-	f_p1->setMass(perfect_mass - mass_offset);
+	f_p1->setMass(mass_offset);
 	f_p1->setLifeTime(1000);
 	f_p1->setRatius(10000);
 
