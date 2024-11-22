@@ -1,4 +1,5 @@
 #include "ForceGenerator.h"
+#include "GameObject.h"
 
 class FlotationForceGenerator : public ForceGenerator {
 public:
@@ -15,10 +16,13 @@ public:
 
     void update(double t) override {}
 
+
 private:
     float _liquidLevel;     // Altura del nivel del líquido.
     float _objectHeight;    // Altura del objeto sumergido.
     float _objectVolume;    // Volumen del objeto sumergido.
     float _liquidDensity;   // Densidad del líquido.
     const float _gravity = 9.8f; // Gravedad
+    
+    GameObject* surface = nullptr;
 };

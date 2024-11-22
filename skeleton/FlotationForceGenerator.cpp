@@ -4,9 +4,14 @@ FlotationForceGenerator::FlotationForceGenerator(float liquidLevel, Vector3 obje
     : _liquidLevel(liquidLevel),
     _objectHeight(objectSize.y),
     _objectVolume(objectSize.x* objectSize.y* objectSize.z),
-    _liquidDensity(liquidDensity) {}
+    _liquidDensity(liquidDensity) {
 
-FlotationForceGenerator::~FlotationForceGenerator() {}
+    surface = new GameObject(Vector3(0, liquidLevel, 0), PxBoxGeometry(30, 0.1, 30), Vector4(0.6, 0.6, 1.0, 1.0));
+}
+
+FlotationForceGenerator::~FlotationForceGenerator() {
+    delete surface;
+}
 
 Vector3 FlotationForceGenerator::calculateForce(Particle* p) {
     // Obtener la posición vertical del objeto y calcular la inmersión.
