@@ -14,7 +14,7 @@ void SpringDemo::init()
 	// anchoredSpring();
 
 	//Ejercicio 2
-	 particleSpring();
+	// particleSpring();
 
 	//Ejercicio 2 - opcional
 	// createSlink();
