@@ -4,14 +4,19 @@ using namespace physx;
 
 class GameObject
 {
-private:
-	RenderItem* _renderItem;
-	PxTransform _transform;
-	Vector4 _color;
+protected:
+	RenderItem*		_renderItem		=	NULL;
+	PxTransform		_transform;
+	Vector4			_color;
+	PxShape*		_shape			=	NULL;
+
+	void init_render(PxRigidActor* actor) {
+		_renderItem = new RenderItem(_shape, actor, _color);
+	}
+
 public:
 	GameObject(Vector3 pos, PxGeometry& geometry, Vector4 color)
-		: _transform(pos), _color(color) {
-		_renderItem = new RenderItem(CreateShape(geometry), &_transform, _color);
+		: _transform(pos), _color(color), _shape(CreateShape(geometry)) {
 	}
 
 	inline void setPosition(const Vector3& newpos) {

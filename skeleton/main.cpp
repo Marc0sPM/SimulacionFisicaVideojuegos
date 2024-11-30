@@ -12,7 +12,8 @@
 #include "Proyectil.h"
 #include "ParticleSystem.h"
 #include "TorbellinoGenerator.h"
-#include "GameObject.h"
+#include "StaticObject.h"
+#include "DynamicObject.h"
 
 #include <iostream>
 
@@ -146,7 +147,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	// createAxis();
-	ps = new ParticleSystem();
+	// ps = new ParticleSystem();
 
 	#pragma region PRACTICA 2
 	//// Efecto cascada
@@ -181,8 +182,25 @@ void initPhysics(bool interactive)
 
 	#pragma region PRACTICA 4
 	//pruebaObjecto = new GameObject(Vector3(0, 0, 0), PxBoxGeometry(30.f, 3.f, 30.f), Vector4(0.6f, 0.6f, 1.f, 1.f));
-	ps->generateSpringDemo();
+	// ps->generateSpringDemo();
 	#pragma endregion
+
+#pragma region PRACTICA 5
+	StaticObject* algo = new StaticObject(gPhysics, gScene, {0,0,0}, PxBoxGeometry(7,20,7), {1,0,1,1});
+
+	DynamicObject* obj = new DynamicObject(
+		gPhysics,
+		gScene,
+		{ 0, 100, 0 },
+		PxBoxGeometry(4, 4, 4),
+		{ 0,0,0,1 },
+		{ 0,5,0 },
+		{ 0,0,0 },
+		0.30
+	);
+
+#pragma endregion
+
 }
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
@@ -198,7 +216,8 @@ void stepPhysics(bool interactive, double t)
 		p->integrate(Particle::integrateType::_EULER_SEMI, t);
 	}
 	// mParticle->integrate(Particle::integrateType::_EULER,  t);
-	ps->update(t);
+	if(ps)
+		ps->update(t);
 }
 
 // Function to clean data
@@ -208,8 +227,8 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 	//deregisterAxis();
-
-	delete ps;
+	if(ps)
+		delete ps;
 	for (auto p : proyectiles) {
 		delete p;
 	}

@@ -27,6 +27,8 @@
     <ClCompile Include="ArbitraryForce.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="FlotationForceGenerator.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
+    <ClCompile Include="DynamicObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -57,6 +59,8 @@
     <ClInclude Include="ArbitraryForce.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="FlotationForceGenerator.h" />
+    <ClInclude Include="StaticObject.h" />
+    <ClInclude Include="DynamicObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
