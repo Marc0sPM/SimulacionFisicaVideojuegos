@@ -14,6 +14,8 @@
 #include "TorbellinoGenerator.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
+#include "RBSystem.h"
+#include "RWindGenerator.h"
 
 #include <iostream>
 
@@ -48,7 +50,7 @@ std::vector<Proyectil*> proyectiles;
 ParticleSystem* ps = nullptr;
 ExplosionGenerator* eg = nullptr;
 
-GameObject* pruebaObjecto;
+RBSystem* rbs = NULL;
 
 defs definitions;
 
@@ -186,19 +188,12 @@ void initPhysics(bool interactive)
 	#pragma endregion
 
 #pragma region PRACTICA 5
-	StaticObject* algo = new StaticObject(gPhysics, gScene, {0,0,0}, PxBoxGeometry(7,20,7), {1,0,1,1});
-
-	DynamicObject* obj = new DynamicObject(
-		gPhysics,
-		gScene,
-		{ 0, 100, 0 },
-		PxBoxGeometry(4, 4, 4),
-		{ 0,0,0,1 },
-		{ 0,5,0 },
-		{ 0,0,0 },
-		0.30
-	);
-
+	rbs = new RBSystem(gPhysics, gScene);
+	auto Objeto2 = rbs->addDynamic({ 0, 10, 0 }, &PxBoxGeometry(4, 4, 4), { 0,0,0,1 }, 0.30); 
+	auto Suelo = rbs->addStatic({ 0, -20, 0 }, &PxBoxGeometry(20, 0.01, 20), { 1, 0.8, 0.8, 1 });
+	
+	auto viento = rbs->addForce(new RWindGenerator({ 10 ,0,1 }, 0.25f));
+	rbs->registerObject(viento, Objeto2);
 #pragma endregion
 
 }
@@ -216,8 +211,9 @@ void stepPhysics(bool interactive, double t)
 		p->integrate(Particle::integrateType::_EULER_SEMI, t);
 	}
 	// mParticle->integrate(Particle::integrateType::_EULER,  t);
-	if(ps)
-		ps->update(t);
+	if(ps)	ps->update(t);
+
+	if (rbs) rbs->update(t);
 }
 
 // Function to clean data
@@ -229,6 +225,8 @@ void cleanupPhysics(bool interactive)
 	//deregisterAxis();
 	if(ps)
 		delete ps;
+
+	if (rbs) delete rbs;
 	for (auto p : proyectiles) {
 		delete p;
 	}

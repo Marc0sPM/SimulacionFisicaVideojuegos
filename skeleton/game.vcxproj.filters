@@ -29,6 +29,9 @@
     <ClCompile Include="FlotationForceGenerator.cpp" />
     <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
+    <ClCompile Include="RBSystem.cpp" />
+    <ClCompile Include="RigidForceGenerator.cpp" />
+    <ClCompile Include="RWindGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -61,6 +64,9 @@
     <ClInclude Include="FlotationForceGenerator.h" />
     <ClInclude Include="StaticObject.h" />
     <ClInclude Include="DynamicObject.h" />
+    <ClInclude Include="RBSystem.h" />
+    <ClInclude Include="RigidForceGenerator.h" />
+    <ClInclude Include="RWindGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

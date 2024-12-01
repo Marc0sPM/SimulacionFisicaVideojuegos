@@ -6,7 +6,7 @@ FlotationForceGenerator::FlotationForceGenerator(float liquidLevel, Vector3 obje
     _objectVolume(objectSize.x* objectSize.y* objectSize.z),
     _liquidDensity(liquidDensity) {
 
-    surface = new GameObject(Vector3(0, liquidLevel, 0), PxBoxGeometry(30, 0.1, 30), Vector4(0.6, 0.6, 1.0, 1.0));
+    surface = new GameObject(Vector3(0, liquidLevel, 0), &PxBoxGeometry(30, 0.1, 30), Vector4(0.6, 0.6, 1.0, 1.0), NONE);
 }
 
 FlotationForceGenerator::~FlotationForceGenerator() {

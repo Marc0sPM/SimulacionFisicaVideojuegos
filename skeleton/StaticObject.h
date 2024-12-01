@@ -3,10 +3,10 @@
 class StaticObject : public GameObject
 {
 private:
-	PxRigidStatic* _rb;
+	PxRigidStatic* _rb = nullptr;
 public: 
-	StaticObject(PxPhysics* phy, PxScene* scene, Vector3 pos, PxGeometry& geo, Vector4 color) : 
-		GameObject(pos, geo, color)
+	StaticObject(PxPhysics* phy, PxScene* scene, Vector3 pos, PxGeometry* geo, Vector4 color) : 
+		GameObject(pos, geo, color, rb_type::STATIC)
 	{
 		_rb = phy->createRigidStatic(_transform);
 		_rb->attachShape(*_shape);
@@ -14,8 +14,10 @@ public:
 
 		init_render(_rb);
 	}
+	~StaticObject() {
 
-	inline PxRigidStatic* getRB() const {
+	}
+	inline PxRigidStatic* getRB(){
 		return _rb;
 	}
 };
