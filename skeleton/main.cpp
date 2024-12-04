@@ -16,6 +16,7 @@
 #include "DynamicObject.h"
 #include "RBSystem.h"
 #include "RWindGenerator.h"
+#include "HundeFlota/HF_Scene.h"
 
 #include <iostream>
 
@@ -53,6 +54,8 @@ ExplosionGenerator* eg = nullptr;
 RBSystem* rbs = NULL;
 
 defs definitions;
+
+HF_Scene* hunde_scene;
 
 void printVec(const Vector3& v) {
 	std::cout << v.x << ", " << v.y << ", " << v.z << "\n";
@@ -187,7 +190,7 @@ void initPhysics(bool interactive)
 	// ps->generateSpringDemo();
 	#pragma endregion
 
-#pragma region PRACTICA 5
+	#pragma region PRACTICA 5
 	rbs = new RBSystem(gPhysics, gScene);
 	auto Objeto2 = rbs->addDynamic({ 0, 10, 0 }, &PxBoxGeometry(4, 4, 4), { 0,0,0,1 }, 0.30); 
 	auto Suelo = rbs->addStatic({ 0, -20, 0 }, &PxBoxGeometry(20, 0.01, 20), { 1, 0.8, 0.8, 1 });
@@ -195,6 +198,12 @@ void initPhysics(bool interactive)
 	auto viento = rbs->addForce(new RWindGenerator({ 10 ,0,1 }, 0.25f));
 	rbs->registerObject(viento, Objeto2);
 #pragma endregion
+
+#pragma region HundeFlota
+	hunde_scene = new HF_Scene();
+	hunde_scene->init();
+#pragma endregion
+
 
 }
 // Function to configure what happens in each step of physics
