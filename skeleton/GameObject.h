@@ -21,9 +21,9 @@ protected:
 	float _life_time = -1; // Tiempo de vida (-1 es infinito)
 
 	/**
-	*	Inicializa el render item del objeto
+	*	Inicializa el render item del objeto con rigidBody
 	*/
-	inline void init_render(PxRigidActor* actor) {
+	inline void init_render_RB(PxRigidActor* actor) {
 		_renderItem = new RenderItem(_shape, actor, _color);
 	}
 
@@ -37,6 +37,12 @@ public:
 			_renderItem = nullptr;
 		}
 		_shape = nullptr;
+	}
+	/**
+	*	Inicializa el render item sin rigid body
+	*/
+	inline void init_render() {
+		_renderItem = new RenderItem(_shape, &_transform, _color);
 	}
 	/**
 	*	Actualiza el tiempo de vida del objeto 
@@ -73,6 +79,21 @@ public:
 	}
 	inline rb_type getRBType() const {
 		return _rb_type;
+	}
+	/**
+	*  Devuelve un Vector3 con el tamaño, solo vale con BoxGeometry
+	*	Usa halfExtents
+	*/
+	inline Vector3 getBoxSize() {
+		auto geoType = _shape->getGeometryType();
+		if (geoType == PxGeometryType::eBOX) {
+			PxBoxGeometry box;
+			_shape->getBoxGeometry(box);
+			Vector3 size(box.halfExtents.x, box.halfExtents.y, box.halfExtents.z);
+			return size;
+		}
+		return { 0,0,0 };
+
 	}
 };
 

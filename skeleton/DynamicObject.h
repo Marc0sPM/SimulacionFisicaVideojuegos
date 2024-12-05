@@ -3,12 +3,11 @@
 
 class DynamicObject : public GameObject	{
 
-private:
+protected:
 	PxRigidDynamic* _rb;
 	/**
 	*	@returns el vector de inercia de forma manual en base a la forma del objeto dinamico
 	*/
-	Vector3 calculateInertiaTensor(float mass);
 
 public:
 	DynamicObject(PxPhysics* phy, PxScene* scene, Vector3 pos, PxGeometry* geo, Vector4 color, double mass);
@@ -19,6 +18,8 @@ public:
 		return _rb;
 	}
 	
+	Vector3 calculateInertiaTensor(float mass);
+
 	inline void setLinearVelocity(Vector3 vel) {
 		_rb->setLinearVelocity(vel);
 	}

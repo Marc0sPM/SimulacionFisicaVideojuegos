@@ -1,9 +1,12 @@
 #include "DynamicObject.h"
-
+#include <iostream>
 DynamicObject::DynamicObject(PxPhysics* phy, PxScene* scene, Vector3 pos, PxGeometry* geo, Vector4 color, double mass) :
 	GameObject(pos, geo, color, rb_type::DYNAMIC)
 {
+
 	_rb = phy->createRigidDynamic(_transform);
+    std::cout << "Transform position: " << _transform.p.x << ", " << _transform.p.y << ", " << _transform.p.z << std::endl;
+
 	_rb->attachShape(*_shape);
 	
     // Calculo manual de la inercia
@@ -15,7 +18,7 @@ DynamicObject::DynamicObject(PxPhysics* phy, PxScene* scene, Vector3 pos, PxGeom
 	// PxRigidBodyExt::updateMassAndInertia(*_rb, mass);
 	scene->addActor(*_rb);
 
-	init_render(_rb);
+	init_render_RB(_rb);
 }
 
 

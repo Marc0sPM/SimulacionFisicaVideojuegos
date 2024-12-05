@@ -254,6 +254,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArbitraryForce.cpp" />
+    <ClCompile Include="HundeFlota\BoatSystem.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="ExplosionGenerator.cpp" />
@@ -261,6 +262,8 @@
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GravityGenerator.cpp" />
+    <ClCompile Include="HundeFlota\FlotationSystem.cpp" />
+    <ClCompile Include="HundeFlota\HF_Scene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalGenerator.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -280,7 +283,6 @@
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformGenerator.cpp" />
     <ClCompile Include="WindGenerator.cpp" />
-    <ClCompile Include="HundeFlota\HF_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArbitraryForce.h" />
@@ -293,6 +295,9 @@
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GravityGenerator.h" />
+    <ClInclude Include="HundeFlota\BoatSystem.h" />
+    <ClInclude Include="HundeFlota\FlotationSystem.h" />
+    <ClInclude Include="HundeFlota\HF_Scene.h" />
     <ClInclude Include="NormalGenerator.h" />
     <ClInclude Include="object_defs.h" />
     <ClInclude Include="Particle.h" />
@@ -313,7 +318,6 @@
     <ClInclude Include="UniformGenerator.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WindGenerator.h" />
-    <ClCompile Include="HundeFlota\HF_Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

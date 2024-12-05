@@ -10,28 +10,77 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Proyectil.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="ParticleGenerator.cpp" />
-    <ClCompile Include="UniformGenerator.cpp" />
-    <ClCompile Include="NormalGenerator.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
-    <ClCompile Include="GravityGenerator.cpp" />
-    <ClCompile Include="WindGenerator.cpp" />
-    <ClCompile Include="TorbellinoGenerator.cpp" />
-    <ClCompile Include="ExplosionGenerator.cpp" />
-    <ClCompile Include="SpringForceGenerator.cpp" />
-    <ClCompile Include="AnchoredSpringFG.cpp" />
-    <ClCompile Include="SpringDemo.cpp" />
-    <ClCompile Include="ArbitraryForce.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="FlotationForceGenerator.cpp" />
-    <ClCompile Include="StaticObject.cpp" />
-    <ClCompile Include="DynamicObject.cpp" />
-    <ClCompile Include="RBSystem.cpp" />
-    <ClCompile Include="RigidForceGenerator.cpp" />
-    <ClCompile Include="RWindGenerator.cpp" />
+    <ClCompile Include="TorbellinoGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="WindGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringForceGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringDemo.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="Proyectil.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="FlotationForceGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionGenerator.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="ArbitraryForce.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchoredSpringFG.cpp">
+      <Filter>Practicas</Filter>
+    </ClCompile>
+    <ClCompile Include="RBSystem.cpp">
+      <Filter>Fisicas</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>Fisicas\Objectos</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Fisicas\Objectos</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObject.cpp">
+      <Filter>Fisicas\Objectos</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidForceGenerator.cpp">
+      <Filter>Fisicas\Fuerzas</Filter>
+    </ClCompile>
+    <ClCompile Include="RWindGenerator.cpp">
+      <Filter>Fisicas\Fuerzas</Filter>
+    </ClCompile>
+    <ClCompile Include="HundeFlota\HF_Scene.cpp">
+      <Filter>HundirFlota</Filter>
+    </ClCompile>
+    <ClCompile Include="HundeFlota\FlotationSystem.cpp" />
+    <ClCompile Include="BoatSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -43,30 +92,86 @@
     </ClInclude>
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
-    <ClInclude Include="Vector3D.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="Proyectil.h" />
-    <ClInclude Include="ParticleSystem.h" />
-    <ClInclude Include="ParticleGenerator.h" />
-    <ClInclude Include="UniformGenerator.h" />
-    <ClInclude Include="NormalGenerator.h" />
-    <ClInclude Include="FireWorkGenerator.h" />
-    <ClInclude Include="ForceGenerator.h" />
-    <ClInclude Include="GravityGenerator.h" />
-    <ClInclude Include="WindGenerator.h" />
-    <ClInclude Include="TorbellinoGenerator.h" />
-    <ClInclude Include="ExplosionGenerator.h" />
-    <ClInclude Include="SpringForceGenerator.h" />
-    <ClInclude Include="AnchoredSpringFG.h" />
-    <ClInclude Include="SpringDemo.h" />
-    <ClInclude Include="ArbitraryForce.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="FlotationForceGenerator.h" />
-    <ClInclude Include="StaticObject.h" />
-    <ClInclude Include="DynamicObject.h" />
-    <ClInclude Include="RBSystem.h" />
-    <ClInclude Include="RigidForceGenerator.h" />
-    <ClInclude Include="RWindGenerator.h" />
+    <ClInclude Include="WindGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="TorbellinoGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringDemo.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="Proyectil.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="FlotationForceGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="FireWorkGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionGenerator.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="ArbitraryForce.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchoredSpringFG.h">
+      <Filter>Practicas</Filter>
+    </ClInclude>
+    <ClInclude Include="RBSystem.h">
+      <Filter>Fisicas</Filter>
+    </ClInclude>
+    <ClInclude Include="object_defs.h">
+      <Filter>HundirFlota</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicObject.h">
+      <Filter>Fisicas\Objectos</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Fisicas\Objectos</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObject.h">
+      <Filter>Fisicas\Objectos</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidForceGenerator.h">
+      <Filter>Fisicas\Fuerzas</Filter>
+    </ClInclude>
+    <ClInclude Include="RWindGenerator.h">
+      <Filter>Fisicas\Fuerzas</Filter>
+    </ClInclude>
+    <ClInclude Include="HundeFlota\HF_Scene.h">
+      <Filter>HundirFlota</Filter>
+    </ClInclude>
+    <ClInclude Include="HundeFlota\FlotationSystem.h" />
+    <ClInclude Include="HundeFlota\BoatSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -74,6 +179,18 @@
     </Filter>
     <Filter Include="HundirFlota">
       <UniqueIdentifier>{e9585d36-e0ce-43b6-b658-238fbd0b413a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Practicas">
+      <UniqueIdentifier>{8de3fc09-f057-44ce-9aa2-9eec7c90f908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fisicas">
+      <UniqueIdentifier>{59439983-a990-43b9-97f7-7ba538b879d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fisicas\Fuerzas">
+      <UniqueIdentifier>{09157610-da39-4118-aeb1-3cb452d71f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fisicas\Objectos">
+      <UniqueIdentifier>{8c88e64b-b5a7-48eb-bc5c-dce4274b9617}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

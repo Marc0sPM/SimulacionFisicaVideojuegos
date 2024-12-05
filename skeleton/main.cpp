@@ -14,7 +14,6 @@
 #include "TorbellinoGenerator.h"
 #include "StaticObject.h"
 #include "DynamicObject.h"
-#include "RBSystem.h"
 #include "RWindGenerator.h"
 #include "HundeFlota/HF_Scene.h"
 
@@ -266,6 +265,7 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
+	hunde_scene->onKeyPress(key);
 
 	switch(toupper(key))
 	{

@@ -12,7 +12,7 @@ public:
 		_rb->attachShape(*_shape);
 		scene->addActor(*_rb);
 
-		init_render(_rb);
+		init_render_RB(_rb);
 	}
 	~StaticObject() {
 
