@@ -191,18 +191,20 @@ void initPhysics(bool interactive)
 	#pragma endregion
 
 	#pragma region PRACTICA 5
-	rbs = new RBSystem(gPhysics, gScene);
+	/*rbs = new RBSystem(gPhysics, gScene);
 	auto Objeto2 = rbs->addDynamic({ 0, 10, 0 }, &PxBoxGeometry(4, 4, 4), { 0,0,0,1 }, 0.30); 
 	auto Suelo = rbs->addStatic({ 0, -20, 0 }, &PxBoxGeometry(20, 0.01, 20), { 1, 0.8, 0.8, 1 });
 	
 	auto viento = rbs->addForce(new RWindGenerator({ 10 ,0,1 }, 0.25f));
-	rbs->registerObject(viento, Objeto2);
+	rbs->registerObject(viento, Objeto2);*/
 #pragma endregion
 
-#pragma region HundeFlota
-	hunde_scene = new HF_Scene();
+	#pragma region HundeFlota
+
+	hunde_scene = new HF_Scene(gPhysics, gScene);
 	hunde_scene->init();
-#pragma endregion
+
+	#pragma endregion
 
 
 }
@@ -223,6 +225,8 @@ void stepPhysics(bool interactive, double t)
 	if(ps)	ps->update(t);
 
 	if (rbs) rbs->update(t);
+
+	if (hunde_scene) hunde_scene->update(t);
 }
 
 // Function to clean data
@@ -239,6 +243,8 @@ void cleanupPhysics(bool interactive)
 	for (auto p : proyectiles) {
 		delete p;
 	}
+
+	if (hunde_scene) delete hunde_scene;
 
 	_Deref_inout_z_
 

@@ -72,5 +72,8 @@
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HundirFlota">
+      <UniqueIdentifier>{e9585d36-e0ce-43b6-b658-238fbd0b413a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

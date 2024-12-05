@@ -42,6 +42,29 @@ public:
 		_physics(phy), _scene(scene) {
 	}
 
+	~RBSystem() {
+		for (auto s : _statics) {
+			_scene->removeActor(*s->getRB());
+			delete s;
+		}
+		_statics.clear();
+
+		for (auto d : _dynamics) {
+			_scene->removeActor(*d->getRB());
+			delete d;
+		}
+		_dynamics.clear();
+
+		for (auto& entry : _forceRegister) {
+			delete entry.first;
+		}
+		_forceRegister.clear();
+
+		_statics_toErase.clear();
+		_dynamics_toErase.clear();
+	}
+
+
 	inline void update(double t) {
 
 		_statics_toErase.clear(); 
@@ -85,23 +108,45 @@ public:
 			delete d;
 		}
 	}
-
+	/**
+	*	Te crea el objecto estatico mediante los parametros de StaticObject y lo añade a la lista de estaticos
+	*/
 	inline StaticObject* addStatic(Vector3 pos, PxGeometry* geo, Vector4 color) {
 		StaticObject* obj = nullptr;
 		obj = new StaticObject(_physics, _scene, pos, geo, color);
 		_statics.push_back(obj);
 		return obj;
 	}
+	/**
+	*	Añade directamente el objecto estatico en la lista
+	*/
+	inline StaticObject* addStatic(StaticObject* obj) {
+		_statics.push_back(obj);
+		return obj;
+	}
+	/**
+	*	Te crea el objecto dinamico mediante los parametros de DynamicObject y lo añade a la lista de dinamicos
+	*/
 	inline DynamicObject* addDynamic(Vector3 pos, PxGeometry* geo, Vector4 color, float mass) {
 		DynamicObject* obj = nullptr;
 		obj = new DynamicObject(_physics, _scene, pos, geo, color, mass);
 		_dynamics.push_back(obj);
 		return obj;
 	}
+	/**
+	*	Añade directamente el objecto dinamico en la lista
+	*/
+	inline DynamicObject*  addDynamic(DynamicObject* obj) {
+		_dynamics.push_back(obj);
+		return obj;
+	}
+
+
 	inline RigidForceGenerator* addForce(RigidForceGenerator* fg) {
 		_forceRegister.insert({ fg, std::list<DynamicObject* >() });
 		return fg;
 	}
+
 	inline void registerObject(RigidForceGenerator* fg, DynamicObject* obj) {
 		auto it = _forceRegister.find(fg);
 		if (it != _forceRegister.end()) {
