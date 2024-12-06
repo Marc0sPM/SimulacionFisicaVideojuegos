@@ -13,9 +13,18 @@ public:
 		_gravity = grav;
 	}
 
-	inline Vector3 getSurfaceSize() {
+	/**
+	* @returns tamaño real del liquido
+	*/
+	inline Vector3 getLiquidSize() {
 		return _liquid->getBoxSize() * 2;
 	}
+
+
+	inline Vector3 getLiquidPos() {
+		return _liquid->getPosition();
+	}
+
 private:
 	// 'Box' que simula el liquido
 	GameObject* _liquid = NULL;
@@ -26,10 +35,7 @@ private:
 	//Densidad del liquido
 	float _liquidDensity;
 
-	Vector3 _gravity; 
-
-	float _dragCoef = 0.1;
-
-	bool _firstUpdate = true;
+	//Gravedad del motor de physics
+	Vector3 _gravity;
 };
 

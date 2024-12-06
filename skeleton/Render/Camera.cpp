@@ -46,12 +46,25 @@ Camera::Camera(const PxVec3& eye, const PxVec3& dir)
 	mMouseY = 0;
 }
 
-void Camera::handleMouse(int button, int state, int x, int y)
+bool Camera::handleMouse(int button, int state, int x, int y)
 {
+
+	// Movimiento de desarrollador
 	PX_UNUSED(state);
 	PX_UNUSED(button);
-	mMouseX = x;
-	mMouseY = y;
+	// Si se hace clic con la rueda del medio (button == 2)
+	//if (button == 2) {
+	//	if (state == 0) {  // 0 para MOUSE_DOWN, 1 para MOUSE_UP
+	//		// Guardamos la posición del mouse cuando se presiona la rueda
+	//		mMouseX = x;
+	//		mMouseY = y;
+	//	}
+	//	else if (state == 1) {
+	//		// Aquí podríamos añadir algo si necesitas hacer algo cuando se suelta la rueda
+	//	}
+	//	return true;
+	//}
+	return false;
 }
 
 bool Camera::handleKey(unsigned char key, int x, int y, float speed)
@@ -80,20 +93,28 @@ void Camera::handleAnalogMove(float x, float y)
 
 void Camera::handleMotion(int x, int y)
 {
-	int dx = mMouseX - x;
-	int dy = mMouseY - y;
+	// Si la rueda del medio está presionada, rotamos la cámara
+	if (mMouseX != 0 && mMouseY != 0) {
+		// Diferencia en las coordenadas del ratón
+		int dx = mMouseX - x;
+		int dy = mMouseY - y;
 
-	PxVec3 viewY = mDir.cross(PxVec3(0,1,0)).getNormalized();
+		PxVec3 viewY = mDir.cross(PxVec3(0, 1, 0)).getNormalized();  // El vector Y de la cámara
 
-	PxQuat qx(PxPi * dx / 180.0f, PxVec3(0,1,0));
-	mDir = qx.rotate(mDir);
-	PxQuat qy(PxPi * dy / 180.0f, viewY);
-	mDir = qy.rotate(mDir);
+		// Rotación sobre el eje Y (girar la cámara alrededor de su eje vertical)
+		PxQuat qx(PxPi * dx / 180.0f, PxVec3(0, 1, 0));  // Rotación horizontal
+		mDir = qx.rotate(mDir);
 
-	mDir.normalize();
+		// Rotación sobre el eje X (mirar hacia arriba o hacia abajo)
+		PxQuat qy(PxPi * dy / 180.0f, viewY);  // Rotación vertical
+		mDir = qy.rotate(mDir);
 
-	mMouseX = x;
-	mMouseY = y;
+		mDir.normalize();  // Normalizar la dirección después de la rotación
+
+		// Actualizamos la posición del mouse
+		mMouseX = x;
+		mMouseY = y;
+	}
 }
 
 PxTransform Camera::getTransform() const

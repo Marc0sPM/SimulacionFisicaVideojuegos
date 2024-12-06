@@ -49,6 +49,9 @@
 
 extern std::string display_text;
 
+void reshape(int width, int height);
+
+
 namespace Snippets
 {
 void setupDefaultWindow(const char* name);
@@ -62,5 +65,8 @@ void drawText(const std::string& text, int x, int y);
 }
 
 #define MAX_NUM_ACTOR_SHAPES 128
+
+extern int WINDOW_WIDTH;
+extern int WINDOW_HEIGHT;
 
 #endif //PHYSX_SNIPPET_RENDER_H

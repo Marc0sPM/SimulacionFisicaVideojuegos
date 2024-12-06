@@ -10,28 +10,42 @@ FlotationSystem::FlotationSystem(Vector3 pos, Vector3 liquidSize, float liquidDe
 }
 
 void FlotationSystem::applyForce(DynamicObject* obj, double t) {
-    Vector3 size = obj->getBoxSize();  // Half extents
-    float objHeight = size.y * 2;  // Altura completa del objeto
-    float objVolume = size.x * 2 * size.y * 2 * size.z * 2;  // Volumen completo
-    float objPosY = obj->getRB()->getGlobalPose().p.y;
+   
+    Vector3 liquidSize = _liquid->getBoxSize() * 2;         
+    Vector3 liquidPos = _liquid->getPosition();             // Centro del líquido  
+    float liquidBottom = liquidPos.y - liquidSize.y / 2;    // Parte baja del líquido 
 
-    // Calcular el nivel de inmersión, desde el punto más bajo del objeto
-    float immersed_level = (_liquidLevel - (objPosY - size.y)) / objHeight;
+    // Obtener la posición y dimensiones del objeto
+    Vector3 size = obj->getBoxSize(); // Half extents 
+    float objHeight = size.y * 2; 
+    float objVolume = size.x * 2 * size.y * 2 * size.z * 2; 
+    Vector3 objPos = obj->getRB()->getGlobalPose().p; // Centro del objeto 
 
-    // Asegurarnos de que el nivel de inmersión esté en el rango [0, 1]
+    // Verificar si el objeto está dentro del volumen del líquido
+    bool isWithinLiquid = 
+        objPos.x + size.x > liquidPos.x - liquidSize.x / 2 &&   // Dentro del rango X 
+        objPos.x - size.x < liquidPos.x + liquidSize.x / 2 && 
+        objPos.z + size.z > liquidPos.z - liquidSize.z / 2 &&   // Dentro del rango Z 
+        objPos.z - size.z < liquidPos.z + liquidSize.z / 2 && 
+        objPos.y - size.y < _liquidLevel &&                     // Parte baja del objeto dentro o  por debajo de la superficie
+        objPos.y + size.y > liquidBottom;                       // Parte alta del objeto por encima de la parte baja del líquido
+
+    if (!isWithinLiquid) {
+      
+        return;
+    }
+
+
+    float immersed_level = (_liquidLevel - (objPos.y - size.y)) / objHeight;
+
+    // clamp en el rango [0, 1]
     if (immersed_level < 0.0f) immersed_level = 0.0f;  // Totalmente fuera del agua
     else if (immersed_level > 1.0f) immersed_level = 1.0f;  // Totalmente sumergido
 
-    // Calcular la fuerza de flotación
+   
     float buoyancy_force = _liquidDensity * objVolume * immersed_level * _gravity.magnitude();
 
-    // Aplicar la fuerza de flotación sobre el objeto
+   
     obj->addForce({ 0, buoyancy_force, 0 });
 
-    //// Damping vertical
-    //float dampingFactor = 0.2f;
-    //float velocityY = obj->getRB()->getLinearVelocity().y;
-    //float damping = -dampingFactor * velocityY;
-
-    //obj->addForce({ 0, damping, 0 });  // Aplicar el damping vertical
 }

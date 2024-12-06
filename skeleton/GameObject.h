@@ -31,7 +31,7 @@ public:
 	GameObject(Vector3 pos, PxGeometry* geometry, Vector4 color, rb_type type )
 		: _transform(pos), _color(color), _shape(CreateShape(*geometry)), _rb_type(type){
 	}
-	~GameObject() {
+	virtual ~GameObject() {
 		if (_renderItem) {
 			DeregisterRenderItem(_renderItem);
 			_renderItem = nullptr;
@@ -47,7 +47,7 @@ public:
 	/**
 	*	Actualiza el tiempo de vida del objeto 
 	*/
-	inline void update(double t) {
+	inline virtual void update(double t) {
 		if (_life_time > -1) {
 			_life_time -= t;
 			if (_life_time < 0) _active = false;
@@ -94,6 +94,21 @@ public:
 		}
 		return { 0,0,0 };
 
+	}
+
+
+
+	/**
+	*	@returns el radio de la esfera en caso de tener SphereGeometry
+	*/
+	inline float getRatius() {
+		auto geoType = _shape->getGeometryType();
+		if (geoType == PxGeometryType::eSPHERE) {
+			PxSphereGeometry sphere;
+			_shape->getSphereGeometry(sphere);
+			return sphere.radius;
+		}
+		return -1;
 	}
 };
 

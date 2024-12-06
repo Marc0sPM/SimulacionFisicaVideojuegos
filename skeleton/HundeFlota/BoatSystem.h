@@ -6,7 +6,6 @@
 #include <ctime>
 #include <cmath>
 #include <iostream>
-
 using namespace physx;
 using namespace std;
 
@@ -20,8 +19,6 @@ private:
 	PxScene*		_scene		= NULL;
 	PxPhysics*		_physics	= NULL;
 	Water*			_water		= NULL;
-	//Tamaño de la superficie del agua - plano [x,z]
-	Vector2 _surface_size; 
 
 	//Valores elegidos por el desarrollador de forma arbitraria para el juego
 
@@ -31,6 +28,8 @@ private:
 	const Vector3 BOAT_SIZE = { 6, 3, 3 };
 	const float MAX_MASS = 2000.f; 
 	const float MIN_MASS = 500.f;
+	const float MIN_SPEED = 3.f;
+	const float MAX_SPEED = 10.f;
 #pragma endregion
 
 
@@ -42,15 +41,22 @@ private:
 	bool isOverlapping(Vector2 newpos); 
 
 	float calculateRandomMass(); 
+
+	void moveBoat(Boat* boat); 
+
+	void checkLimits(Boat* boat, Vector3 waterPos, Vector3 waterSize); 
 public:
-	void generateBoat(); 
 	//Constructora del sistema
 	// @param rbs sistema de Rigid Body
 	// @param surf superficie de generacion para los barcos
-	BoatSystem(PxPhysics* ph, PxScene* s, RBSystem* rbs, Vector2 surf, Water* water) :
-		_physics(ph), _scene(s), _sys(rbs), _surface_size(surf), _water(water) {
+	BoatSystem(PxPhysics* ph, PxScene* s, RBSystem* rbs, Water* water) :
+		_physics(ph), _scene(s), _sys(rbs),  _water(water) {
 		std::srand(static_cast<unsigned int>(std::time(nullptr))); 
 	}
+
+
+	// Mantener este metodo de forma temporal aqui
+	void generateBoat(); 
 
 	void init();
 	void update(double t); 

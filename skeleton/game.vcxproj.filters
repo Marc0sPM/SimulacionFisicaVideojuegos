@@ -79,8 +79,12 @@
     <ClCompile Include="HundeFlota\HF_Scene.cpp">
       <Filter>HundirFlota</Filter>
     </ClCompile>
-    <ClCompile Include="HundeFlota\FlotationSystem.cpp" />
-    <ClCompile Include="BoatSystem.cpp" />
+    <ClCompile Include="HundeFlota\BoatSystem.cpp">
+      <Filter>HundirFlota</Filter>
+    </ClCompile>
+    <ClCompile Include="HundeFlota\FlotationSystem.cpp">
+      <Filter>Fisicas\Fuerzas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -170,8 +174,12 @@
     <ClInclude Include="HundeFlota\HF_Scene.h">
       <Filter>HundirFlota</Filter>
     </ClInclude>
-    <ClInclude Include="HundeFlota\FlotationSystem.h" />
-    <ClInclude Include="HundeFlota\BoatSystem.h" />
+    <ClInclude Include="HundeFlota\BoatSystem.h">
+      <Filter>HundirFlota</Filter>
+    </ClInclude>
+    <ClInclude Include="HundeFlota\FlotationSystem.h">
+      <Filter>Fisicas\Fuerzas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

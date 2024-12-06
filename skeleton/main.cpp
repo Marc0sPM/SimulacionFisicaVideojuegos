@@ -60,27 +60,29 @@ void printVec(const Vector3& v) {
 	std::cout << v.x << ", " << v.y << ", " << v.z << "\n";
  }
 void createAxis() {
+
+	float yoffset = 40.f;
 	//Origen
 	PxShape* sShape = CreateShape(PxSphereGeometry(1));
-	sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0, 0)), Vector4(1, 1, 1, 1));
+	sphere = new RenderItem(sShape, new PxTransform(PxVec3(0, 0 + yoffset, 0)), Vector4(1, 1, 1, 1));
 
 	// ========================================
 	//Eje x
-	Vector3D<float> ejeX = Vector3D<float>(10, 0, 0);
+	Vector3D<float> ejeX = Vector3D<float>(10, 0 + yoffset, 0);
 	PxTransform* xTr = new PxTransform(ejeX.toPhysix());
 	eje_x = new RenderItem(sShape, xTr, Vector4(1, 0, 0, 1));
 	// ========================================
 
 	// ========================================
 	// Eje y
-	Vector3D<float> ejeY = Vector3D<float>(0, 10, 0);
+	Vector3D<float> ejeY = Vector3D<float>(0, 10 + yoffset, 0);
 	PxTransform* yTr = new PxTransform(ejeY.x, ejeY.y, ejeY.z);
 	eje_y = new RenderItem(sShape, yTr, Vector4(0, 1, 0, 1));
 	// ========================================
 
 	// ========================================
 	// Eje z
-	Vector3D<float> ejeZ = Vector3D<float>(0, 0, 10);
+	Vector3D<float> ejeZ = Vector3D<float>(0, 0 + yoffset, 10);
 	PxTransform* zTr = new PxTransform(ejeZ.x, ejeZ.y, ejeZ.z);
 	eje_z = new RenderItem(sShape, zTr, Vector4(0, 0, 1, 1));
 	// ========================================
@@ -150,7 +152,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	// createAxis();
+	createAxis();
 	// ps = new ParticleSystem();
 
 	#pragma region PRACTICA 2
@@ -200,7 +202,8 @@ void initPhysics(bool interactive)
 
 	#pragma region HundeFlota
 
-	hunde_scene = new HF_Scene(gPhysics, gScene);
+	hunde_scene = new HF_Scene(gPhysics, gScene, GetCamera());
+	
 	hunde_scene->init();
 
 	#pragma endregion
@@ -261,6 +264,9 @@ void cleanupPhysics(bool interactive)
 	
 	}
 
+void mouseClick(int button, int state, int x, int y) {
+	hunde_scene->onMouseClick(button, state, x, y);
+}
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
 {
@@ -305,10 +311,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 }
 
-void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
+void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 {
-	PX_UNUSED(actor1);
-	PX_UNUSED(actor2);
+	std::cout << "Colisionoº\n";
+	hunde_scene->onCollision(actor1, actor2);
+
 }
 
 

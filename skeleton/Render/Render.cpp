@@ -50,6 +50,9 @@ static float gCylinderData[]={
 
 #define MAX_NUM_MESH_VEC3S  1024
 static PxVec3 gVertexBuffer[MAX_NUM_MESH_VEC3S];
+int WINDOW_WIDTH = 700;
+int WINDOW_HEIGHT = 700;
+
 
 void renderGeometry(const PxGeometryHolder& h, bool wireframe =false)
 {
@@ -229,6 +232,20 @@ void renderGeometry(const PxGeometryHolder& h, bool wireframe =false)
 	}
 }
 
+void reshape(int width, int height)
+{
+	// Actualizar las dimensiones de la ventana
+	WINDOW_WIDTH = width;
+	WINDOW_HEIGHT = height;
+
+	// Configurar la proyección
+	glViewport(0, 0, width, height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
+	glMatrixMode(GL_MODELVIEW);
+}
+
 namespace Snippets
 {
 
@@ -249,12 +266,13 @@ void setupDefaultWindow(const char *name)
 
 	glutInit(&argc, argv);
 	
-	glutInitWindowSize(700, 700);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE|GLUT_DEPTH);
 	int mainHandle = glutCreateWindow(name);
 	glutSetWindow(mainHandle);
-	glutReshapeFunc(reshapeCallback);
-	
+	// Registrar el callback de cambio de tamaño
+	glutReshapeFunc(reshape);
+
 	delete[] namestr;
 }
 
