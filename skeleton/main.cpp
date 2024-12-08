@@ -217,18 +217,14 @@ void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
 	
+	if (hunde_scene) hunde_scene->update(t);
+
+
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	for (auto p : proyectiles) {
-		p->integrate(Particle::integrateType::_EULER_SEMI, t);
-	}
-	// mParticle->integrate(Particle::integrateType::_EULER,  t);
-	if(ps)	ps->update(t);
+	
 
-	if (rbs) rbs->update(t);
-
-	if (hunde_scene) hunde_scene->update(t);
 }
 
 // Function to clean data
@@ -282,29 +278,29 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	case 'Q':
-		crearProyectil(_BULLET);
+		// crearProyectil(_BULLET);
 		break;
 	case 'C': 
-		crearProyectil(_CANNON);
+		// crearProyectil(_CANNON);
 		break;
 	case 'O':
-		setCamTop();
+		// setCamTop();
 		break;
 	case 'P':
-		setCamLat();
+		// setCamLat();
 		break;
 	case 'E':
-		if(eg != nullptr)
-			eg->explode(Vector3(0, 0, 0));
+		/*if(eg != nullptr)
+			eg->explode(Vector3(0, 0, 0));*/
 		break;
 	case 'J': 
-		ps->getSpringDemo()->increaseAnK();
+		// ps->getSpringDemo()->increaseAnK();
 		break;
 	case 'K':
-		ps->getSpringDemo()->decreaseAnK();
+		// ps->getSpringDemo()->decreaseAnK();
 		break;
 	case 'L':
-		ps->getSpringDemo()->applyArbForce();
+		// ps->getSpringDemo()->applyArbForce();
 		break;
 	default:
 		break;

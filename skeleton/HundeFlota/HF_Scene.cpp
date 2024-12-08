@@ -9,15 +9,31 @@ void HF_Scene::init()
 	_camera->setDir(CAM_DIR);
 	_camera->setEye(CAM_POS);
 
-	_sys = new RBSystem(_physics, _scene);
+	_sysRB = new RBSystem(_physics, _scene);
+    _psys = new ParticleSystem(); 
+
+    auto frag = _psys->addFragmentsGenerator(
+        { 0,0,0 },
+        { 0,10,0 },
+        5.f,
+        1.f,
+        10,
+        2.f,
+        spawn_position_distribution::NORMAL_SP,
+        50.f
+    );
+
+    auto grav = _psys->addForce(new GravityGenerator(Vector3(0, -9.8, 0)));
+    _psys->addLink(grav, frag);
+
 
 	// Crear el sistema de flotación
-	_water = new Water({ 0, 0, 0 }, { 50, 5, 50 }, { 0.0f, 0.0f, 1.0f, 1.0f });
+	_water = new Water({ 0, 0, 0 }, { 60, 15, 60 }, { 0.0f, 0.0f, 1.0f, 1.0f });
 	_water->setGravity(_scene->getGravity());
-	_sys->addForce(_water);
+	_sysRB->addForce(_water);
 
 
-	_boatsys = new BoatSystem(_physics, _scene, _sys, _water);
+	_boatsys = new BoatSystem(this, _physics, _scene, _sysRB, _water);
 
 	_boatsys->generateBoat();
 	_boatsys->generateBoat();
@@ -27,8 +43,21 @@ void HF_Scene::init()
 
 void HF_Scene::update(double t)
 {
-	_sys->update(t);
+    checkBallLimits();
+
+
+    _psys->update(t);
+	_sysRB->update(t);
 	_boatsys->update(t);
+
+
+    for (auto& ball : _balls_remove) {
+        _balls.remove(ball);
+        _sysRB->removeObject(ball);
+        delete ball;
+    }
+
+    _balls_remove.clear();
 }
 
 void HF_Scene::cleanup()
@@ -39,7 +68,7 @@ void HF_Scene::onKeyPress(unsigned char key) {
 	switch (key)
 	{
 	case 'x':
-		//crearProyectil
+
 		break;
 	default: 
 		break;
@@ -73,35 +102,32 @@ void HF_Scene::onCollision(PxRigidActor* actor1, PxRigidActor* actor2)
 {
     auto boats = _boatsys->getBoats();
     for (auto boat : *boats) {
-        // Compara los actores de la colisión con el rigid body de las bolas
+        
         if (boat->getRB() == actor1 || boat->getRB() == actor2) {
             std::cout << "Colisión detectada con una bola!" << std::endl;
-
-            // Ejemplo de lógica: cambia el color de la bola al colisionar
-            boat->changeColor(Vector4(1, 0, 0, 1));  // Cambiar a rojo
-
-            // Si necesitas eliminar la bola, asegúrate de manejar correctamente el iterador
-            //_balls.remove(ball);  // Esto solo es válido si no estás iterando con `for(auto it = ...)`
-
+            _boatsys->removeBoat(boat);
             break;
         }
     }
     for (auto ball : _balls) {
-        // Compara los actores de la colisión con el rigid body de las bolas
+        
         if (ball->getRB() == actor1 || ball->getRB() == actor2) {
             std::cout << "Colisión detectada con una bola!" << std::endl;
 
-            // Ejemplo de lógica: cambia el color de la bola al colisionar
-            ball->changeColor(Vector4(1, 0, 0, 1));  // Cambiar a rojo
-
-            // Si necesitas eliminar la bola, asegúrate de manejar correctamente el iterador
-            //_balls.remove(ball);  // Esto solo es válido si no estás iterando con `for(auto it = ...)`
+            if (std::find(_balls_remove.begin(), _balls_remove.end(), ball) == _balls_remove.end()) {
+                _balls_remove.push_back(ball);
+            }
 
             break;
         }
     }
 
 
+}
+
+void HF_Scene::spawnFrags(Boat* b)
+{
+    _psys->getFrag()->activateFragments(b->getRB()->getGlobalPose().p + Vector3(0, 1, 0), b->getColor());
 }
 
 Vector3 HF_Scene::getDirectionWithCursor() {
@@ -159,10 +185,21 @@ Vector3 HF_Scene::getDirectionWithCursor() {
 void HF_Scene::shootBall()
 {
     Ball* ball;
-    ball = new Ball(_physics, _scene, _camera->getEye(), BALL_RADIUS, GenerateRandomColor(), BALL_MASS); 
+    ball = new Ball(_physics, _scene, _camera->getEye(), BALL_RADIUS, GenerateRandomColor(), BALL_MASS);
+    _sysRB->addDynamic(ball);
     ball->addForce(getDirectionWithCursor() * SHOOT_FORCE);
         // _ball->setLifeTime(BALL_LIFETIME);
     _balls.push_back(ball);
+}
+
+void HF_Scene::checkBallLimits()
+{
+    for (auto& b : _balls) {
+        float y = b->getRB()->getGlobalPose().p.y;
+        if (y < _water->getLiquidPos().y - _water->getLiquidSize().y / 2) {
+            _balls_remove.push_back(b);
+        }
+    }
 }
 
 

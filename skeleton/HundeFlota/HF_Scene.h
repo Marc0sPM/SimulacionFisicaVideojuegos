@@ -3,6 +3,7 @@
 #include "../object_defs.h"
 #include "BoatSystem.h"
 #include "PxPhysicsAPI.h"
+#include "../ParticleSystem.h"
 #include <cmath>
 #include <list>
 using namespace physx;
@@ -14,7 +15,10 @@ public:
 		_scene(scene), _physics(p), _camera(cam) {}
 
 	~HF_Scene() {
-		delete _sys;
+		delete _sysRB;
+		_balls.clear(); 
+		_balls_remove.clear();
+		delete _boatsys;
 	}
 	void init();
 	void update(double t);
@@ -25,9 +29,13 @@ public:
 	void onMouseClick(int button, int state, int x, int y);
 	void onCollision(PxRigidActor* actor1, PxRigidActor* actor2); 
 
+	void spawnFrags(Boat* b);
+
 private:
 	list<Ball*>		_balls;
-	RBSystem*		_sys		= NULL;
+	vector<Ball*>	_balls_remove; 
+	RBSystem*		_sysRB		= NULL;
+	ParticleSystem* _psys		= NULL;
 	PxScene*		_scene		= NULL; 
 	PxPhysics*		_physics	= NULL;
 	BoatSystem*		_boatsys	= NULL;
@@ -46,6 +54,11 @@ private:
 	physx::PxVec3 getDirectionWithCursor();
 
 	void shootBall();
+
+	/**
+	*	Elimina la bola si cae por debajo del agua
+	*/
+	void checkBallLimits();
 
 };
 

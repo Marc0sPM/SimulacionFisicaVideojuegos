@@ -263,6 +263,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GravityGenerator.cpp" />
     <ClCompile Include="HundeFlota\FlotationSystem.cpp" />
+    <ClCompile Include="HundeFlota\FragmentsGenerator.cpp" />
     <ClCompile Include="HundeFlota\HF_Scene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalGenerator.cpp" />
@@ -297,6 +298,7 @@
     <ClInclude Include="GravityGenerator.h" />
     <ClInclude Include="HundeFlota\BoatSystem.h" />
     <ClInclude Include="HundeFlota\FlotationSystem.h" />
+    <ClInclude Include="HundeFlota\FragmentsGenerator.h" />
     <ClInclude Include="HundeFlota\HF_Scene.h" />
     <ClInclude Include="NormalGenerator.h" />
     <ClInclude Include="object_defs.h" />

@@ -3,7 +3,7 @@
 #include "StaticObject.h"
 #include "DynamicObject.h"
 #include "RigidForceGenerator.h"
-
+#include <iostream>
 #include <list>
 #include <unordered_map>
 using namespace physx;
@@ -49,7 +49,7 @@ public:
 		}
 		_statics.clear();
 
-		for (auto d : _dynamics) {
+ 		for (auto d : _dynamics) {
 			_scene->removeActor(*d->getRB());
 			delete d;
 		}
@@ -67,14 +67,12 @@ public:
 
 	inline void update(double t) {
 
-		_statics_toErase.clear(); 
-		_dynamics_toErase.clear(); 
 
 		applyForces(t);
 
 		for (auto d : _dynamics) {
 			if (d->canDie()) {
-				_dynamics_toErase.push_back(d);
+				removeObject(d);
 			}
 			else {
 				d->update(t);
@@ -88,24 +86,6 @@ public:
 			else {
 				s->update(t);	
 			}
-		}
-
-		// Eliminacion de objectos
-		for (auto s : _statics_toErase) {
-			auto it = std::find(_statics.begin(), _statics.end(), s);
-			if (it != _statics.end()) {
-				_statics.erase(it);
-				_scene->removeActor(*s->getRB());
-			}
-			delete s;
-		}
-		for (auto d : _dynamics_toErase) {
-			auto it = std::find(_dynamics.begin(), _dynamics.end(), d);
-			if (it != _dynamics.end()) {
-				_dynamics.erase(it);
-				_scene->removeActor(*d->getRB());
-			}
-			delete d;
 		}
 	}
 	/**
@@ -153,5 +133,26 @@ public:
 			it->second.push_back(obj);
 		}
 	}
+
+	inline void deregisterObject(RigidForceGenerator* fg, DynamicObject* obj) {
+		auto it = _forceRegister.find(fg);
+		if (it != _forceRegister.end()) {
+			it->second.remove(obj);
+		}
+	}
+
+	inline void removeObject(DynamicObject* obj) {
+		for (auto& entry : _forceRegister) {
+			entry.second.remove(obj);
+ 		}
+		_dynamics.remove(obj);
+		std::cout << "Elimna bola de _dynamics\n";
+		_scene->removeActor(*obj->getRB());
+		std::cout << "Elimina actor de escena\n";
+	}
+	inline void removeStatic(StaticObject* obj) {
+		_statics.remove(obj);
+	}
+
 };
 

@@ -9,6 +9,7 @@
 #include "FireWorkGenerator.h"
 #include "ExplosionGenerator.h"
 #include "SpringDemo.h"
+#include "HundeFlota/FragmentsGenerator.h"
 
 class ParticleSystem
 {
@@ -19,6 +20,8 @@ private:
 	std::unordered_map<ForceGenerator*, std::list<Particle*>> forceRegister; //resgistro de generadores de fuerzas y a que particulas afectan;
 	std::vector<ForceGenerator* > fToErase;
 
+	// Generador de fragmentos para el juego
+	FragmentsGenerator* _frag = NULL; 
 	SpringDemo* spd = nullptr;
 
 public:
@@ -103,6 +106,8 @@ public:
 	*/
 	ParticleGenerator* addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f, Vector4 color = {1,1,1,1}); // poner color aleatoria proximamente
 	
+	ParticleGenerator* addFragmentsGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f);
+
 	/**
 	*	Añade una explosion al sistema
 	*	@param center centro de la explosion
@@ -151,5 +156,9 @@ public:
 	void generateSpringDemo();
 
 	SpringDemo* getSpringDemo() { return spd; }
+
+	FragmentsGenerator* getFrag() {
+		return _frag;
+	}
 };
 

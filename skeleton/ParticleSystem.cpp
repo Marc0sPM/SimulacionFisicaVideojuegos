@@ -102,6 +102,21 @@ ParticleGenerator* ParticleSystem::addFireWorkGenerator(Vector3 pos, Vector3 dir
 	return gList.back();
 }
 
+ParticleGenerator* ParticleSystem::addFragmentsGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int count, float spawnR, spawn_position_distribution sp, float rat, float lifetime)
+{
+	if (!_frag) {
+		//Particula arbitraria sin preocuparse de la forma y el color
+		Particle p = Particle(pos, direction, { 0,0,0 }, { 1,1,1,1 }, SPHERE); 
+		p.setRatius(rat); 
+ 		p.setLifeTime(lifetime); 
+		p.setMass(mass); 
+		_frag = new FragmentsGenerator(&p, rate, count, spawnR, sp);
+		gList.push_back(_frag);
+		return _frag;
+	}
+	return nullptr;
+}
+
 
 ForceGenerator*  ParticleSystem::addExplosionGenerator(float k, float r, float tau)
 {

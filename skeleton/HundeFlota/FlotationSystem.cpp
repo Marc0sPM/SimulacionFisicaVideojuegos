@@ -3,7 +3,7 @@
 
 FlotationSystem::FlotationSystem(Vector3 pos, Vector3 liquidSize, float liquidDensity, Vector4 liquidColor)
 {
-    _liquidLevel = pos.y + liquidSize.y / 2;
+    _liquidLevel = pos.y + liquidSize.y - 2;
     _liquidDensity = liquidDensity;
     _liquid = new GameObject(pos, &PxBoxGeometry(liquidSize), liquidColor, rb_type::NONE);
     _liquid->init_render();

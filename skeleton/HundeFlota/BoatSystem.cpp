@@ -1,17 +1,29 @@
 #include "BoatSystem.h"
-
+#include "HF_Scene.h"
 
 void BoatSystem::update(double t)
 {
+	_counter -= t;
+	if (_counter < 0) {
+		generateBoat();
+		_counter = SPAWN_TIME; 
+	}
 
 	Vector3 waterPos = _water->getLiquidPos();
 	Vector3 waterSize = _water->getLiquidSize();
-
 	for (auto b : _boats) {
 		checkLimits(b, waterPos, waterSize ); 
 		moveBoat(b);
 
 	}
+
+	for (auto& boat : _remove_boats) {
+ 		_boats.remove(boat);
+		_sys->removeObject(boat);
+		delete boat;
+	}
+
+	_remove_boats.clear();
 }
 
 #pragma region AUXILIAR METHODS & FUNCS
@@ -39,7 +51,7 @@ void BoatSystem::generateBoat() {
 			isValidPos = !isOverlapping(pos);
 
 			if (isValidPos) {
-				Boat* boat = new Boat(_physics, _scene, Vector3(pos.x, SPAWN_HEIGHT, pos.y), BOAT_SIZE, GenerateRandomColor(), calculateRandomMass());
+				Boat* boat = new Boat(_physics, _scene, Vector3(pos.x, _spawnHeight, pos.y), BOAT_SIZE, GenerateRandomColor(), calculateRandomMass());
 				_boats.push_back(boat);
 				_sys->addDynamic(boat);
 				_sys->registerObject(_water, boat);
@@ -93,6 +105,13 @@ void BoatSystem::checkLimits(Boat* boat, Vector3 waterPos, Vector3 waterSize)
 	else if (boatX >= maxX && boat->direction != move_dir::LEFT) {
 		boat->direction = move_dir::LEFT;  // Cambiar dirección a la izquierda 
 		boat->speed = -std::abs(boat->speed); // Asegurarse de que la velocidad sea negativa
+	}
+}
+
+void BoatSystem::removeBoat(Boat* boat) {
+	if (std::find(_remove_boats.begin(), _remove_boats.end(), boat) == _remove_boats.end()) {
+		_remove_boats.push_back(boat);
+		_hf_scene->spawnFrags(boat);
 	}
 }
 #pragma endregion

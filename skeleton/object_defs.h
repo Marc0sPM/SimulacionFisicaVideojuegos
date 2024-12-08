@@ -1,9 +1,14 @@
-	#pragma once
-	#include "StaticObject.h"
-	#include "DynamicObject.h"
-	#include "HundeFlota/FlotationSystem.h"
-	#include <cstdlib>
-	#include <ctime>
+#pragma once
+#include "StaticObject.h"
+#include "DynamicObject.h"
+#include "HundeFlota/FlotationSystem.h"
+#include <cstdlib>
+#include <ctime>
+
+
+//Tamaño minimo y maximo de los fragmentos al romperse los boats
+#define MIN_FRAG_SIZE 1
+#define MAX_FRAG_SIZE 3
 
 enum move_dir {
 	RIGHT = 0, 

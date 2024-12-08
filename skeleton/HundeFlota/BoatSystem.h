@@ -9,34 +9,38 @@
 using namespace physx;
 using namespace std;
 
+class HF_Scene;
 class BoatSystem
 {
 private:
-	// Lista de botes
-	list<Boat* > _boats;
-	// Ref al sistema de rigid bodies
-	RBSystem*		_sys		= NULL;
-	PxScene*		_scene		= NULL;
-	PxPhysics*		_physics	= NULL;
-	Water*			_water		= NULL;
-
-	//Valores elegidos por el desarrollador de forma arbitraria para el juego
 
 #pragma region Const Parameters
 	const int MAX_BOATS = 4; 
-	const float SPAWN_HEIGHT = 10.f;
 	const Vector3 BOAT_SIZE = { 6, 3, 3 };
 	const float MAX_MASS = 2000.f; 
 	const float MIN_MASS = 500.f;
 	const float MIN_SPEED = 3.f;
 	const float MAX_SPEED = 10.f;
+	const double SPAWN_TIME = 5.0; // Tiempo de spawneo, en segundos 
 #pragma endregion
 
+	// Lista de botes
+	list<Boat* > _boats;
+	//Lista de botes a eliminar
+	vector<Boat* > _remove_boats;
+	// Ref al sistema de rigid bodies
+	RBSystem*		_sys		= NULL;
+	PxScene*		_scene		= NULL;
+	PxPhysics*		_physics	= NULL;
+	Water*			_water		= NULL;
+	HF_Scene*		_hf_scene	= NULL;	
+
+	double _counter = SPAWN_TIME;
+
+	float _spawnHeight; 
 
 	//Genera un barco en el plano [x,z] 
 	void intialGeneration(); 
-	// Al destruirse un barco hay una explosion --> mirar con callbacks 
-	void destroyBoat(); 
 	
 	bool isOverlapping(Vector2 newpos); 
 
@@ -49,17 +53,18 @@ public:
 	//Constructora del sistema
 	// @param rbs sistema de Rigid Body
 	// @param surf superficie de generacion para los barcos
-	BoatSystem(PxPhysics* ph, PxScene* s, RBSystem* rbs, Water* water) :
-		_physics(ph), _scene(s), _sys(rbs),  _water(water) {
+	BoatSystem(HF_Scene* hf, PxPhysics* ph, PxScene* s, RBSystem* rbs, Water* water) :
+		_hf_scene(hf), _physics(ph), _scene(s), _sys(rbs),  _water(water), _spawnHeight(_water->getLiquidPos().y + (_water->getLiquidSize().y / 2)  + BOAT_SIZE.y + 2) {
 		std::srand(static_cast<unsigned int>(std::time(nullptr))); 
 	}
-
-
 	// Mantener este metodo de forma temporal aqui
 	void generateBoat(); 
 
 	void init();
 	void update(double t); 
+
+	
+	void removeBoat(Boat* boat);
 
 	//Devuelve puntero a la lista para evitar copia de memoria
 	list<Boat* >*  getBoats() {

@@ -139,8 +139,13 @@ public:
 		return rat;
 	}
 
-	void setColor(Vector4 c) {
-		color = c;
+	inline void setColor(const Vector4& c) {
+		std::cout << "Color barco: " << c.x << ", " << c.y << ", " << c.z << ", " << c.w << "\n";
+
+		color.x = c.x;
+		color.y = c.y;
+		color.z = c.z;
+		color.w = c.w;
 	}
 
 	float getLifeTime() const {
@@ -164,6 +169,11 @@ public:
 	void setCenter(Vector3 c) { center = c; }
 	inline Vector3 getSize() const {
 		return size;
+	}
+
+	inline void setBoxShape(float size) {
+		PxBoxGeometry geo(Vector3( size,size,size));
+		renderItem->shape = CreateShape(geo);
 	}
 
 protected:

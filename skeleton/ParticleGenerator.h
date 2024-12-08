@@ -4,6 +4,7 @@
 #include <list>
 #include <random>
 #include "ForceGenerator.h"
+#include "object_defs.h"
 class ParticleSystem;
 
 enum spawn_position_distribution {
@@ -13,7 +14,8 @@ enum spawn_position_distribution {
 enum generator_type {
 	UNIFORM, 
 	NORMAL,
-	FIREWORK
+	FIREWORK,
+	FRAGMENTS
 };
 
 class ParticleGenerator

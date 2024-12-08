@@ -85,6 +85,7 @@
     <ClCompile Include="HundeFlota\FlotationSystem.cpp">
       <Filter>Fisicas\Fuerzas</Filter>
     </ClCompile>
+    <ClCompile Include="HundeFlota\FragmentsGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="HundeFlota\FlotationSystem.h">
       <Filter>Fisicas\Fuerzas</Filter>
     </ClInclude>
+    <ClInclude Include="HundeFlota\FragmentsGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

@@ -80,6 +80,10 @@ public:
 	inline rb_type getRBType() const {
 		return _rb_type;
 	}
+	inline Vector4 getColor() const {
+		return _color;
+	}
+
 	/**
 	*  Devuelve un Vector3 con el tamaño, solo vale con BoxGeometry
 	*	Usa halfExtents
