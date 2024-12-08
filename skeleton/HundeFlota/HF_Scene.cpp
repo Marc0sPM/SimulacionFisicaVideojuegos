@@ -14,9 +14,9 @@ void HF_Scene::init()
 
     auto frag = _psys->addFragmentsGenerator(
         { 0,0,0 },
-        { 0,10,0 },
+        { 0,5,0 },
         5.f,
-        1.f,
+        BOAT_SIZE.y,
         10,
         2.f,
         spawn_position_distribution::NORMAL_SP,
@@ -35,10 +35,7 @@ void HF_Scene::init()
 
 	_boatsys = new BoatSystem(this, _physics, _scene, _sysRB, _water);
 
-	_boatsys->generateBoat();
-	_boatsys->generateBoat();
-	_boatsys->generateBoat();
-	_boatsys->generateBoat();
+    _boatsys->init();
 }
 
 void HF_Scene::update(double t)

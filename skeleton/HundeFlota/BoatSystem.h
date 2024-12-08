@@ -9,14 +9,15 @@
 using namespace physx;
 using namespace std;
 
+const Vector3 BOAT_SIZE = { 6, 3, 3 };
+const int MAX_BOATS = 4; 
+
 class HF_Scene;
 class BoatSystem
 {
 private:
 
 #pragma region Const Parameters
-	const int MAX_BOATS = 4; 
-	const Vector3 BOAT_SIZE = { 6, 3, 3 };
 	const float MAX_MASS = 2000.f; 
 	const float MIN_MASS = 500.f;
 	const float MIN_SPEED = 3.f;
@@ -39,8 +40,6 @@ private:
 
 	float _spawnHeight; 
 
-	//Genera un barco en el plano [x,z] 
-	void intialGeneration(); 
 	
 	bool isOverlapping(Vector2 newpos); 
 
@@ -60,7 +59,11 @@ public:
 	// Mantener este metodo de forma temporal aqui
 	void generateBoat(); 
 
-	void init();
+	void init() {
+		for (int i = 0; i < MAX_BOATS; ++i) {
+			generateBoat();
+		}
+	}
 	void update(double t); 
 
 	
