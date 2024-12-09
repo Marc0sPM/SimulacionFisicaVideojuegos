@@ -265,6 +265,7 @@
     <ClCompile Include="HundeFlota\FlotationSystem.cpp" />
     <ClCompile Include="HundeFlota\FragmentsGenerator.cpp" />
     <ClCompile Include="HundeFlota\HF_Scene.cpp" />
+    <ClCompile Include="HundeFlota\SplashGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalGenerator.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="HundeFlota\FlotationSystem.h" />
     <ClInclude Include="HundeFlota\FragmentsGenerator.h" />
     <ClInclude Include="HundeFlota\HF_Scene.h" />
+    <ClInclude Include="HundeFlota\SplashGenerator.h" />
     <ClInclude Include="NormalGenerator.h" />
     <ClInclude Include="object_defs.h" />
     <ClInclude Include="Particle.h" />

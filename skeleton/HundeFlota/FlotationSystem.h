@@ -25,6 +25,10 @@ public:
 		return _liquid->getPosition();
 	}
 
+	inline Vector4 getLiquidColor(){
+		return _liquid->getColor();
+	}
+
 private:
 	// 'Box' que simula el liquido
 	GameObject* _liquid = NULL;

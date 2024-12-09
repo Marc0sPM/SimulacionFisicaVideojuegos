@@ -10,6 +10,7 @@
 #include "ExplosionGenerator.h"
 #include "SpringDemo.h"
 #include "HundeFlota/FragmentsGenerator.h"
+#include "HundeFlota/SplashGenerator.h"
 
 class ParticleSystem
 {
@@ -21,8 +22,9 @@ private:
 	std::vector<ForceGenerator* > fToErase;
 
 	// Generador de fragmentos para el juego
-	FragmentsGenerator* _frag = NULL; 
-	SpringDemo* spd = nullptr;
+	FragmentsGenerator* _frag	= NULL; 
+	SplashGenerator*	_splash = NULL;
+	SpringDemo*			spd		= NULL;
 
 public:
 	ParticleSystem() {}
@@ -107,6 +109,7 @@ public:
 	ParticleGenerator* addFireWorkGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int particle_count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f, Vector4 color = {1,1,1,1}); // poner color aleatoria proximamente
 	
 	ParticleGenerator* addFragmentsGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f);
+	ParticleGenerator* addSplashGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int count, float spawnR, spawn_position_distribution sp, float rat, float lifetime = 2.0f,Vector4 color = {1,1,1,1});
 
 	/**
 	*	Añade una explosion al sistema
@@ -155,10 +158,16 @@ public:
 	*/
 	void generateSpringDemo();
 
-	SpringDemo* getSpringDemo() { return spd; }
+	inline SpringDemo* getSpringDemo() { return spd; }
 
-	FragmentsGenerator* getFrag() {
+	inline FragmentsGenerator* getFrag() const {
 		return _frag;
 	}
+
+	inline SplashGenerator* getSplash() const { 
+		return _splash; 
+	}
+
+
 };
 

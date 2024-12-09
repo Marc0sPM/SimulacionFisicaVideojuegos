@@ -26,7 +26,7 @@ public:
 	/**
 	*	Constructora de particula simple pensada para proyectil
 	*/
-	Particle(Vector3 Pos, Vector3 Vel, Vector3 acc = {0,0,0}, Vector4 color = {0.8, 0.8, 0.8, 1.0}, shape sh = SPHERE);
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 acc = {0,0,0}, Vector4 color = {0.8, 0.8, 0.8, 1.0}, shape sh = SPHERE, Vector3 size = {0,0,0});
 
 	/**
 	*	Constructora de particula pensada para un sistema de particulas
@@ -174,6 +174,12 @@ public:
 	inline void setBoxShape(float size) {
 		PxBoxGeometry geo(Vector3( size,size,size));
 		renderItem->shape = CreateShape(geo);
+	}
+	inline void setSphereShape(float r) {
+		renderItem->shape = CreateShape(PxSphereGeometry(r));
+	}
+	inline void setSize(Vector3 s) {
+		size = s;
 	}
 
 protected:

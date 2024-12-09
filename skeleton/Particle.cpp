@@ -11,9 +11,10 @@ Particle::Particle() {
 	
 }
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc, Vector4 col, shape sh)
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acc, Vector4 col, shape sh, Vector3 s)
 {
 	color = col;
+	size = s;
 	init(Pos, Vel, acc, sh);
 	
 }

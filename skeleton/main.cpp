@@ -21,7 +21,6 @@
 
 std::string display_text = "This is a test";
 
-
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -152,7 +151,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	createAxis();
+	// createAxis();
 	// ps = new ParticleSystem();
 
 	#pragma region PRACTICA 2
@@ -217,7 +216,11 @@ void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
 	
-	if (hunde_scene) hunde_scene->update(t);
+	if (hunde_scene) {
+		hunde_scene->update(t);
+		display_text = hunde_scene->getPointsText();
+	}
+
 
 
 	gScene->simulate(t);

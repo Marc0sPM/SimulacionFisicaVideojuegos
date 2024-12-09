@@ -1,5 +1,6 @@
 #include "HF_Scene.h"
 #include "../RenderUtils.hpp"
+#include "../Render/Render.h"
 #include <iostream>
 
 
@@ -23,12 +24,25 @@ void HF_Scene::init()
         50.f
     );
 
+    auto splash = _psys->addSplashGenerator(
+        { 0,0,0 },
+        { 0,15,0 },
+        5.f,
+        1.f,
+        30,
+        1.f,
+        spawn_position_distribution::NORMAL_SP,
+        50.f,
+        4.f,
+        WATER_COLOR
+    );
+
     auto grav = _psys->addForce(new GravityGenerator(Vector3(0, -9.8, 0)));
     _psys->addLink(grav, frag);
-
+    _psys->addLink(grav, splash);
 
 	// Crear el sistema de flotación
-	_water = new Water({ 0, 0, 0 }, { 60, 15, 60 }, { 0.0f, 0.0f, 1.0f, 1.0f });
+	_water = new Water({ 0, 0, 0 }, WATER_SIZE, WATER_COLOR);
 	_water->setGravity(_scene->getGravity());
 	_sysRB->addForce(_water);
 
@@ -36,12 +50,20 @@ void HF_Scene::init()
 	_boatsys = new BoatSystem(this, _physics, _scene, _sysRB, _water);
 
     _boatsys->init();
+
+    drawText(POINTS_TEXT + to_string(_points), POINTS_POS.x, POINTS_POS.y);
 }
 
 void HF_Scene::update(double t)
 {
     checkBallLimits();
-
+    if (!_canShoot) {
+        _shootTime -= t;
+        if (_shootTime < 0) {
+            _canShoot = true;
+            _shootTime = TIME_TO_SHOOT;
+        }
+    }
 
     _psys->update(t);
 	_sysRB->update(t);
@@ -90,8 +112,10 @@ void HF_Scene::onMouseClick(int button, int state, int x, int y) {
 		Vector3 dir = getDirectionWithCursor();
 		std::cout << "Direccion proy: (" << dir.x << ", " << dir.y << ", " << dir.z << ")\n";
 		
-
-        shootBall();
+        if (_canShoot) {
+            shootBall();
+            _canShoot = false;
+        }
 	}
 }
 
@@ -103,6 +127,8 @@ void HF_Scene::onCollision(PxRigidActor* actor1, PxRigidActor* actor2)
         if (boat->getRB() == actor1 || boat->getRB() == actor2) {
             std::cout << "Colisión detectada con una bola!" << std::endl;
             _boatsys->removeBoat(boat);
+            _points += POINTS_BOAT;
+            updatePoints();
             break;
         }
     }
@@ -179,6 +205,11 @@ Vector3 HF_Scene::getDirectionWithCursor() {
     return rotatedDir;
 }
 
+void HF_Scene::updatePoints()
+{
+    _text = POINTS_TEXT + to_string(_points);
+}
+
 void HF_Scene::shootBall()
 {
     Ball* ball;
@@ -192,11 +223,33 @@ void HF_Scene::shootBall()
 void HF_Scene::checkBallLimits()
 {
     for (auto& b : _balls) {
-        float y = b->getRB()->getGlobalPose().p.y;
-        if (y < _water->getLiquidPos().y - _water->getLiquidSize().y / 2) {
+        Vector3 p = b->getRB()->getGlobalPose().p;
+        //Salpica si esta en la superficie del agua
+        if (p.y <= _water->getLiquidPos().y + _water->getLiquidSize().y * 2 / 3 && 
+            p.y >= _water->getLiquidPos().y + _water->getLiquidSize().y * 2 / 3 - 3.f) {
+
+            if (isBallInWater(p)) {
+                _psys->getSplash()->spawnSplash(p - Vector3(0,b->getRatius(),0));
+            }
+        }
+        //Se elimina al llegar al fondo del liquido
+        if (p.y < _water->getLiquidPos().y - _water->getLiquidSize().y / 2) {
             _balls_remove.push_back(b);
         }
     }
+}
+bool HF_Scene::isBallInWater(Vector3 ballPos) {
+    // Calculamos los límites de la superficie del agua en X y Z
+    auto waterPos = _water->getLiquidPos();
+    auto waterSize = _water->getLiquidSize();
+    float minX = waterPos.x - waterSize.x / 2.0f;
+    float maxX = waterPos.x + waterSize.x / 2.0f;
+    float minZ = waterPos.z - waterSize.z / 2.0f;
+    float maxZ = waterPos.z + waterSize.z / 2.0f;
+
+    // Comprobamos si la posición de la bola está dentro de los límites X y Z
+    return (ballPos.x >= minX && ballPos.x <= maxX &&
+        ballPos.z >= minZ && ballPos.z <= maxZ);
 }
 
 

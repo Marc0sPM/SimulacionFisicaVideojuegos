@@ -117,6 +117,22 @@ ParticleGenerator* ParticleSystem::addFragmentsGenerator(Vector3 pos, Vector3 di
 	return nullptr;
 }
 
+ParticleGenerator* ParticleSystem::addSplashGenerator(Vector3 pos, Vector3 direction, float mass, float rate, int count, float spawnR, spawn_position_distribution sp, float rat, float lifetime, Vector4 color)
+{
+	if (!_splash) {
+		//Particula arbitraria sin preocuparse de la forma y el color
+		Particle p = Particle(pos, direction, { 0,0,0 }, color, SPHERE, Vector3(0.1, 0,0));
+		p.setRatius(rat);
+		p.setLifeTime(lifetime);
+		p.setMass(mass);
+		
+		_splash = new SplashGenerator(&p, rate, count, spawnR, sp);
+		gList.push_back(_splash);
+		return _splash;
+	}
+	return nullptr;
+}
+
 
 ForceGenerator*  ParticleSystem::addExplosionGenerator(float k, float r, float tau)
 {

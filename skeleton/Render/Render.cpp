@@ -305,8 +305,9 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Display text
-	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-	drawText(display_text, 0, 0);
+	 glColor4f(1.0f, 0.1f, 0.1f, 1.0f);
+	 int x = 500;
+	 drawText(display_text, 0, x);
 
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
@@ -402,7 +403,8 @@ void finishRender()
 
 void drawText(const std::string& text, int x, int y)
 {
-	glMatrixMode(GL_PROJECTION);
+	glColor4f(1.0f, 0.1f, 0.1f, 1.0f);
+ 	glMatrixMode(GL_PROJECTION);
 	double* matrix = new double[16];
 	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
 	glLoadIdentity();

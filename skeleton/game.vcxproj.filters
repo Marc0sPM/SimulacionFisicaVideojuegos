@@ -86,6 +86,7 @@
       <Filter>Fisicas\Fuerzas</Filter>
     </ClCompile>
     <ClCompile Include="HundeFlota\FragmentsGenerator.cpp" />
+    <ClCompile Include="HundeFlota\SplashGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -182,6 +183,7 @@
       <Filter>Fisicas\Fuerzas</Filter>
     </ClInclude>
     <ClInclude Include="HundeFlota\FragmentsGenerator.h" />
+    <ClInclude Include="HundeFlota\SplashGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

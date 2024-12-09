@@ -15,7 +15,8 @@ enum generator_type {
 	UNIFORM, 
 	NORMAL,
 	FIREWORK,
-	FRAGMENTS
+	FRAGMENTS,
+	SPLASH
 };
 
 class ParticleGenerator
