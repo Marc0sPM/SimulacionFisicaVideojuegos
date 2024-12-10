@@ -48,16 +48,17 @@ private:
 
 	const Vector3 CAM_POS			= {0.f, 40.f, 165.f};
 	const Vector3 CAM_DIR			= {0.00001f, -0.1f,  -1.f};
-	const float SHOOT_FORCE			= 10000.f;
+	const float SHOOT_FORCE			= 220.f;
 	const float BALL_MASS			= 5.f;
 	const float BALL_RADIUS			= 1.f;
 	const float BALL_LIFETIME		= 5.f;
 	const Vector4 WATER_COLOR		= { 0.5f, 0.5f ,1.f ,1.f };
 	const Vector3 WATER_SIZE		= { 60, 15, 60 };
 	const float TIME_TO_SHOOT		= 1.5f;
-	const std::string POINTS_TEXT = "POINTS: ";
+	const std::string POINTS_TEXT	= "POINTS: ";
 	const Vector2 POINTS_POS		= { 0 , 0};
 	const int POINTS_BOAT			= 100;
+	const Vector3 WIND_VEL			= { 0.f, -500000.f, 0.f }; 
 
 	int _mouseX = 0, _mouseY = 0;
 	bool _canShoot = true;
@@ -67,7 +68,7 @@ private:
 	std::string _text = POINTS_TEXT + "0";
 
 	physx::PxVec3 getDirectionWithCursor();
-
+		
 	void shootBall();
 
 	/**

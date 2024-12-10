@@ -29,8 +29,8 @@ public:
 	inline void setAngularVelocity(Vector3 ang) {
 		_rb->setAngularVelocity(ang);
 	}
-	inline void addForce(Vector3 f) {
-		_rb->addForce(f);
+	inline void addForce(Vector3 f, PxForceMode::Enum mode = PxForceMode::eFORCE) {
+		_rb->addForce(f, mode);
 	}
 	inline void addTorque(Vector3 t) {
 		_rb->addTorque(t);

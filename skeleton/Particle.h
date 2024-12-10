@@ -45,9 +45,7 @@ public:
 	*	Destructora, desregistra el renderItem que representa la particula
 	*/
 	virtual ~Particle() {
-		// std::cout << "Destruye particula: " << this << "\n";
 		if (renderItem != nullptr) {
-			//std::cout << "BORRA PARTICULA\n";
  			DeregisterRenderItem(renderItem);
 			//delete renderItem;
 			renderItem = nullptr;
@@ -140,12 +138,7 @@ public:
 	}
 
 	inline void setColor(const Vector4& c) {
-		std::cout << "Color barco: " << c.x << ", " << c.y << ", " << c.z << ", " << c.w << "\n";
-
-		color.x = c.x;
-		color.y = c.y;
-		color.z = c.z;
-		color.w = c.w;
+		color = c;
 	}
 
 	float getLifeTime() const {

@@ -1,6 +1,8 @@
 #pragma once
 #include "../RBSystem.h"
 #include "../object_defs.h"
+#include "../RWindGenerator.h"
+
 #include <list>
 #include <cstdlib>
 #include <ctime>
@@ -23,6 +25,7 @@ private:
 	const float MIN_SPEED = 3.f;
 	const float MAX_SPEED = 10.f;
 	const double SPAWN_TIME = 5.0; // Tiempo de spawneo, en segundos 
+	const double WIND_TIME = 4.0; 
 #pragma endregion
 
 	// Lista de botes
@@ -35,8 +38,10 @@ private:
 	PxPhysics*		_physics	= NULL;
 	Water*			_water		= NULL;
 	HF_Scene*		_hf_scene	= NULL;	
+	RWindGenerator* _wind_down	= NULL;
 
 	double _counter = SPAWN_TIME;
+	double _wind_counter = WIND_TIME;
 
 	float _spawnHeight; 
 
@@ -56,6 +61,12 @@ public:
 		_hf_scene(hf), _physics(ph), _scene(s), _sys(rbs),  _water(water), _spawnHeight(_water->getLiquidPos().y + (_water->getLiquidSize().y / 2)  + BOAT_SIZE.y + 2) {
 		std::srand(static_cast<unsigned int>(std::time(nullptr))); 
 	}
+
+	~BoatSystem() {
+		_boats.clear();
+		_remove_boats.clear();
+	}
+
 	// Mantener este metodo de forma temporal aqui
 	void generateBoat(); 
 
@@ -74,5 +85,8 @@ public:
 		return &_boats;
 	}
 
+	void setWindDown(RWindGenerator* w) {
+		_wind_down = w; 
+	}	
 };
 

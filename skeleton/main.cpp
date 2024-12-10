@@ -245,7 +245,7 @@ void cleanupPhysics(bool interactive)
 		delete p;
 	}
 
-	if (hunde_scene) delete hunde_scene;
+	if (hunde_scene) hunde_scene->cleanup(); 
 
 	_Deref_inout_z_
 
@@ -312,7 +312,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 {
-	std::cout << "Colisionoº\n";
 	hunde_scene->onCollision(actor1, actor2);
 
 }

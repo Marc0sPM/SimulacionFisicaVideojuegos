@@ -5,7 +5,7 @@ DynamicObject::DynamicObject(PxPhysics* phy, PxScene* scene, Vector3 pos, PxGeom
 {
 
 	_rb = phy->createRigidDynamic(_transform);
-    std::cout << "Transform position: " << _transform.p.x << ", " << _transform.p.y << ", " << _transform.p.z << std::endl;
+    
 
 	_rb->attachShape(*_shape);
 	

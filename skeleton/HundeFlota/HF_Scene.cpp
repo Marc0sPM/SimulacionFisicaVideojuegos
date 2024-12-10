@@ -48,7 +48,9 @@ void HF_Scene::init()
 
 
 	_boatsys = new BoatSystem(this, _physics, _scene, _sysRB, _water);
-
+    auto wind = new RWindGenerator(WIND_VEL, 0.25);
+    _sysRB->addForce(wind);
+    _boatsys->setWindDown(wind);
     _boatsys->init();
 
     drawText(POINTS_TEXT + to_string(_points), POINTS_POS.x, POINTS_POS.y);
@@ -81,6 +83,10 @@ void HF_Scene::update(double t)
 
 void HF_Scene::cleanup()
 {
+    delete _sysRB;
+    delete _boatsys; 
+    _balls.clear();
+    _balls_remove.clear();
 }
 
 void HF_Scene::onKeyPress(unsigned char key) {
@@ -97,7 +103,6 @@ void HF_Scene::onKeyPress(unsigned char key) {
 void HF_Scene::onMouseMove(int x, int y) {
 	_mouseX = x;
 	_mouseY = y;
-	std::cout << "Posición del cursor: (" << x << ", " << y << ")\n";
 }
 
 void HF_Scene::onMouseClick(int button, int state, int x, int y) {
@@ -105,10 +110,7 @@ void HF_Scene::onMouseClick(int button, int state, int x, int y) {
 	_mouseY = y;
 
 	if (button == 0 && state == 1) { // Botón izquierdo presionado
-		std::cout << "Clic izquierdo en posición: (" << _mouseX << ", " << _mouseY << ")\n";
-		// Aquí puedes disparar un proyectil o realizar otra acción
-		std::cout << "Centro de la pantalla: (" << WINDOW_WIDTH / 2 << ", " << WINDOW_HEIGHT / 2 << ")\n";
-
+		
 		Vector3 dir = getDirectionWithCursor();
 		std::cout << "Direccion proy: (" << dir.x << ", " << dir.y << ", " << dir.z << ")\n";
 		
@@ -125,7 +127,6 @@ void HF_Scene::onCollision(PxRigidActor* actor1, PxRigidActor* actor2)
     for (auto boat : *boats) {
         
         if (boat->getRB() == actor1 || boat->getRB() == actor2) {
-            std::cout << "Colisión detectada con una bola!" << std::endl;
             _boatsys->removeBoat(boat);
             _points += POINTS_BOAT;
             updatePoints();
@@ -135,8 +136,7 @@ void HF_Scene::onCollision(PxRigidActor* actor1, PxRigidActor* actor2)
     for (auto ball : _balls) {
         
         if (ball->getRB() == actor1 || ball->getRB() == actor2) {
-            std::cout << "Colisión detectada con una bola!" << std::endl;
-
+           
             if (std::find(_balls_remove.begin(), _balls_remove.end(), ball) == _balls_remove.end()) {
                 _balls_remove.push_back(ball);
             }
@@ -215,7 +215,7 @@ void HF_Scene::shootBall()
     Ball* ball;
     ball = new Ball(_physics, _scene, _camera->getEye(), BALL_RADIUS, GenerateRandomColor(), BALL_MASS);
     _sysRB->addDynamic(ball);
-    ball->addForce(getDirectionWithCursor() * SHOOT_FORCE);
+    ball->addForce(getDirectionWithCursor() * SHOOT_FORCE, PxForceMode::eIMPULSE);
         // _ball->setLifeTime(BALL_LIFETIME);
     _balls.push_back(ball);
 }

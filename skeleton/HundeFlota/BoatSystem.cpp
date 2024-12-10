@@ -9,6 +9,17 @@ void BoatSystem::update(double t)
 		_counter = SPAWN_TIME; 
 	}
 
+	_wind_counter -= t;
+	if (_wind_counter <= 0) {
+		if (_wind_down) {
+			
+			_wind_down->setActive(!_wind_down->isActive());
+			std::cout << "Viento " << (_wind_down->isActive() ? "activado" : "desactivado") << std::endl;
+		}
+		_wind_counter = WIND_TIME;
+	}
+
+
 	Vector3 waterPos = _water->getLiquidPos();
 	Vector3 waterSize = _water->getLiquidSize();
 	for (auto b : _boats) {
@@ -55,6 +66,9 @@ void BoatSystem::generateBoat() {
 				_boats.push_back(boat);
 				_sys->addDynamic(boat);
 				_sys->registerObject(_water, boat);
+
+				if(_wind_down)	
+ 					_sys->registerObject(_wind_down, boat);
 				return;
 			}
 		}

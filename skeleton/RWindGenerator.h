@@ -10,7 +10,7 @@ public:
     RWindGenerator(const Vector3& velocity,  float rozCoef)
         : _velocity(velocity), _rozCoef(rozCoef) {
 
-        _isActive = true;
+        _isActive = false;
     }
 
     void applyForce(DynamicObject* obj, double t) override {

@@ -146,9 +146,7 @@ public:
 			entry.second.remove(obj);
  		}
 		_dynamics.remove(obj);
-		std::cout << "Elimna bola de _dynamics\n";
 		_scene->removeActor(*obj->getRB());
-		std::cout << "Elimina actor de escena\n";
 	}
 	inline void removeStatic(StaticObject* obj) {
 		_statics.remove(obj);
