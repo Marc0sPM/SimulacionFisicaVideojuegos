@@ -245,7 +245,8 @@ void cleanupPhysics(bool interactive)
 		delete p;
 	}
 
-	if (hunde_scene) hunde_scene->cleanup(); 
+	if (hunde_scene) hunde_scene->cleanup();
+	hunde_scene = NULL;
 
 	_Deref_inout_z_
 

@@ -34,6 +34,7 @@ public:
 		}
 	}
 	~Boat() override {
+		std::cout << "[-] Boat\n";
 	}
 	//Velocidad de movimiento del bote
 	float speed;
@@ -46,6 +47,9 @@ public:
 	Ball(PxPhysics* ph, PxScene* sc, Vector3 pos, float r, Vector4 color, float mass) :
 		DynamicObject(ph, sc, pos, &PxSphereGeometry(r), color, mass) {
 	}
+	~Ball() override {
+		std::cout << "[-] Ball\n";
+	}
 };
 
 // Generador de fuerza de flotacion que simula agua
@@ -53,6 +57,9 @@ class Water : public FlotationSystem {
 public:
 	Water(Vector3 pos, Vector3 size, Vector4 color) :
 		FlotationSystem(pos, size, 1000.f, color) {
+	}
+	~Water() override {
+		std::cout << "[-] Water\n";
 	}
 };
 

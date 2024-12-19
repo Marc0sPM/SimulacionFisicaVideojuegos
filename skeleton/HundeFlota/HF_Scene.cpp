@@ -83,10 +83,12 @@ void HF_Scene::update(double t)
 
 void HF_Scene::cleanup()
 {
+
     delete _sysRB;
     delete _boatsys; 
     _balls.clear();
     _balls_remove.clear();
+    std::cout << "[-] HF_Scene\n";
 }
 
 void HF_Scene::onKeyPress(unsigned char key) {

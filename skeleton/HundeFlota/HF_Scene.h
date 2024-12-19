@@ -15,10 +15,6 @@ public:
 		_scene(scene), _physics(p), _camera(cam) {}
 
 	~HF_Scene() {
-		delete _sysRB;
-		_balls.clear(); 
-		_balls_remove.clear();
-		delete _boatsys;
 	}
 	void init();
 	void update(double t);

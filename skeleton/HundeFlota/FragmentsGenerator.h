@@ -11,6 +11,8 @@ public:
 		particle_count(count) {
 	}
 
+    ~FragmentsGenerator() override {}
+
     void emit() override {
         if (_canEmit) {
             Vector3 new_pos = calculatePosition();

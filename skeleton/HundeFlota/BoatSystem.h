@@ -65,6 +65,7 @@ public:
 	~BoatSystem() {
 		_boats.clear();
 		_remove_boats.clear();
+		std::cout << "[-] BoatSystem\n";
 	}
 
 	// Mantener este metodo de forma temporal aqui

@@ -47,6 +47,10 @@ public:
 		random_engine.seed(rd());
 
 	}
+	virtual ~ParticleGenerator() {
+		emittedParticles.clear();
+		linkedForces.clear();
+	}
 
 	/**
 	*	Metodo virtual para generacion de particulas

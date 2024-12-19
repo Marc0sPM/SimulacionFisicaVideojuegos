@@ -5,11 +5,18 @@ class SplashGenerator : public ParticleGenerator
 private:
 	int particle_count; 
 	bool _canEmit = false;
+
+    const float MIN_MASS = 2.f;
+    const float MAX_MASS = 7.f;
 public: 
 	SplashGenerator(Particle* p, float rate, int count, float spawnR, spawn_position_distribution sp) :
 		ParticleGenerator(p, rate, spawnR, sp, SPLASH),
 		particle_count(count) {
 	}
+
+    ~SplashGenerator() override {
+    }
+
     void emit() override {
         if (_canEmit) {
             Vector3 new_pos = calculatePosition();
@@ -23,6 +30,8 @@ public:
             // Variación en la fuerza del eje Y
             std::uniform_real_distribution<float> y_variation_factor(0.5f, 1.0f); // Algunas partículas serán más bajas
 
+            std::uniform_real_distribution<float> mass_distribution(MIN_MASS,MAX_MASS); // Algunas partículas serán más bajas
+           
             for (int i = 0; i < particle_count; ++i) {
                 Particle* new_particle = new Particle(model_particle);
                 new_particle->setPosition(new_pos);
@@ -54,6 +63,10 @@ public:
                 );
 
                 new_particle->setVelocity(random_velocity);
+
+                float random_mass = mass_distribution(random_engine);
+                new_particle->setMass(random_mass);
+
                 addParticle(new_particle);
             }
             _canEmit = false;

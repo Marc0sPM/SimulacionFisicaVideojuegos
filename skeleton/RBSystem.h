@@ -57,11 +57,13 @@ public:
 
 		for (auto& entry : _forceRegister) {
 			delete entry.first;
+			std::cout << "[-] RB_ForceGenerator\n";
 		}
 		_forceRegister.clear();
 
 		_statics_toErase.clear();
 		_dynamics_toErase.clear();
+		std::cout << "[-] RBSystem\n";
 	}
 
 

@@ -85,8 +85,12 @@
     <ClCompile Include="HundeFlota\FlotationSystem.cpp">
       <Filter>Fisicas\Fuerzas</Filter>
     </ClCompile>
-    <ClCompile Include="HundeFlota\FragmentsGenerator.cpp" />
-    <ClCompile Include="HundeFlota\SplashGenerator.cpp" />
+    <ClCompile Include="HundeFlota\SplashGenerator.cpp">
+      <Filter>HundirFlota</Filter>
+    </ClCompile>
+    <ClCompile Include="HundeFlota\FragmentsGenerator.cpp">
+      <Filter>HundirFlota</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -182,8 +186,12 @@
     <ClInclude Include="HundeFlota\FlotationSystem.h">
       <Filter>Fisicas\Fuerzas</Filter>
     </ClInclude>
-    <ClInclude Include="HundeFlota\FragmentsGenerator.h" />
-    <ClInclude Include="HundeFlota\SplashGenerator.h" />
+    <ClInclude Include="HundeFlota\SplashGenerator.h">
+      <Filter>HundirFlota</Filter>
+    </ClInclude>
+    <ClInclude Include="HundeFlota\FragmentsGenerator.h">
+      <Filter>HundirFlota</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
